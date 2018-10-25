@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    NGUYEN YEN DUYEN 
                 </div>
 
                 <div class="links">
