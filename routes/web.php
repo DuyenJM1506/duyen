@@ -14,3 +14,32 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+use App\Loai;
+Route::get('/danhsachloai', function() {
+    //Eloquent model để lấy DL
+    //$ds_loai = Loai::all(); //= select * from loai
+    //$json = json_encode($ds_loai);
+    //return $json;
+   $ds_loai = DB::table('loai') ->get(); //Query builder
+   $json = json_encode($ds_loai);
+   return $json;
+});
+use App\Chude;
+Route::get('/danhsachchude', function() {
+    //$ds_chude = Chude::all(); //= select * from chude
+    //$json = json_encode($ds_chude);
+    //return $json;
+    $ds_chude = DB::table('chude') ->get(); //Query builder
+    $json = json_encode($ds_chude);
+    return $json;
+});
+use App\Sanpham;
+Route::get('/danhsachsanpham', function(){
+    $ds_sanpham = DB::table('sanpham') ->get(); //Query builder
+    $json = json_encode($ds_sanpham);
+    return $json;
+});
+
+
+
