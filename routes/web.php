@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
 use App\Loai;
 Route::get('/danhsachloai', function() {
     //Eloquent model để lấy DL
@@ -34,12 +34,9 @@ Route::get('/danhsachchude', function() {
     $json = json_encode($ds_chude);
     return $json;
 });
-use App\Sanpham;
-Route::get('/danhsachsanpham', function(){
-    $ds_sanpham = DB::table('sanpham') ->get(); //Query builder
-    $json = json_encode($ds_sanpham);
-    return $json;
-});
+*/
+Route::get('/danhsachloai', 'LoaiController@index')->name('danhsachloai.index');
+Route::get('/danhsachchude', 'ChudeController@index')->name('danhsachchude.index');
 
 
 

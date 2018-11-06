@@ -79,8 +79,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    NGUYEN YEN DUYEN 
+                    FLOWERS SOUL
                 </div>
+
+                <a href="{{ route('danhsachloai.index') }}">Danh sách các loại hoa</a> <br>
+                <a href="{{ route('danhsachchude.index') }}">Danh sách các chủ đề hoa</a> <br>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
