@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    FLOWERS SOUL
+                    FLOWERS SOUL\
                 </div>
 
                 <a href="{{ route('danhsachloai.index') }}">Danh sách các loại hoa</a> <br>
