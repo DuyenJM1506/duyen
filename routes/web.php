@@ -37,6 +37,6 @@ Route::get('/danhsachchude', function() {
 */
 Route::get('/danhsachloai', 'LoaiController@index')->name('danhsachloai.index');
 Route::get('/danhsachchude', 'ChudeController@index')->name('danhsachchude.index');
-
+Route::get('/danhsachsanpham', 'SanphamController@index')->name('danhsachsanpham.index');
 
 

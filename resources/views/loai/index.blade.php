@@ -1,4 +1,11 @@
-<h1>HELLO DS LOAI</h1>
+@extends('backend.layouts.index')
+
+@section('title')
+    Danh sách loại sản phẩm
+@endsection
+
+@section('main-content')
+<h1>List of types</h1>
 
 <table border = "2">
     <thead>
@@ -16,3 +23,4 @@
         @endforeach
     </tbody>
 </table>
+@endsection
