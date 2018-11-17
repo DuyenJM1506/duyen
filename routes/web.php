@@ -36,6 +36,9 @@ Route::get('/danhsachchude', function() {
 });
 */
 Route::get('/danhsachloai', 'LoaiController@index')->name('danhsachloai.index');
+Route::get('/danhsachloai/create', 'LoaiController@create')->name('danhsachloai.create');
+Route::post('/danhsachloai/store', 'LoaiController@store')->name('danhsachloai.store');
+
 Route::get('/danhsachchude', 'ChudeController@index')->name('danhsachchude.index');
 Route::get('/danhsachsanpham', 'SanphamController@index')->name('danhsachsanpham.index');
 

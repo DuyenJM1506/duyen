@@ -7,6 +7,8 @@
 @section('main-content')
 <h1>List of types</h1>
 
+<a href="{{ route('danhsachloai.create') }}">Create new</a>
+
 <table border = "2">
     <thead>
         <tr>
