@@ -41,5 +41,8 @@ Route::post('/danhsachloai/store', 'LoaiController@store')->name('danhsachloai.s
 
 Route::get('/danhsachchude', 'ChudeController@index')->name('danhsachchude.index');
 Route::get('/danhsachsanpham', 'SanphamController@index')->name('danhsachsanpham.index');
-
-
+Route::put('/danhsachloai/{id}', 'LoaiController@update')->name('danhsachloai.update');
+Route::get('/danhsachloai/{id}', 'LoaiController@edit')->name('danhsachloai.edit');
+Route::delete('/danhsachloai/{id}', 'LoaiController@destroy')->name('danhsachloai.destroy');
+//route san pham
+Route::resource('danhsachsanpham', 'SanphamController');
