@@ -17,12 +17,12 @@ class CreateSanphamTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigInteger('sp_ma') ->autoIncrement();
             $table->string ('sp_ten', 191);
-            $table->integer('giaGoc')
+            $table->integer('sp_giaGoc')
                 ->default ('0');
-            $table->unsignedInteger('giaBan')
+            $table->unsignedInteger('sp_giaBan')
                 ->default ('0'); 
             $table->string ('sp_hinh', 200);
-            $table->text('thongTin');
+            $table->text('sp_thongTin');
             $table->string ('sp_danhGia', 50);
             $table->timestamp('sp_taoMoi') 
                 ->default (DB::raw ('CURRENT_TIMESTAMP')) 

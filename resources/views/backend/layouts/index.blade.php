@@ -32,6 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!--các customstyle danh rieng cho tung view-->
+  @yield('custom-css')
+  <!-- cac custom style của backend-->
+  <link rel="stylesheet" href="{{ asset('css/custom-style.css') }}">
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -405,5 +409,7 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+     <!-- cac custom script danh rieng cho tung view-->
+     @yield('custom-scripts')
 </body>
 </html>
