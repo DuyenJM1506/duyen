@@ -5,8 +5,13 @@
 @endsection
 
 @section('main-content')
-<h1>List of products</h1>
-<a href="{{route('danhsachsanpham.create')}}">Them moi</a>
+<h1>DANH SÁCH SẢN PHẨM</h1>
+<div>
+<a href="{{route('danhsachsanpham.create')}}" class="btn btn-primary">Thêm mới</a>
+<a href="{{route('danhsachsanpham.excel')}}" class="btn btn-primary">Xuất Excel</a>
+<a href="{{route('danhsachsanpham.pdf')}}" class="btn btn-primary">Xuất PDF</a>
+</div>
+</br>
 <div class="flash-message">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))

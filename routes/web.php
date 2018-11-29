@@ -45,4 +45,7 @@ Route::put('/danhsachloai/{id}', 'LoaiController@update')->name('danhsachloai.up
 Route::get('/danhsachloai/{id}', 'LoaiController@edit')->name('danhsachloai.edit');
 Route::delete('/danhsachloai/{id}', 'LoaiController@destroy')->name('danhsachloai.destroy');
 //route san pham
+Route::get('/danhsachsanpham/excel', 'SanphamController@excel')->name('danhsachsanpham.excel');
+Route::get('/danhsachsanpham/pdf', 'SanphamController@pdf')->name('danhsachsanpham.pdf');
+
 Route::resource('danhsachsanpham', 'SanphamController');

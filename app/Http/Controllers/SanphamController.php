@@ -7,6 +7,10 @@ use App\Sanpham;
 use App\Loai;
 use Session;
 use Storage;
+use App\Exports\SanPhamExport;
+use Maatwebsite\Excel\Facades\Excel as Excel;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class SanphamController extends Controller
 {
@@ -25,6 +29,11 @@ class SanphamController extends Controller
     }
     public function store(Request $request)
     {
+        $validation = $request->validate([
+            'sp_hinh' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
+            'sp_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
+        ]);
+
         $sp = new Sanpham();
         $sp->sp_ten = $request->sp_ten;
         $sp->sp_giaGoc = $request->sp_giaGoc;
@@ -46,6 +55,23 @@ class SanphamController extends Controller
             $file->storeAs('public/photos/' ,$file->getClientOriginalName());
         }
         $sp->save();
+        
+            //lưu hình ảnh liên quan
+            if($request->hasFile('sp_hinhanhlienquan')) {
+                $file = $request->sp_hinhanhlienquan;
+                
+                //duyệt từng ảnh và thực hiện lưu
+                foreach ($request->sp_hinhanhlienquan as $index => $file) {
+                    $file->storeAs('public/photos', $file->getClientOriginalName());
+
+                    //tạo đối tượng HinhAnh
+                    $hinhAnh = new HinhAnh();
+                    $hinhAnh->sp_ma = $sp->sp_ma;
+                    $hinhAnh->ha_stt = ($index +1);
+                    $hinhAnh->ha_ten = $file->getClientOriginalName();
+                    $hinhAnh->save();
+                }
+            }
 
         Session::flash('alert-info', 'Them moi thanh cong!');
         return redirect()->route('danhsachsanpham.index');
@@ -101,4 +127,20 @@ class SanphamController extends Controller
         Session::flash('alert-info', 'Xoa san pham thanh cong!');
         return redirect()->route('danhsachsanpham.index');
     }
+    public function excel() 
+    {
+        return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
+    }
+
+    public function pdf() 
+{
+    $ds_sanpham = Sanpham::all();
+    $ds_loai    = Loai::all();
+    $data = [
+        'danhsachsanpham' => $ds_sanpham,
+        'danhsachloai'    => $ds_loai,
+    ];
+    $pdf = PDF::loadView('sanpham.pdf', $data);
+    return $pdf->download('DanhMucSanPham.pdf');
+}
 }
