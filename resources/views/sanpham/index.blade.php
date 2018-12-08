@@ -10,6 +10,7 @@
 <a href="{{route('danhsachsanpham.create')}}" class="btn btn-primary">Thêm mới</a>
 <a href="{{route('danhsachsanpham.excel')}}" class="btn btn-primary">Xuất Excel</a>
 <a href="{{route('danhsachsanpham.pdf')}}" class="btn btn-primary">Xuất PDF</a>
+<a href="{{route('danhsachsanpham.print')}}" class="btn btn-primary">Print</a>
 </div>
 </br>
 <div class="flash-message">

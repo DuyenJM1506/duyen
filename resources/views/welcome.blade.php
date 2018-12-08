@@ -82,6 +82,7 @@
                     FLOWERS SOUL
                 </div>
 
+                <a href="{{ route('danhsachsanpham.index') }}">Danh sách sản phẩm hoa</a> <br>
                 <a href="{{ route('danhsachloai.index') }}">Danh sách các loại hoa</a> <br>
                 <a href="{{ route('danhsachchude.index') }}">Danh sách các chủ đề hoa</a> <br>
 

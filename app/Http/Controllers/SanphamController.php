@@ -133,14 +133,30 @@ class SanphamController extends Controller
     }
 
     public function pdf() 
-{
-    $ds_sanpham = Sanpham::all();
-    $ds_loai    = Loai::all();
-    $data = [
-        'danhsachsanpham' => $ds_sanpham,
-        'danhsachloai'    => $ds_loai,
-    ];
-    $pdf = PDF::loadView('sanpham.pdf', $data);
-    return $pdf->download('DanhMucSanPham.pdf');
-}
+    {
+        $ds_sanpham = Sanpham::all();
+        $ds_loai    = Loai::all();
+        $data = [
+            'danhsachsanpham' => $ds_sanpham,
+            'danhsachloai'    => $ds_loai,
+        ];
+        $pdf = PDF::loadView('sanpham.pdf', $data);
+        return $pdf->download('DanhMucSanPham.pdf');
+    }
+
+/**
+ * Action hiển thị biểu mẫu xem trước khi in trên Web
+ */
+    public function print()
+    {
+        $ds_sanpham = Sanpham::all();
+        $ds_loai    = Loai::all();
+        $data = [
+            'danhsachsanpham' => $ds_sanpham,
+            'danhsachloai'    => $ds_loai,
+        ];
+        return view('sanpham.print')
+            ->with('danhsachsanpham', $ds_sanpham)
+            ->with('danhsachloai', $ds_loai);
+    }
 }

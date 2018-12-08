@@ -47,5 +47,12 @@ Route::delete('/danhsachloai/{id}', 'LoaiController@destroy')->name('danhsachloa
 //route san pham
 Route::get('/danhsachsanpham/excel', 'SanphamController@excel')->name('danhsachsanpham.excel');
 Route::get('/danhsachsanpham/pdf', 'SanphamController@pdf')->name('danhsachsanpham.pdf');
+Route::get('/admin/danhsachsanpham/print', 'SanphamController@print')->name('danhsachsanpham.print');
+//route loai
+Route::get('/danhsachloai/excel', 'LoaiController@excel')->name('danhsachloai.excel');
+Route::get('/danhsachloai/pdf', 'LoaiController@pdf')->name('danhsachloai.pdf');
+Route::get('/admin/danhsachloai/print', 'LoaiController@print')->name('danhsachloai.print');
 
 Route::resource('danhsachsanpham', 'SanphamController');
+Route::resource('danhsachloai', 'LoaiController');
+Route::get('/', 'FrontendController@index')->name('frontend.home');

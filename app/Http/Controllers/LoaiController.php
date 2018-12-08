@@ -75,4 +75,24 @@ class LoaiController extends Controller
         return redirect()->route('danhsachloai.index');
             
     } 
+
+        /**
+     * Action xuất Excel
+     */
+    public function excel() 
+    {
+        /* Code dành cho việc debug
+        - Khi debug cần hiển thị view để xem trước khi Export Excel
+        */
+        // $ds_sanpham = Sanpham::all();
+        // $ds_loai    = Loai::all();
+        // $data = [
+        //     'danhsachsanpham' => $ds_sanpham,
+        //     'danhsachloai'    => $ds_loai,
+        // ];
+        // return view('sanpham.excel')
+        //     ->with('danhsachsanpham', $ds_sanpham)
+        //     ->with('danhsachloai', $ds_loai);
+        return Excel::download(new LoaiExport, 'danhsachloai.xlsx');
+    }
 }

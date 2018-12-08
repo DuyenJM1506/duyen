@@ -6,8 +6,14 @@
 
 @section('main-content')
 
-<h2>{{Session::get('aaaa')}} Danh sach loai san pham</h2>
-<a href="{{route('danhsachloai.create')}}">Them moi</a>
+<h2>{{Session::get('aaaa')}} DANH SÁCH LOẠI SẢN PHẨM </h2>
+<div>
+    <a href="{{route('danhsachloai.create')}}" class="btn btn-primary">Thêm mới</a> 
+    <a href="{{route('danhsachloai.excel')}}" class="btn btn-primary">Xuất Excel</a> 
+    <a href="{{route('danhsachloai.pdf')}}" class="btn btn-primary">Xuất PDF</a> 
+    <a href="{{route('danhsachloai.print')}}" class="btn btn-primary">Print</a> 
+</div>
+<br/>
 
 <div class="flash-message">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -21,10 +27,10 @@
 <table border = "1">
     <thead>
         <tr>
-            <th>Ma</th>
-            <th>Ten loai</th>
-            <th>Sua</th>
-            <th>Xoa</th>
+            <th>Mã</th>
+            <th>Tên loại</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
         </tr>
     </thead>
     <tbody>
