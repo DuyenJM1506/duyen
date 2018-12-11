@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Loai;
 use DB;
-
+use Mail;
+use App\Mail\ContactMailer;
 
 class FrontendController extends Controller
 {
@@ -43,6 +44,23 @@ private function searchSanPham(Request $request)
     $data = $query->get();
     return $data;
 }
+public function about ()
+    {
+        return view('frontend.pages.about');
+    }
+public function contact ()
+    {
+        return view('frontend.pages.contact');
+    }
+
+public function sendMailContactForm(Request $request)
+    {
+        $input = $request->all();
+        Mail::to('tester.agmk@gmail.com')
+            ->send(new ContactMailer($input));
+        return $input;
+    } 
 }
+
 
 

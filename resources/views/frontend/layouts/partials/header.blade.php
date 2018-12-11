@@ -34,7 +34,7 @@
           <div class="menu-desktop">
             <ul class="main-menu">
               <li class="{{ Request::is('') ? 'active-menu' : '' }}">
-                <a href="">Home</a>
+                <a href="{{ route('frontend.home') }}">Home</a>
               </li>
               <li>
                 <a href="product.html">Shop</a>
@@ -46,10 +46,10 @@
                 <a href="blog.html">Blog</a>
               </li>
               <li class="{{ Request::is('gioi-thieu') ? 'active-menu' : '' }}">
-                <a href="">About</a>
+                <a href="{{ route('frontend.about') }}">About</a>
               </li>
               <li class="{{ Request::is('lien-he') ? 'active-menu' : '' }}">
-                <a href="">Contact</a>
+                <a href="{{ route('frontend.contact') }}">Contact</a>
               </li>
             </ul>
           </div>  
