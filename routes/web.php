@@ -64,3 +64,14 @@ Route::get('/san-pham', 'FrontendController@product')->name('frontend.product');
 Route::get('/gio-hang', 'FrontendController@cart')->name('frontend.cart');
 Route::post('/dat-hang', 'FrontendController@order')->name('frontend.order');
 Route::get('/dat-hang/hoan-tat', 'FrontendController@orderFinish')->name('frontend.orderFinish');
+
+//báo cáo
+Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('baocao.donhang');
+Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
+//languge
+Route::get('setLocale/{locale}', function ($locale) {
+    if (in_array($locale, \Config::get('app.locales'))) {
+      Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('app.setLocale');

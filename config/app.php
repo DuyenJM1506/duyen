@@ -78,8 +78,9 @@ return [
     |
     */
 
-    'locale' => 'en',
-
+    'locale' => 'vi',
+    // Bổ sung thêm danh sách các ngôn ngữ
+    'locales' => ['vi', 'en'],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -91,7 +92,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------

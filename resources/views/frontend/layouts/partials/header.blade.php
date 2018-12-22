@@ -14,8 +14,11 @@
             <a href="#" class="flex-c-m trans-04 p-lr-25">
               My Account
             </a>
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
+            <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="flex-c-m trans-04 p-lr-25">
               EN
+            </a>
+            <a href="{{ route('app.setLocale', ['locale' => 'vi']) }}" class="flex-c-m trans-04 p-lr-25">
+              VI
             </a>
             <a href="#" class="flex-c-m trans-04 p-lr-25">
               USD
@@ -34,22 +37,22 @@
           <div class="menu-desktop">
             <ul class="main-menu">
               <li class="{{ Request::is('') ? 'active-menu' : '' }}">
-                <a href="{{ route('frontend.home') }}">Home</a>
+                <a href="{{ route('frontend.home') }}">{{ __('sunshine.home') }}</a>
               </li>
               <li class="{{ Request::is('san-pham') ? 'active-menu' : '' }}">
-                <a href="{{ route('frontend.product') }}">Sản phẩm</a>
+                <a href="{{ route('frontend.product') }}">{{ __('sunshine.product') }}</a>
               </li>
               <li class="label1" data-label1="hot">
                 <a href="shoping-cart.html">Features</a>
               </li>
               <li class="label1 {{ Request::is('gio-hang') ? 'active-menu' : '' }}" data-label1="hot">
-                <a href="{{ route('frontend.cart') }}">Giỏ hàng</a>
+                <a href="{{ route('frontend.cart') }}">{{ __('sunshine.cart') }}</a>
               </li>
               <li class="{{ Request::is('gioi-thieu') ? 'active-menu' : '' }}">
-                <a href="{{ route('frontend.about') }}">About</a>
+                <a href="{{ route('frontend.about') }}">{{ __('sunshine.about') }}</a>
               </li>
               <li class="{{ Request::is('lien-he') ? 'active-menu' : '' }}">
-                <a href="{{ route('frontend.contact') }}">Contact</a>
+                <a href="{{ route('frontend.contact') }}">{{ __('sunshine.contact') }}</a>
               </li>
             </ul>
           </div>  
