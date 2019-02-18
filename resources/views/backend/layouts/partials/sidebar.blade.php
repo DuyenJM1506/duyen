@@ -1,7 +1,7 @@
 <div class="col-md-4" id="sidebar">
     <ul>
         <li><a href="{{ route('danhsachsanpham.index') }}">Danh sách sản phẩm</a></li>
-        <li><a href="{{ route('danhsachchude.index') }}">Danh sách chủ đề</a></li>
+        <!--<li><a href="{{ route('danhsachchude.index') }}">Danh sách chủ đề</a></li>-->
         <li><a href="{{ route('danhsachloai.index') }}">Danh sách loại sản phẩm</a></li>
     </ul>
 </div>
@@ -12,10 +12,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('theme/adminlte/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+          <img src="{{ asset('theme/adminlte/img/floral-2622309_960_720.jpg') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>A.F</p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -37,14 +37,16 @@
         
         <!-- Danh mục Sản phẩm -->
         <li class="treeview {{ Request::is('admin/danhsachsanpham*') ? 'menu-open' : '' }}">
-          <a href="#"><i class="fa fa-link"></i> <span>Danh mục sản phẩm</span>
+          <a href="#"><i class="fa fa-link"></i> <span>Quản lý sản phẩm</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu" style="display: {{ Request::is('admin/danhsachsanpham*') ? 'block' : 'none' }};">
             <li class="{{ Request::is('admin/danhsachsanpham') ? 'active' : '' }}"><a href="{{ route('danhsachsanpham.index') }}">Danh sách sản phẩm</a></li>
+            <li class="{{ Request::is('admin/danhsachloai') ? 'active' : '' }}"><a href="{{ route('danhsachloai.index') }}">Danh sách loại sản phẩm</a></li>
             <li class="{{ Request::is('admin/danhsachsanpham/create') ? 'active' : '' }}"><a href="{{ route('danhsachsanpham.create') }}">Thêm mới sản phẩm</a></li>
+            <li class="{{ Request::is('admin/danhsachloai/create') ? 'active' : '' }}"><a href="{{ route('danhsachloai.create') }}">Thêm mới loại sản phẩm</a></li>
           </ul>
         </li>
         <!-- /.Danh mục Sản phẩm -->

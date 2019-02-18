@@ -21,7 +21,7 @@
         @endif
     @endforeach
 </div>
-<table border = "2">
+<table border = "1">
     <thead>
         <tr>
             <th>Mã</th>
@@ -29,6 +29,8 @@
             <th>Hình ảnh</th>
             <th>Thuộc loại</th>
             <th>Sửa - Xóa</th>
+            <th>Số lượng ban đầu</th>
+            <th>Số lượng hiện tại</th>
             
         </tr>
     </thead>
@@ -49,6 +51,8 @@
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
                 </td>
+                <td>{{ $sp->sp_soLuongBanDau }}</td>
+                <td>{{ $sp->sp_soLuongHienTai }}</td>
             </tr>
         @endforeach
     </tbody>

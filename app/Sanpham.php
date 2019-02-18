@@ -10,8 +10,9 @@ class Sanpham extends Model
     const UPDATED_AT = 'sp_capNhat';
 
     protected $table = 'sanpham';
-    protected $fillable= ['sp_ten', 'sp_taoMoi', 'sp_capNhat', 'sp_trangThai', 'sp_giaGoc',
-                           'sp_giaBan', 'sp_danhGia', 'sp_thongTin', 'l_ma'];
+    protected $fillable= ['sp_ten', 'sp_taoMoi', 'sp_capNhat', 'sp_giaGoc',
+                           'sp_giaBan', 'sp_moTa', 'sp_soluongBanDau', 'sp_soluongHienTai',
+                           'l_ma'];
     protected $guarded = ['sp_ma'];
     protected $primaryKey = 'sp_ma';
     protected $dates = ['sp_taoMoi', 'sp_capNhat'];

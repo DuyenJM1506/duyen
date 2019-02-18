@@ -28,6 +28,7 @@ class LoaiController extends Controller
         $loai->l_capNhat   = $request->l_capNhat;
         $loai->l_trangThai = $request->l_trangThai;
         $loai->save();
+        return redirect()->route('danhsachloai.index');
 
     }
     public function edit($id){
@@ -94,5 +95,33 @@ class LoaiController extends Controller
         //     ->with('danhsachsanpham', $ds_sanpham)
         //     ->with('danhsachloai', $ds_loai);
         return Excel::download(new LoaiExport, 'danhsachloai.xlsx');
+    }
+
+    public function pdf() 
+    {
+        $ds_sanpham = Sanpham::all();
+        $ds_loai    = Loai::all();
+        $data = [
+            'danhsachsanpham' => $ds_sanpham,
+            'danhsachloai'    => $ds_loai,
+        ];
+        $pdf = PDF::loadView('loai.pdf', $data);
+        return $pdf->download('DanhMucLoai.pdf');
+    }
+
+/**
+ * Action hiển thị biểu mẫu xem trước khi in trên Web
+ */
+    public function print()
+    {
+        $ds_sanpham = Sanpham::all();
+        $ds_loai    = Loai::all();
+        $data = [
+            'danhsachsanpham' => $ds_sanpham,
+            'danhsachloai'    => $ds_loai,
+        ];
+        return view('sanpham.print')
+            ->with('danhsachsanpham', $ds_sanpham)
+            ->with('danhsachloai', $ds_loai);
     }
 }

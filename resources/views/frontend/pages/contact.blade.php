@@ -22,7 +22,7 @@ Liên hệ Shop Hoa tươi - Sunshine
         <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
           <form name="contactForm" ng-submit="submitContactForm()" novalidate>
             <h4 class="mtext-105 cl2 txt-center p-b-30">
-              Gởi lời nhắn cho công ty Sunshine
+              Gởi lời nhắn cho ARMY FASHION Shop
             </h4>
             <!-- Div Thông báo lỗi 
             Chỉ hiển thị khi các validate trong form `contactForm` không hợp lệ => contactForm.$invalid = true
@@ -103,7 +103,7 @@ Liên hệ Shop Hoa tươi - Sunshine
                 Email hỗ trợ
               </span>
               <p class="stext-115 cl1 size-213 p-t-18">
-                nentangtoituonglai@gmail.com
+                nguyenyenduyen1506@gmail.com
               </p>
             </div>
           </div>

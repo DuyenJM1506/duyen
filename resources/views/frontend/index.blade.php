@@ -10,7 +10,7 @@ Shop Hoa tươi - Sunshine
 {{-- Thay thế nội dung vào Placeholder `main-content` của view `frontend.layouts.index` --}}
 @section('main-content')
 <div class="container text-center">
-    <h2>{{ __('sunshine.welcome') }}</h2> <br>
+    <h3>{{ __('ARMY FASHION Shop Welcome') }}</h3> <br>
 </div>
 <!-- Slider -->
 @include('frontend.widgets.homepage-slider')

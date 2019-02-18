@@ -14,11 +14,11 @@
         <table border="0" align="center" cellpadding="5" style="border-collapse: collapse;">
             <tr>
                 <td colspan="6" align="center" style="font-size: 13px;" width="100">
-                    <b>Công ty TNHH Sunshine</b></td>
+                    <b>ARMY FASHION Shop</b></td>
             </tr>
             <tr>
                 <td colspan="6" align="center" style="font-size: 13px">
-                    <b>http://sunshine.com/</b></td>
+                    <b>http://armyfashion.com/</b></td>
             </tr>
             <tr>
                 <td colspan="6" align="center" style="font-size: 13px">
@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td colspan="6" align="center">
-                    <img src="{{ asset('storage/sunshine_wm64.png') }}" /></td>
+                    <img src="{{ asset('storage/ddd.jpg') }}" /></td>
             </tr>
             <tr>
                 <td colspan="6" class="caption" align="center" style="text-align: center; font-size: 20px">

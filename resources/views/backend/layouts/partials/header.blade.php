@@ -4,7 +4,7 @@
             LOGO
         </div>
         <div class="col-md-8" id="company-name">
-            SUNSHINE
+            ARMY FASHION
         </div>
     </div>
 </div>

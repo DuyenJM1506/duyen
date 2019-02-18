@@ -1,7 +1,7 @@
 @extends('backend.layouts.index')
 
 @section('title')
-Create new product
+Thêm mới sản phẩm
 @endsection
 
 @section('custom-css')
@@ -12,7 +12,7 @@ Create new product
 @endsection
 
 @section('main-content')
-<h1>Create new product</h1>
+<h1>Thêm mới sản phẩm</h1>
 <form id="frmThemMoiSP" method="post" action="{{ route('danhsachsanpham.store') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="form-group">
@@ -49,13 +49,13 @@ Create new product
         </div>
     </div>
     <div class="form-group">
-        <label for="sp_thongTin">Thông tin</label>
-            <input type="text" class="form-control" id="sp_thongTin" name="sp_thongTin" placeholder="Thong tin" value="{{ old('sp_thongTin') }}">
+        <label for="sp_soLuongBanDau">Số lượng ban đầu</label>
+            <input type="text" class="form-control" id="sp_soLuongBanDau" name="sp_soLuongBanDau" placeholder="Số lượng sản phẩm ban đầu" value="{{ old('sp_soLuongBanDau') }}">
     </div>
     <div class="form-group">
-        <label for="sp_danhGia">Đánh giá</label>
-            <input type="text" class="form-control" id="sp_danhGia" name="sp_danhGia" placeholder="Danh gia" value="{{ old('sp_danhGia') }}">
-    </div>
+        <label for="sp_danhGia">Số lượng hiện tại</label>
+            <input type="text" class="form-control" id="sp_soLuongHienTai" name="sp_soLuongHienTai" placeholder="Số lượng sản phẩm hiện tại" value="{{ old('sp_soLuongHienTai') }}">
+    </div> 
     <div class="form-group">
         <label for="sp_taoMoi">Ngày tạo mới</label>
             <input type="text" class="form-control" id="sp_taoMoi" name="sp_taoMoi" placeholder="Ngay" value="{{ old('sp_taoMoi') }}">
@@ -114,3 +114,5 @@ Create new product
     });
 </script>
 @endsection
+
+

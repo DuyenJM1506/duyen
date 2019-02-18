@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Loai;
-use App\Mau;
+//use App\Mau;
 use App\Sanpham;
-use App\Vanchuyen;
-use App\Khachhang;
-use App\Donhang;
-use App\Thanhtoan;
-use App\Chitietdonhang;
+//use App\Vanchuyen;
+//use App\Khachhang;
+//use App\Donhang;
+//use App\Thanhtoan;
+//use App\Chitietdonhang;
 use Carbon\Carbon;
 use DB;
 use Mail;
@@ -43,14 +43,14 @@ public function index(Request $request)
     $danhsachloai = Loai::all();
 
      // Query danh sách màu
-    $danhsachmau = Mau::all();
+    //$danhsachmau = Mau::all();
 
     // Hiển thị view `frontend.index` với dữ liệu truyền vào
     return view('frontend.index')
         ->with('ds_top3_newest_loaisanpham', $ds_top3_newest_loaisanpham)
         ->with('danhsachsanpham', $danhsachsanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-        ->with('danhsachmau', $danhsachmau)
+      //  ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
 /**
@@ -99,11 +99,11 @@ public function productDetail(Request $request, $id)
     // Query danh sách Loại
     $danhsachloai = Loai::all();
     // Query danh sách màu
-    $danhsachmau = Mau::all();
+   // $danhsachmau = Mau::all();
     return view('frontend.pages.product-detail')
         ->with('sp', $sanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-        ->with('danhsachmau', $danhsachmau)
+       // ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
     }
 
@@ -121,12 +121,12 @@ public function product(Request $request)
     // Query danh sách Loại
     $danhsachloai = Loai::all();
     // Query danh sách màu
-    $danhsachmau = Mau::all();
+    //$danhsachmau = Mau::all();
     // Hiển thị view `frontend.index` với dữ liệu truyền vào
     return view('frontend.pages.product')
         ->with('danhsachsanpham', $danhsachsanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-        ->with('danhsachmau', $danhsachmau)
+        //->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
 
@@ -136,12 +136,12 @@ public function product(Request $request)
     public function cart(Request $request)
     {
          // Query danh sách hình thức vận chuyển
-    $danhsachvanchuyen = Vanchuyen::all();
+   // $danhsachvanchuyen = Vanchuyen::all();
     // Query danh sách phương thức thanh toán
-    $danhsachphuongthucthanhtoan = Thanhtoan::all();
-    return view('frontend.pages.shopping-cart')
-        ->with('danhsachvanchuyen', $danhsachvanchuyen)
-        ->with('danhsachphuongthucthanhtoan', $danhsachphuongthucthanhtoan);
+    //$danhsachphuongthucthanhtoan = Thanhtoan::all();
+    return view('frontend.pages.shopping-cart');
+       // ->with('danhsachvanchuyen', $danhsachvanchuyen)
+       // ->with('danhsachphuongthucthanhtoan', $danhsachphuongthucthanhtoan);
     }
 
     /**
@@ -155,8 +155,8 @@ public function order(Request $request)
     try {
         // Tạo mới khách hàng
         $khachhang = new Khachhang();
-        $khachhang->kh_taiKhoan = $request->khachhang['kh_taiKhoan'];
-        $khachhang->kh_matKhau = bcrypt('123456');
+       // $khachhang->kh_taiKhoan = $request->khachhang['kh_taiKhoan'];
+        //$khachhang->kh_matKhau = bcrypt('123456');
         $khachhang->kh_hoTen = $request->khachhang['kh_hoTen'];
         $khachhang->kh_gioiTinh = $request->khachhang['kh_gioiTinh'];
         $khachhang->kh_email = $request->khachhang['kh_email'];
@@ -171,7 +171,7 @@ public function order(Request $request)
         $khachhang->save();
         $dataMail['khachhang'] = $khachhang->toArray();
         // Tạo mới đơn hàng
-        $donhang = new Donhang();
+       /* $donhang = new Donhang();
         $donhang->kh_ma = $khachhang->kh_ma;
         $donhang->dh_thoiGianDatHang = Carbon::now();
         $donhang->dh_thoiGianNhanHang = $request->donhang['dh_thoiGianNhanHang'];
@@ -200,7 +200,7 @@ public function order(Request $request)
             $chitietdonhang->save();
             $dataMail['donhang']['chitiet'][] = $chitietdonhang->toArray();
             $dataMail['donhang']['giohang'][] = $sp;
-        }
+        } */
         // Gởi mail khách hàng
         // dd($dataMail);
         Mail::to($khachhang->kh_email)

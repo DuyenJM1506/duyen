@@ -22,8 +22,7 @@ class CreateSanphamTable extends Migration
             $table->unsignedInteger('sp_giaBan')
                 ->default ('0'); 
             $table->string ('sp_hinh', 200);
-            $table->text('sp_thongTin');
-            $table->string ('sp_danhGia', 50);
+           
             $table->timestamp('sp_taoMoi') 
                 ->default (DB::raw ('CURRENT_TIMESTAMP')) 
                 ->comment ('Tạo sản phẩm mới'); 
@@ -36,12 +35,14 @@ class CreateSanphamTable extends Migration
             $table->unsignedTinyInteger ('l_ma')
                 ->comment ('Loại sản phâm');
             $table->unique('sp_ten');
-
+            $table->bigInteger('sp_soLuongBanDau');
+            $table->bigInteger('sp_soLuongHienTai');
             $table->foreign('l_ma')
                 ->references ('l_ma')
                 ->on('loai')
                 ->onDelete('CASCADE')
                 ->onUpdate ('CASCADE');
+
         });
     }
 

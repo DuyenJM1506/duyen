@@ -16,7 +16,7 @@
     </div>
 @endif
 
-<form method="post" action="{{ route('danhsachloai.update', ['id' => $loai->l_ma]) }}">
+<form method="post" action="{{ route('danhsachloai.update', ['id' => $loai->l_ma]) }}"enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT"/>
 
     {{ csrf_field() }}

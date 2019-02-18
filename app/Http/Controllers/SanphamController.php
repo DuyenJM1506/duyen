@@ -38,8 +38,8 @@ class SanphamController extends Controller
         $sp->sp_ten = $request->sp_ten;
         $sp->sp_giaGoc = $request->sp_giaGoc;
         $sp->sp_giaBan = $request->sp_giaBan;
-        $sp->sp_thongTin = $request->sp_thongTin;
-        $sp->sp_danhGia = $request->sp_danhGia;
+        $sp->sp_soLuongBanDau = $request->sp_soLuongBanDau;
+        $sp->sp_soLuongHienTai= $request->sp_soLuongHienTai;
         $sp->sp_taoMoi = $request->sp_taoMoi;
         $sp->sp_capNhat = $request->sp_capNhat;
         $sp->sp_trangThai = $request->sp_trangThai;
@@ -52,7 +52,7 @@ class SanphamController extends Controller
             $sp->sp_hinh = $file->getClientOriginalName();
 
             //chép file vào thư mục"photos"
-            $file->storeAs('public/photos/' ,$file->getClientOriginalName());
+            $file->storeAs('public/storage/photos/' , $file->getClientOriginalName());
         }
         $sp->save();
         
@@ -62,7 +62,7 @@ class SanphamController extends Controller
                 
                 //duyệt từng ảnh và thực hiện lưu
                 foreach ($request->sp_hinhanhlienquan as $index => $file) {
-                    $file->storeAs('public/photos', $file->getClientOriginalName());
+                    $file->storeAs('public/storage/photos/', $file->getClientOriginalName());
 
                     //tạo đối tượng HinhAnh
                     $hinhAnh = new HinhAnh();
@@ -90,8 +90,8 @@ class SanphamController extends Controller
         $sp->sp_ten = $request->sp_ten;
         $sp->sp_giaGoc = $request->sp_giaGoc;
         $sp->sp_giaBan = $request->sp_giaBan;
-        $sp->sp_thongTin = $request->sp_thongTin;
-        $sp->sp_danhGia = $request->sp_danhGia;
+        $sp->sp_soLuongBanDau = $request->sp_soLuongBanDau;
+        $sp->sp_soLuongHienTai = $request->sp_soLuongHienTai;
         $sp->sp_taoMoi = $request->sp_taoMoi;
         $sp->sp_capNhat = $request->sp_capNhat;
         $sp->sp_trangThai = $request->sp_trangThai;
@@ -100,14 +100,14 @@ class SanphamController extends Controller
         if($request->hasFile('sp_hinh'))
         {
             //Xóa hình cũ để tránh rác
-            Storage::delete('public/photos/' .$sp->sp_hinh);
+            Storage::delete('public/storage/photos/' .$sp->sp_hinh);
             //Upload hình mới 
             $file = $request->sp_hinh;
             //lưu tên hình vào column sp_hinh
             $sp->sp_hinh = $file->getClientOriginalName();
 
             //chép file vào thư mục"photos"
-            $fileSaved = $file->storeAs('public/photos/', $sp->sp_hinh);
+            $fileSaved = $file->storeAs('public/storage/photos/'. $sp->sp_hinh);
         }
         $sp->save();
 
@@ -120,7 +120,7 @@ class SanphamController extends Controller
         if(empty($sp) == false)
         {
              //Xóa hình cũ để tránh rác
-             Storage::delete('public/photos/' .$sp->sp_hinh);
+             Storage::delete('public/storage/photos/' .$sp->sp_hinh);
         }
         $sp->delete();
 
@@ -129,6 +129,18 @@ class SanphamController extends Controller
     }
     public function excel() 
     {
+       /* Code dành cho việc debug
+        - Khi debug cần hiển thị view để xem trước khi Export Excel
+       
+         $ds_sanpham = Sanpham::all();
+         $ds_loai    = Loai::all();
+         $data = [
+             'danhsachsanpham' => $ds_sanpham,
+             'danhsachloai'    => $ds_loai,
+         ];
+         $xlsx = Excel::loadView('sanpham.excel', $data);
+         return $xlsx->download('Danhsachsanpham.xlsx');  */
+        
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }
 

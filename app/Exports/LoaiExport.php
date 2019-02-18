@@ -35,7 +35,7 @@ class LoaiExport implements FromView, WithDrawings, WithEvents, ShouldAutoSize
         $drawingLogo = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawingLogo->setName('Logo');
         $drawingLogo->setDescription('Logo');
-        $drawingLogo->setPath(public_path('storage/storage/sunshine_wm64.png'));
+        $drawingLogo->setPath(public_path('storage/storage/ddd.jpg'));
         $drawingLogo->setHeight(90);
         $drawingLogo->setCoordinates('C4');
         $offsetX = 40; //pixels
@@ -48,9 +48,9 @@ class LoaiExport implements FromView, WithDrawings, WithEvents, ShouldAutoSize
         foreach($ds_loai as $index=>$loai)
         {
             $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-            $drawing->setName($loai->loai_ten);
-            $drawing->setDescription($loai->loai_thongTin);
-          // $drawing->setPath(public_path('storage/photos/' . $sp->sp_hinh));
+            $drawing->setName($loai->l_ten);
+           // $drawing->setDescription($loai->loai_thongTin);
+            $drawing->setPath(public_path('storage/photos/' . $sp->sp_hinh));
             $drawing->setHeight(40);
             $drawing->setWidth(40);
             $drawing->setCoordinates('B' . ($startRow + $index));

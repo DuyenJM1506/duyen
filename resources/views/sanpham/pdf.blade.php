@@ -40,13 +40,13 @@
         <table border="0" align="center">
             <tr>
                 <td class="companyInfo">
-                    Công ty TNHH Sunshine<br />
-                    http://sunshine.com/<br />
+                    ARMY FASHION Shop<br />
+                    http://armyfashion.com/<br />
                     (0292)3.888.999 # 01.222.888.999<br />
-                    <img src="{{ asset('storage/storage/sunshine_wm64.png') }}" />
+                    <img src="{{ asset('storage/storage/ddd.jpg') }}" wight="50px" height="50px" />
                 </td>
-            </tr>
-        </table>
+            </tr> <!--public/storage/photos/floral-2622309_960_720.jpg-->
+        </table> <!--storage/storage/sunshine_wm64.png-->
         <br />
         <br />
         <?php 

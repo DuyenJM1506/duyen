@@ -66,9 +66,9 @@ desired effect
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>A</b>F</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>Admin </b>A.F</span>
     </a>
 
     <!-- Header Navbar -->
@@ -183,7 +183,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="{{ asset('theme/adminlte/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">Duyen & Chau</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -191,15 +191,15 @@ desired effect
                 <img src="{{ asset('theme/adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  ARMY FASHION
+                  <small>Since 2019</small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#">Clothes</a>
                   </div>
                   <div class="col-xs-4 text-center">
                     <a href="#">Sales</a>
@@ -236,7 +236,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Flowers Soul
+        ARMY Fashion
         <small>Management</small>
       </h1>
       <ol class="breadcrumb">
@@ -261,10 +261,10 @@ desired effect
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      Love yourself
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2019 <a href="#">A.F</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

@@ -58,12 +58,12 @@ Hiệu chỉnh sản phẩm
         </div>
     </div>
     <div class="form-group">
-        <label for="sp_thongTin">Thông tin</label>
-            <input type="text" class="form-control" id="sp_thongTin" name="sp_thongTin" placeholder="Thong tin" value="{{ $sp->sp_thongTin }}">
+        <label for="sp_soLuongBanDau">Số lượng ban đầu</label>
+            <input type="text" class="form-control" id="sp_soLuongBanDau" name="sp_soLuongBanDau" placeholder="So luong ban dau" value="{{ $sp->sp_soLuongBanDau }}">
     </div>
     <div class="form-group">
-        <label for="sp_danhGia">Đánh giá</label>
-            <input type="text" class="form-control" id="sp_danhGia" name="sp_danhGia" placeholder="Danh gia" value="{{ $sp->sp_danhGia }}">
+        <label for="sp_danhGia">Số lượng hiện tại</label>
+            <input type="text" class="form-control" id="sp_soLuongHienTai" name="sp_soLuongHienTai" placeholder="So luong hien tai" value="{{ $sp->sp_soLuongHienTai }}">
     </div>
     <div class="form-group">
         <label for="sp_taoMoi">Ngày tạo mới</label>

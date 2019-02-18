@@ -20,13 +20,7 @@ class CreateKhachhangTable extends Migration
                 ->autoIncrement()
                 ->comment('Ma khach hang');
 
-            $table->string('kh_taiKhoan',50)
-                ->comment('Tai khoan khach hang');
-
-            $table->string('kh_matKhau',32)
-                ->comment('Mat khau khach hang');
-
-            $table->string('kh_hoTen',100)
+            $table->string('kh_hoTen',191)
                 ->comment('Ho ten khach hang');
 
             $table->unsignedInteger('kh_gioiTinh')
@@ -40,12 +34,12 @@ class CreateKhachhangTable extends Migration
                 ->default(DB::raw('CURRENT_TIMESTAMP'))
                 ->comment('Ngay sinh khach hang');
 
-            $table->string('kh_diaChi',250)
+            $table->string('kh_diaChi',500)
                 ->nullable()
                 ->default('NULL')
                 ->comment('Dia chi khach hang');
 
-            $table->string('kh_dienThoai',11)
+            $table->string('kh_dienThoai',10)
                 ->nullable()
                 ->default('NULL')
                 ->comment('Dien thoai khach hang');
@@ -61,7 +55,6 @@ class CreateKhachhangTable extends Migration
             $table->unsignedTinyInteger('kh_trangThai')
                 ->default('3');
             
-            $table->unique('kh_taiKhoan');
             $table->unique('kh_ngaySinh');
             $table->unique('kh_dienThoai');
         });
