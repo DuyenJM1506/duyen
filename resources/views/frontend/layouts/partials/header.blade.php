@@ -11,7 +11,7 @@
             <a href="#" class="flex-c-m trans-04 p-lr-25">
               Giúp đỡ
             </a>
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
+            <a href="{{ route('frontend.login') }}" class="flex-c-m trans-04 p-lr-25">
               Tài khoản của bạn
             </a>
             <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="flex-c-m trans-04 p-lr-25">
@@ -31,7 +31,7 @@
           
           <!-- Logo desktop -->    
           <a href="" class="logo">
-            <img src="{{ asset('theme/cozastore/images/icons/logo-01.png') }}" alt="IMG-LOGO">
+            <img src="{{ asset('theme/cozastore/images/icons/logoAF2.png') }}" alt="IMG-LOGO">
           </a>
           <!-- Menu desktop -->
           <div class="menu-desktop">

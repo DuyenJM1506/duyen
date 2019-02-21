@@ -75,3 +75,9 @@ Route::get('setLocale/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('app.setLocale');
+
+//regrister&login
+Route::get('login','DangnhapAdController@getLogin')->name('frontend.login');
+
+Route::resource('dangky', 'DangkyController');
+Route::post('/dangky/loginUser','DangkyController@loginUser')->name('frontend.dangky');//dùng post đăng nhập

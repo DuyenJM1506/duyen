@@ -4,6 +4,7 @@
 Thêm mới sản phẩm
 @endsection
 
+
 @section('custom-css')
 <!--Cac cssdanh rieng cho thu vien bootstrap-fileinput-->
 <link href="{{ asset('vendor/bootstrap-fileinput/css/fileinput.css') }}" rel="stylesheet" media="all" type="text/css">

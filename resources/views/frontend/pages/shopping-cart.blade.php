@@ -26,13 +26,7 @@ Giỏ hàng ARMY FASHION Shop
                         <!-- Thông báo lỗi kh_email -->
                         <li><span class="error" ng-show="orderForm.kh_email.$error.required">Vui lòng nhập email</span></li>
                         <li><span class="error" ng-show="!orderForm.kh_email.$error.required && orderForm.kh_email.$error.pattern">Chỉ chấp nhập GMAIL, vui lòng kiểm tra lại</span></li>
-                       <!-- Thông báo lỗi kh_taiKhoan -->
-                        <!--
-                        <li><span class="error" ng-show="orderForm.kh_taiKhoan.$error.required">Vui lòng nhập tên tài khoản</span></li>
-                        <li><span class="error" ng-show="orderForm.kh_taiKhoan.$error.minlength">Tên tài khoản phải > 6 ký tự</span></li>
-                        <li><span class="error" ng-show="orderForm.kh_taiKhoan.$error.maxlength">Tên tài khoản phải <= 50 ký tự</span></li>
-                        -->
-                        <!-- Thông báo lỗi kh_hoTen -->
+                     
                         <li><span class="error" ng-show="orderForm.kh_hoTen.$error.required">Vui lòng nhập Họ tên</span></li>
                         <li><span class="error" ng-show="orderForm.kh_hoTen.$error.minlength">Họ tên phải > 6 ký tự</span></li>
                         <li><span class="error" ng-show="orderForm.kh_hoTen.$error.maxlength">Họ tên phải <= 100 ký tự</span></li>
@@ -48,10 +42,7 @@ Giỏ hàng ARMY FASHION Shop
                         <li><span class="error" ng-show="orderForm.kh_dienThoai.$error.maxlength">Điện thoại phải <= 11 ký tự</span></li>
                     </li>
                 </div>
-              <!--  <div class="form-group">
-                    <label for="kh_taiKhoan">Tài khoản:</label>
-                    <input type="text" class="form-control" id="kh_taiKhoan" name="kh_taiKhoan" ng-model="kh_taiKhoan" ng-minlength="6" ng-maxlength="50" ng-required=true>
-                </div>-->
+              
                 <div class="form-group">
                     <label for="kh_hoTen">Họ tên:</label>
                     <input type="text" class="form-control" id="kh_hoTen" name="kh_hoTen" ng-model="kh_hoTen" ng-minlength="6" ng-maxlength="100" ng-required=true>
@@ -104,11 +95,6 @@ Giỏ hàng ARMY FASHION Shop
                         <li><span class="error" ng-show="orderForm.dh_dienThoai.$error.minlength">Điện thoại phải > 6 ký tự</span></li>
                         <li><span class="error" ng-show="orderForm.dh_dienThoai.$error.maxlength">Điện thoại phải <= 11 ký tự</span></li>
                       
-                        <!-- Thông báo lỗi vc_ma -->
-                      <!--  <li><span class="error" ng-show="orderForm.vc_ma.$error.required">Vui lòng chọn Hình thức vận chuyển</span></li> -->
-                        
-                        <!-- Thông báo lỗi tt_ma -->
-                       <!-- <li><span class="error" ng-show="orderForm.tt_ma.$error.required">Vui lòng chọn Phương thức thanh toán</span></li> -->
                     </li>
                 </div>
                 <div class="form-group">
@@ -173,8 +159,7 @@ Giỏ hàng ARMY FASHION Shop
                     "dh_diaChi": $scope.orderForm.dh_diaChi.$viewValue,
                     "dh_dienThoai": $scope.orderForm.dh_dienThoai.$viewValue,
                   
-                  //  "vc_ma": $scope.orderForm.vc_ma.$viewValue,
-                   // "tt_ma": $scope.orderForm.tt_ma.$viewValue,
+                  
                 };
                 var dataCart = ngCart.getCart();
         var dataInputOrderForm = {
@@ -208,19 +193,3 @@ Giỏ hàng ARMY FASHION Shop
   });
 </script>
 @endsection
-<!--\   <div class="form-group">
-                    <label for="vc_ma">Hình thức vận chuyển:</label>
-                    <select name="vc_ma" id="vc_ma" class="form-control" ng-model="vc_ma" ng-required=true>
-                        @foreach($danhsachvanchuyen as $vc)
-                        <option value="{{ $vc->vc_ma }}">{{ $vc->vc_ten }} ({{ $vc->vc_chiPhi }} đ)</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tt_ma">Phương thức thanh toán:</label>
-                    <select name="tt_ma" id="tt_ma" class="form-control" ng-model="tt_ma" ng-required=true>
-                        @foreach($danhsachphuongthucthanhtoan as $tt)
-                        <option value="{{ $tt->tt_ma }}">{{ $tt->tt_ten }}</option>
-                        @endforeach
-                    </select>
-                </div> -->
