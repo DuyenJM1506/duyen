@@ -5,7 +5,7 @@
       <div class="top-bar">
         <div class="content-topbar flex-sb-m h-full container">
           <div class="left-top-bar">
-            Miễn phí ship với hóa đơn trên 500.000 VNĐ
+            Miễn phí ship với hóa đơn trên 500.000VNĐ
           </div>
           <div class="right-top-bar flex-w h-full">
            
@@ -14,22 +14,9 @@
               Tài khoản của bạn
             </a>
             @else
-            <div>
-              <ul class="standard_dropdown top_bar_dropdown">
-                <li>
-                  <a href="{{ route('frontend.login') }}" class="flex-c-m trans-04 p-lr-25">
-                        Chào  {{ Auth::user()->name }}
-                  </a>
-                  <ul>
-                    <li><a href="{{ route('capnhattaikhoan')}}">Cập nhật tài khoản</a> </li>
-                    <li><a href="{{ route('capnhatmatkhau')}}">Đổi mật khẩu</a> </li>
-                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">Đăng xuất</a> </li>
-                  </ul>
-                </li>
-                 
-              </ul>
-            </div>
+            <a href="{{ route('frontend.login') }}" class="flex-c-m trans-04 p-lr-25">
+              Chào  {{ Auth::user()->name }}
+            </a>
             @endif
             <a href="#" class="flex-c-m trans-04 p-lr-25">
               Đăng xuất
