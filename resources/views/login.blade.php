@@ -34,14 +34,12 @@
 		</button>
 	</div>
 @endif
-<div class="container" style="margin-top: 10%; margin-bottom: 10%"  
-
->
+<div class="container" style="margin-top: 50px; margin-bottom: 50px" >
 	<div class="row">
 		<div class="col-sm-6 col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form role="form" action="{{ url('/login') }}" method="POST">
+					<form role="form" action="{{ route('kiemtradangnhap') }}" method="POST">
 						{!! csrf_field() !!}
 						<fieldset>
 							<div class="row">
@@ -60,15 +58,15 @@
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											<input class="form-control" placeholder="Mật khẩu" name="password" type="password" value="">
+											<input class="form-control" placeholder="Mật khẩu" name="password" type="password" value="{{ old('password') }}">
 										</div>
 									</div>
 									<div class="form-group">
 										<input type="submit" class="btn btn-lg btn-primary btn-block" value="Đăng nhập">
 									</div>
 									<div class="login-help">
-										<a href="/{{ url('/register') }}" >Đăng ký</a> - <a href="#" >Quên mật khẩu</a>
-									</div>
+										<a href="{{ asset('/dangky') }}"><font style="color: white">Đăng ký</font></a> - <a href="#" ><font style="color: white">Quên mật khẩu</font></a>
+									</div> 
 								</div>
 							</div>
 						</fieldset>

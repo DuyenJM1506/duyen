@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sunshineApp">
+<html lang="en" >
 <head>
   <title>@yield('title')</title>
   <meta charset="UTF-8">

@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 /*
 use App\Loai;
 Route::get('/danhsachloai', function() {
@@ -35,6 +35,7 @@ Route::get('/danhsachchude', function() {
     return $json;
 });
 */
+Auth::routes();
 Route::get('/danhsachloai', 'LoaiController@index')->name('danhsachloai.index');
 Route::get('/danhsachloai/create', 'LoaiController@create')->name('danhsachloai.create');
 Route::post('/danhsachloai/store', 'LoaiController@store')->name('danhsachloai.store');
@@ -61,10 +62,6 @@ Route::get('/lien-he', 'FrontendController@contact')->name('frontend.contact');
 Route::post('/lien-he/goi-loi-nhan', 'FrontendController@sendMailContactForm')->name('frontend.contact.sendMailContactForm');
 Route::get('/san-pham/{id}', 'FrontendController@productDetail')->name('frontend.productDetail');
 Route::get('/san-pham', 'FrontendController@product')->name('frontend.product');
-Route::get('/gio-hang', 'FrontendController@cart')->name('frontend.cart');
-Route::post('/dat-hang', 'FrontendController@order')->name('frontend.order');
-Route::get('/dat-hang/hoan-tat', 'FrontendController@orderFinish')->name('frontend.orderFinish');
-
 //báo cáo
 Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('baocao.donhang');
 Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
@@ -78,6 +75,12 @@ Route::get('setLocale/{locale}', function ($locale) {
 
 //regrister&login
 Route::get('login','DangnhapAdController@getLogin')->name('frontend.login');
+Route::post('/kiem-tra-dang-nhap-admin', 'DangnhapAdController@postLogin')->name('kiemtradangnhapadmin');
+Route::get('/admin/login', 'BackendController@login');
+Route::get('/admin', 'BackendController@login');
+Route::get('/admin/dang-nhap', 'BackendController@logout')->name('dangxuatam');
 
-Route::resource('dangky', 'DangkyController');
-Route::post('/dangky/loginUser','DangkyController@loginUser')->name('frontend.dangky');//dùng post đăng nhập
+Route::get('/dangky', 'FrontendController@dangky')->name('frontend.dangky');
+Route::get('register','RegisterController@register')->name('frontend.register');
+Route::post('/kiem-tra-dang-nhap', 'FrontendController@checkLogin')->name('kiemtradangnhap');
+Route::get('/gh', 'CartController@index')->name('gh');

@@ -7,16 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Loai;
 //use App\Mau;
 use App\Sanpham;
-//use App\Vanchuyen;
-//use App\Khachhang;
-//use App\Donhang;
-//use App\Thanhtoan;
-//use App\Chitietdonhang;
+use App\Vanchuyen;
+use App\Khachhang;
+use App\Donhang;
+use App\Thanhtoan;
+use App\Chitietdonhang;
 use Carbon\Carbon;
 use DB;
 use Mail;
 use App\Mail\ContactMailer;
 use App\Mail\OrderMailer;
+
+use App\Http\Requests;
+use Validator;
+use Auth;
+use Illuminate\Support\MessageBag;
 
 class FrontendController extends Controller
 {
@@ -89,7 +94,7 @@ public function sendMailContactForm(Request $request)
 /**
  * Action hiển thị chi tiết Sản phẩm
  */
-public function productDetail(Request $request, $id)
+public function chitietsanpham(Request $request, $id)
     {
     $sanpham = Sanpham::find($id);
     // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
@@ -135,13 +140,13 @@ public function product(Request $request)
  */
     public function cart(Request $request)
     {
-         // Query danh sách hình thức vận chuyển
-   // $danhsachvanchuyen = Vanchuyen::all();
-    // Query danh sách phương thức thanh toán
-    //$danhsachphuongthucthanhtoan = Thanhtoan::all();
-    return view('frontend.pages.shopping-cart');
-       // ->with('danhsachvanchuyen', $danhsachvanchuyen)
-       // ->with('danhsachphuongthucthanhtoan', $danhsachphuongthucthanhtoan);
+         //Query danh sách hình thức vận chuyển
+    $vanchuyen = Vanchuyen::all();
+     //Query danh sách phương thức thanh toán
+    $thanhtoan = Thanhtoan::all();
+    return view('frontend.cart')
+         ->with('vanchuyen', $vanchuyen)
+         ->with('thanhtoan', $thanhtoan);
     }
 
     /**
@@ -155,8 +160,6 @@ public function order(Request $request)
     try {
         // Tạo mới khách hàng
         $khachhang = new Khachhang();
-       // $khachhang->kh_taiKhoan = $request->khachhang['kh_taiKhoan'];
-        //$khachhang->kh_matKhau = bcrypt('123456');
         $khachhang->kh_hoTen = $request->khachhang['kh_hoTen'];
         $khachhang->kh_gioiTinh = $request->khachhang['kh_gioiTinh'];
         $khachhang->kh_email = $request->khachhang['kh_email'];
@@ -171,15 +174,13 @@ public function order(Request $request)
         $khachhang->save();
         $dataMail['khachhang'] = $khachhang->toArray();
         // Tạo mới đơn hàng
-       /* $donhang = new Donhang();
+        $donhang = new Donhang();
         $donhang->kh_ma = $khachhang->kh_ma;
         $donhang->dh_thoiGianDatHang = Carbon::now();
         $donhang->dh_thoiGianNhanHang = $request->donhang['dh_thoiGianNhanHang'];
         $donhang->dh_nguoiNhan = $request->donhang['dh_nguoiNhan'];
         $donhang->dh_diaChi = $request->donhang['dh_diaChi'];
         $donhang->dh_dienThoai = $request->donhang['dh_dienThoai'];
-        $donhang->dh_nguoiGui = $request->donhang['dh_nguoiGui'];
-        $donhang->dh_loiChuc = $request->donhang['dh_loiChuc'];
         $donhang->dh_daThanhToan = 0; //Chưa thanh toán
         $donhang->nv_xuLy = 1; //Mặc định nhân viên đầu tiên
         $donhang->nv_giaoHang = 1; //Mặc định nhân viên đầu tiên
@@ -195,12 +196,12 @@ public function order(Request $request)
             $chitietdonhang->dh_ma = $donhang->dh_ma;
             $chitietdonhang->sp_ma = $sp['_id'];
             $chitietdonhang->m_ma = 1;
-            $chitietdonhang->ctdh_soLuong = $sp['_quantity'];
-            $chitietdonhang->ctdh_donGia = $sp['_price'];
+            $chitietdonhang->dhsp_soLuong = $sp['_quantity'];
+            $chitietdonhang->dhsp_donGia = $sp['_price'];
             $chitietdonhang->save();
             $dataMail['donhang']['chitiet'][] = $chitietdonhang->toArray();
             $dataMail['donhang']['giohang'][] = $sp;
-        } */
+        }
         // Gởi mail khách hàng
         // dd($dataMail);
         Mail::to($khachhang->kh_email)
@@ -229,6 +230,36 @@ public function orderFinish()
 {
     return view('frontend.pages.order-finish');
 }
+
+    public function dangky()
+    {
+        return view('dangky');
+    }
+    public function checkLogin(Request $request) {
+    	$rules = [
+    		'password' => 'required|min:5'
+    	];
+    	$messages = [
+    		'password.required' => 'Mật khẩu là trường bắt buộc',
+    		'password.min' => 'Mật khẩu phải chứa ít nhất 5 ký tự',
+    	];
+    	$validator = Validator::make($request->all(), $rules, $messages);
+
+    	if ($validator->fails()) {
+    		return redirect()->back()->withErrors($validator)->withInput();
+    	} else {
+    		$username = $request->input('username');
+    		$password = $request->input('password');
+
+    		if( Auth::attempt(['username' => $username, 'password' =>$password])) {
+    			return redirect()->intended('/');
+    		} else {
+    			$errors = new MessageBag(['errorlogin' => ' hoặc mật khẩu không đúng']);
+    			return redirect()->back()->withInput()->withErrors($errors);
+    		}
+    	}
+    }
+
 }
 
 
