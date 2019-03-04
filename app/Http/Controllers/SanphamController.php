@@ -30,8 +30,7 @@ class SanphamController extends Controller
     public function store(Request $request)
     {
         $validation = $request->validate([
-            'sp_hinh' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
-            'sp_hinhanhlienquan.*' => 'file|image|mimes:jpeg,png,gif,webp|max:2048'
+            'sp_hinh' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
         ]);
 
         $sp = new Sanpham();

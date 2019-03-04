@@ -18,9 +18,12 @@
               Chào  {{ Auth::user()->name }}
             </a>
             @endif
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
-              Đăng xuất
+            <!-- <a href="#" class="flex-c-m trans-04 p-lr-25"> -->
+            <a class="flex-c-m trans-04 p-lr-25" href="{{ route('logout') }}" onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();">Đăng xuất
             </a>
+             <!-- Đăng xuất
+            </a> -->
             <a href="{{ route('app.setLocale', ['locale' => 'en']) }}" class="flex-c-m trans-04 p-lr-25">
               EN
             </a>
@@ -35,7 +38,7 @@
           
           <!-- Logo desktop -->    
           <a href="" class="logo">
-            <img src="{{ asset('theme/cozastore/images/icons/logoAF2.png') }}" alt="IMG-LOGO">
+            <img src="{{ asset('theme/cozastore/images/icons/logoAF22.png') }}" alt="IMG-LOGO">
           </a>
           <!-- Menu desktop -->
           <div class="menu-desktop">

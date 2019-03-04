@@ -2,7 +2,7 @@
 @extends('frontend.layouts.index')
 {{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.index` --}}
 @section('title')
-Shop Hoa tươi - Sunshine
+ARMY FASHION Shop
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.index` --}}
 @section('custom-css')

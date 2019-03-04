@@ -259,6 +259,10 @@ public function orderFinish()
     		}
     	}
     }
+    public function getLogout() {
+        Auth::logout();
+        return redirect()->intended('/');
+     }
 
 }
 

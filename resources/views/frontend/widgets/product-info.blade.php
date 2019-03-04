@@ -46,15 +46,15 @@
             <a href="{{ route('frontend.productDetail', ['id' => $sp->sp_ma]) }}">{{ $sp->sp_ten }}</a>
           </h4>
           <span class="mtext-106 cl2">
-            {{ $sp->sp_giaBan }}
+            <span class="stext-102 cl3 p-t-23">Giá: </span>{{ $sp->sp_giaBan }}
           </span>
-           <p class="stext-102 cl3 p-t-23">
-            {{ $sp->sp_soLuongHienTai }}
+           <p class="mtext-106 cl2">
+           <span class="stext-102 cl3 p-t-23">Số lượng sản phẩm: </span> {{ $sp->sp_soLuongHienTai }}
           </p>
-       
+       </br>
             <div class="flex-w flex-r-m p-b-10">
               <div class="size-204 flex-w flex-m respon6-next">
-                <ngcart-addtocart template-url="{{ asset('vendor/ngCart/template/ngCart/addtocart.html') }}" 
+                <ngcart-addtocart template-url="#" 
                   id="{{ $sp->sp_ma }}" 
                   name="{{ $sp->sp_ten }}" 
                   price="{{ $sp->sp_giaBan }}" 
@@ -67,9 +67,7 @@
           <!--  -->
           <div class="flex-w flex-m p-l-100 p-t-40 respon7">
             <div class="flex-m bor9 p-r-10 m-r-11">
-              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-                <i class="zmdi zmdi-favorite"></i>
-              </a>
+             
             </div>
             <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
               <i class="fa fa-facebook"></i>

@@ -84,3 +84,5 @@ Route::get('/dangky', 'FrontendController@dangky')->name('frontend.dangky');
 Route::get('register','RegisterController@register')->name('frontend.register');
 Route::post('/kiem-tra-dang-nhap', 'FrontendController@checkLogin')->name('kiemtradangnhap');
 Route::get('/gh', 'CartController@index')->name('gh');
+//log out
+Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
