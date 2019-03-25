@@ -68,7 +68,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>F</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin </b>A.F</span>
+      <span class="logo-lg"><b>A.F </b>Shop</span>
     </a>
 
     <!-- Header Navbar -->
@@ -181,7 +181,7 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="{{ asset('theme/adminlte/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+              <img src="{{ asset('theme/adminlte/dist/img/dc.jpg') }}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">Duyen & Chau</span>
             </a>
@@ -232,10 +232,10 @@ desired effect
   <!-- Left side column. contains the logo and sidebar -->
   @include('backend.layouts.partials/sidebar')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
+    <section class="content-header" >
+      <h1 >
         ARMY Fashion
         <small>Management</small>
       </h1>

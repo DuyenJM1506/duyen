@@ -26,6 +26,14 @@ class SanphamController extends Controller
         $ds_loai = Loai::all();
         return view('sanpham.create')
             ->with('danhsachloai', $ds_loai);
+
+        $ds_mau = Mau::all();
+        return view('sanpham.create')
+            ->with('danhsachmau', $ds_mau);
+
+        $ds_xuatxu = Xuatxu::all();
+        return view('sanpham.create')
+            ->with('danhsachxuatxu', $ds_xuatxu);
     }
     public function store(Request $request)
     {
@@ -43,6 +51,8 @@ class SanphamController extends Controller
         $sp->sp_capNhat = $request->sp_capNhat;
         $sp->sp_trangThai = $request->sp_trangThai;
         $sp->l_ma = $request->l_ma;
+        $sp->m_ma = $request->m_ma;
+        $sp->xx_ma = $request->xx_ma;
 
         if($request->hasFile('sp_hinh'));
         {
@@ -51,7 +61,7 @@ class SanphamController extends Controller
             $sp->sp_hinh = $file->getClientOriginalName();
 
             //chép file vào thư mục"photos"
-            $file->storeAs('public/storage/photos/' , $file->getClientOriginalName());
+            $file->storeAs('storage/photos/' , $file->getClientOriginalName());
         }
         $sp->save();
         
@@ -61,7 +71,7 @@ class SanphamController extends Controller
                 
                 //duyệt từng ảnh và thực hiện lưu
                 foreach ($request->sp_hinhanhlienquan as $index => $file) {
-                    $file->storeAs('public/storage/photos/', $file->getClientOriginalName());
+                    $file->storeAs('storage/photos/', $file->getClientOriginalName());
 
                     //tạo đối tượng HinhAnh
                     $hinhAnh = new HinhAnh();
@@ -95,18 +105,20 @@ class SanphamController extends Controller
         $sp->sp_capNhat = $request->sp_capNhat;
         $sp->sp_trangThai = $request->sp_trangThai;
         $sp->l_ma = $request->l_ma;
+        $sp->m_ma = $request->m_ma;
+        $sp->xx_ma = $request->xx_ma;
 
         if($request->hasFile('sp_hinh'))
         {
             //Xóa hình cũ để tránh rác
-            Storage::delete('public/storage/photos/' .$sp->sp_hinh);
+            Storage::delete('storage/photos/' .$sp->sp_hinh);
             //Upload hình mới 
             $file = $request->sp_hinh;
             //lưu tên hình vào column sp_hinh
             $sp->sp_hinh = $file->getClientOriginalName();
 
             //chép file vào thư mục"photos"
-            $fileSaved = $file->storeAs('public/storage/photos/'. $sp->sp_hinh);
+            $fileSaved = $file->storeAs('storage/photos/', $sp->sp_hinh);
         }
         $sp->save();
 
@@ -119,7 +131,7 @@ class SanphamController extends Controller
         if(empty($sp) == false)
         {
              //Xóa hình cũ để tránh rác
-             Storage::delete('public/storage/photos/' .$sp->sp_hinh);
+             Storage::delete('storage/photos/' .$sp->sp_hinh);
         }
         $sp->delete();
 
@@ -128,17 +140,6 @@ class SanphamController extends Controller
     }
     public function excel() 
     {
-       /* Code dành cho việc debug
-        - Khi debug cần hiển thị view để xem trước khi Export Excel
-       
-         $ds_sanpham = Sanpham::all();
-         $ds_loai    = Loai::all();
-         $data = [
-             'danhsachsanpham' => $ds_sanpham,
-             'danhsachloai'    => $ds_loai,
-         ];
-         $xlsx = Excel::loadView('sanpham.excel', $data);
-         return $xlsx->download('Danhsachsanpham.xlsx');  */
         
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }
@@ -147,9 +148,13 @@ class SanphamController extends Controller
     {
         $ds_sanpham = Sanpham::all();
         $ds_loai    = Loai::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
         $data = [
             'danhsachsanpham' => $ds_sanpham,
             'danhsachloai'    => $ds_loai,
+            'danhsachmau'     => $ds_mau,
+            'danhsachxuatxu'  => $ds_xuatxu,
         ];
         $pdf = PDF::loadView('sanpham.pdf', $data);
         return $pdf->download('DanhMucSanPham.pdf');
@@ -162,12 +167,18 @@ class SanphamController extends Controller
     {
         $ds_sanpham = Sanpham::all();
         $ds_loai    = Loai::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
         $data = [
             'danhsachsanpham' => $ds_sanpham,
             'danhsachloai'    => $ds_loai,
+            'danhsachmau'     => $ds_mau,
+            'danhsachxuatxu'  => $ds_xuatxu,
         ];
         return view('sanpham.print')
             ->with('danhsachsanpham', $ds_sanpham)
-            ->with('danhsachloai', $ds_loai);
+            ->with('danhsachloai', $ds_loai)
+            ->with('danhsachmau' , $ds_mau)
+            ->with('danhsachxuatxu', $ds_xuatxu);
     }
 }

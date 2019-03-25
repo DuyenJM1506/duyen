@@ -43,6 +43,19 @@ class CreateSanphamTable extends Migration
                 ->onDelete('CASCADE')
                 ->onUpdate ('CASCADE');
 
+            $table->foreign('m_ma')
+            ->references ('m_ma')
+            ->on('mau')
+            ->onDelete('CASCADE')
+            ->onUpdate ('CASCADE');
+        
+            $table->foreign('xx_ma')
+            ->references ('xx_ma')
+            ->on('xuatxu')
+            ->onDelete('CASCADE')
+            ->onUpdate ('CASCADE');
+
+
         });
     }
 

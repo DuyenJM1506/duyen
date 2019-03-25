@@ -17,7 +17,7 @@ Thêm mới sản phẩm
 <form id="frmThemMoiSP" method="post" action="{{ route('danhsachsanpham.store') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="form-group">
-        <label for="l_ten">Nhập loại sản phẩm</label>
+        <label for="l_ten">Chọn loại sản phẩm</label>
         <select name="l_ma">
             @foreach($danhsachloai as $loai)
                 @if(old('l_ma') == $loai->l_ma)
@@ -57,6 +57,33 @@ Thêm mới sản phẩm
         <label for="sp_danhGia">Số lượng hiện tại</label>
             <input type="text" class="form-control" id="sp_soLuongHienTai" name="sp_soLuongHienTai" placeholder="Số lượng sản phẩm hiện tại" value="{{ old('sp_soLuongHienTai') }}">
     </div> 
+
+    <div class="form-group">
+        <label for="xx_ten">Chọn xuất xứ sản phẩm</label>
+        <select name="xx_ma">
+            @foreach($danhsachxuatxu as $xx)
+                @if(old('xx_ma') == $xx->xx_ma)
+                    <option value="{{ $xx->xx_ma }}" selected>{{ $xx->xx_ten }}</option>
+                @else
+                    <option value="{{ $xx->xx_ma }}">{{ $xx->xx_ten }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="m_ten">Chọn màu sản phẩm</label>
+        <select name="m_ma">
+            @foreach($danhsachmau as $mau)
+                @if(old('m_ma') == $mau->m_ma)
+                    <option value="{{ $mau->m_ma }}" selected>{{ $mau->m_ten }}</option>
+                @else
+                    <option value="{{ $mau->m_ma }}">{{ $mau->m_ten }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
     <div class="form-group">
         <label for="sp_taoMoi">Ngày tạo mới</label>
             <input type="text" class="form-control" id="sp_taoMoi" name="sp_taoMoi" placeholder="Ngay" value="{{ old('sp_taoMoi') }}">

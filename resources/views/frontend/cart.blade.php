@@ -1,150 +1,159 @@
-@extends('frontend.layouts.app')
-
+{{-- View này sẽ kế thừa giao diện từ `frontend.layouts.index` --}}
+@extends('frontend.layouts.index')
+{{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.index` --}}
 @section('title')
-    Kiểm tra giỏ hàng
+Giỏ hàng
 @endsection
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/cart_styles.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/cart_responsive.css') }}">
-    <style type="text/css">
-        #preselection {
-            max-width: 30%;
-        }
-    </style>
+{{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.index` --}}
+@section('custom-css')
 @endsection
-@section('content')
-    <div class="cart_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="cart_container">
-                        <div class="cart_title" style="font-family: Arial">Kiểm tra giỏ hàng</div>
-                        <div class="cart_items border">
-                            <table class="table table-hover" style="font-family: Arial">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col"></th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Giá gốc</th>
-                                    <th scope="col">Đơn giá</th>
-                                    <th scope="col">Tổng cộng</th>
-                                    <th scope="col"></th>
-                                </tr>
-                                </thead>
-                                <tbody ng-app="myApp" ng-controller="myCtrl">
-                                <?php $a = 1 ?>
-                                <?php
-                                $sorted = $cart->sortByDesc('id');
-                                ?>
-                                @foreach ($sorted as $item)
-                                    <tr>
-                                        <th scope="row">{{ $a }}</th>
-                                        <td><img src="{{ asset('upload/' . $item->attributes->img) }}" height="50px"
-                                                 width="40px" alt=""></td>
-                                        <td align="center">{{ str_limit($item->name,30) }}</td>
-                                        <td class="align-items-center">
-                                            <div class="input-group">
+{{-- Thay thế nội dung vào Placeholder `main-content` của view `frontend.layouts.index` --}}
+@section('main-content')
 
-                                                <a href="{{ route('capnhatgiam',$item->id ) }}"><span><i
-                                                                class="fas fa-minus-circle fa-2x"></i></span></a>
-                                                <button type="button"
-                                                        class="btn btn-default">{{$item->quantity}}</button>
+<div class="container text-center">
+<h2>Giỏ hàng</h2>
+<br>
+<h4>Tổng cộng: </h4>
+<br>
+<a href="{{route('frontend.product')}}" ><h5>Thêm sản phẩm</h5></a> 
+<br>  
+<div class="container text-left">   
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Sản phẩm </th>
+        <th></th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Xóa</th>
+      </tr>
+    </thead>
+    <tbody>
+    @foreach ($cart as $item)
+      <tr>
+        <td>
+        <img src="{{ asset('storage/photos/' . $item->attributes->img) }}" height="50px" width="40px" alt="hinh">
+        </td>
+        <td>{{$item->name}}</td>
+        <td>{{$item->price}} đ</td>
+        <td>
+        <td>
+          <div class="text-left wrap-num-product flex-w m-l-auto m-r-0">
+            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+              <a href="{{ route('capnhatgiam',$item->id ) }}">
+                <i class="fs-16 zmdi zmdi-minus"></i></a>
+            </div>
 
-                                                <a href="{{ route('capnhattang',$item->id ) }}"><span><i
-                                                                class="fas fa-plus-circle fa-2x"></i></span></a>
+            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
 
-                                            </div>
-                                        </td>
-                                        <td class="align-items-center">{{ number_format($item->attributes->giagoc) }}
-                                            đ
-                                        </td>
-                                        <td class="align-items-center">{{ number_format($item->price) }} đ</td>
-                                        <td class="d-flex align-items-center">{{ number_format($item->getPriceSum()) }}
-                                            đ
-                                        </td>
-                                        <td class="align-items-center">
-                                            <a onclick="return ktra()" href="{{ route('xoasanpham', $item->id) }}">
-											<span>
-												<i class="far fa-trash-alt fa-2x"></i>
-											</span>
-                                            </a></td>
-                                    </tr>
-                                    <?php $a = $a + 1; ?>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+              <a href="{{ route('capnhattang',$item->id ) }}">
+                <i class="fs-16 zmdi zmdi-plus"></i></a>
+            </div>
+          </div>
 
-                        <!-- Order Total -->
-                        <div class="order_total" style="height: 150px">
-                            <div class="order_total_content text-md-right">
-                                <div class="order_total_title">Phí vận chuyển:</div>
-                                <div class="order_total_amount">
-                                    @if($total>500000)
-                                        0 đ
-                                    @else
-                                        30,000 đ
-                                    @endif
-                                </div>
-                                <br>
-                                <div class="order_total_title">Tổng cộng:</div>
-                                <div class="order_total_amount">
-                                    @if($total>500000)
-                                        {{ number_format($total) }} đ
-                                    @else
-                                        {{ number_format($total+30000) }} đ
-                                    @endif
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="cart_buttons">
-                            <a href="{{ route('index') }}">
-                                <button type="button" class="button cart_button_clear">Tiếp tục mua hàng</button>
-                            </a>
-                            <a href="{{ route('dathang') }}">
-                                <button type="button" class="button cart_button_checkout">Tiến hành đặt hàng</button>
-                            </a>
-                        </div>
-                    </div>
+        </td>
+        <td>
+        <a href="{{ route('xoasanpham', $item->id) }}">
+        <input type="hidden" name="_method" value="DELETE"/>
+            {{ csrf_field() }}
+            &nbsp; <button type="submit" class="btn btn-danger">Xóa</button>
+        </a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div> 
+<!-- Thông tin khách hàng -->
+<div class="container" ng-controller="orderController">
+    <form name="orderForm" ng-submit="submitOrderForm()" novalidate>               
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <h2>Thông tin khách hàng</h2>
+                <!-- Div Thông báo lỗi 
+                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
+                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
+                -->
+                <br>
+              
+                <div class="form-group">
+                    <label for="kh_hoTen">Họ tên:</label>
+                    <input type="text" class="form-control" id="kh_hoTen" name="kh_hoTen" ng-model="kh_hoTen" ng-minlength="6" ng-maxlength="100" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="kh_gioiTinh">Giới tính:</label>
+                    <select name="kh_gioiTinh" id="kh_gioiTinh" class="form-control" ng-model="kh_gioiTinh" ng-required=true>
+                        <option value="0">Nữ</option>
+                        <option value="1">Nam</option>
+                        <option value="2">Khác</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kh_email">Email:</label>
+                    <input type="email" class="form-control" id="kh_email" name="kh_email" ng-model="kh_email" ng-pattern="/^.+@gmail\.com$/" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="kh_ngaySinh">Ngày sinh:</label>
+                    <input type="text" class="form-control" id="kh_ngaySinh" name="kh_ngaySinh" ng-model="kh_ngaySinh" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="kh_diaChi">Địa chỉ:</label>
+                    <input type="text" class="form-control" id="kh_diaChi" name="kh_diaChi" ng-model="kh_diaChi" ng-minlength="6" ng-maxlength="250">
+                </div>
+                <div class="form-group">
+                    <label for="kh_dienThoai">Điện thoại:</label>
+                    <input type="text" class="form-control" id="kh_dienThoai" name="kh_dienThoai" ng-model="kh_dienThoai" ng-minlength="6" ng-maxlength="11">
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6">
+                <h2>Thông tin Đặt hàng</h2>
+                <!-- Div Thông báo lỗi 
+                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
+                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
+                -->
+              <br>
+                <div class="form-group">
+                    <label for="dh_thoiGianNhanHang">Thời gian nhận hàng:</label>
+                    <input type="text" class="form-control" id="dh_thoiGianNhanHang" name="dh_thoiGianNhanHang" ng-model="dh_thoiGianNhanHang" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="dh_nguoiNhan">Người nhận:</label>
+                    <input type="text" class="form-control" id="dh_nguoiNhan" name="dh_nguoiNhan" ng-model="dh_nguoiNhan" ng-minlength="6" ng-maxlength="100" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="dh_diaChi">Địa chỉ:</label>
+                    <input type="text" class="form-control" id="dh_diaChi" name="dh_diaChi" ng-model="dh_diaChi" ng-minlength="6" ng-maxlength="250" ng-required=true>
+                </div>
+                <div class="form-group">
+                    <label for="dh_dienThoai">Điện thoại:</label>
+                    <input type="text" class="form-control" id="dh_dienThoai" name="dh_dienThoai" ng-model="dh_dienThoai" ng-minlength="6" ng-maxlength="11" ng-required=true>
+                </div>
+               
+             
+            </div>
         </div>
-    </div>
-    <script language="javascript">
-        function ktra() {
-            if (confirm("Bạn có chắc chắn muốn xóa ")) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        <!-- Div Thông báo validate hợp lệ 
+        Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$valid = true
+        Sử dụng tiền chỉ lệnh ng-show="orderForm.$valid"
+        -->
+        <!-- <div class="alert alert-success" ng-show="orderForm.$valid">
+            Thông tin hợp lệ, vui lòng bấm nút <b>"Thanh toán"</b> để hoàn tất ĐƠN HÀNG<br />
+            Chúng tôi sẽ gởi mail đển quý khách. Xin chân thành cám ơn Quý Khách hàng đã tin tưởng sản phẩm của chúng tôi.
+        </div> -->
+        <!-- Nút submit form -->
+        <button type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer mb-4" ng-disabled="orderForm.$invalid && ngCart.getTotalItems() === 0">
+            Thanh toán
+        </button>
+    </form>
+</div>
 
 
-    </script>
+</div>
+<!-- Slider -->
+<!-- @include('frontend.widgets.homepage-slider') -->
+<!-- Banner -->
 @endsection
-@section('scripts')
-    <script src="{{ asset('frontend/js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('frontend/styles/bootstrap4/popper.js') }}"></script>
-    <script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/greensock/TweenMax.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/greensock/TimelineMax.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/greensock/animation.gsap.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/easing/easing.js') }}"></script>
-    <script src="{{ asset('frontend/js/cart_custom.js') }}"></script>
-    <script>
-        var msg = '{{Session::get('alert')}}';
-        var exist = '{{Session::has('alert')}}';
-        if (exist) {
-            alert(msg);
-        }
-    </script>
+{{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
+@section('custom-scripts')
 @endsection

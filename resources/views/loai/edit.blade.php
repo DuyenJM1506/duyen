@@ -16,6 +16,7 @@
     </div>
 @endif
 
+<h2>Hiệu chỉnh loại sản phẩm</h2>
 <form method="post" action="{{ route('danhsachloai.update', ['id' => $loai->l_ma]) }}" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT"/>
 

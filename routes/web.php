@@ -40,19 +40,68 @@ Route::get('/danhsachloai', 'LoaiController@index')->name('danhsachloai.index');
 Route::get('/danhsachloai/create', 'LoaiController@create')->name('danhsachloai.create');
 Route::post('/danhsachloai/store', 'LoaiController@store')->name('danhsachloai.store');
 
-Route::get('/danhsachchude', 'ChudeController@index')->name('danhsachchude.index');
 Route::get('/danhsachsanpham', 'SanphamController@index')->name('danhsachsanpham.index');
 Route::put('/danhsachloai/{id}', 'LoaiController@update')->name('danhsachloai.update');
 Route::get('/danhsachloai/{id}', 'LoaiController@edit')->name('danhsachloai.edit');
 Route::delete('/danhsachloai/{id}', 'LoaiController@destroy')->name('danhsachloai.destroy');
+
+//route mau san pham
+Route::get('/danhsachmau', 'MauController@index')->name('danhsachmau.index');
+Route::get('/danhsachmau/create', 'MauController@create')->name('danhsachmau.create');
+Route::post('/danhsachmau/store', 'MauController@store')->name('danhsachmau.store');
+Route::get('/danhsachmau/{id}', 'MauController@edit')->name('danhsachmau.edit');
+Route::delete('/danhsachmau/{id}', 'MauController@destroy')->name('danhsachmau.destroy');
+Route::put('/danhsachmau/{id}', 'MauController@update')->name('danhsachmau.update');
 //route san pham
 Route::get('/danhsachsanpham/excel', 'SanphamController@excel')->name('danhsachsanpham.excel');
 Route::get('/danhsachsanpham/pdf', 'SanphamController@pdf')->name('danhsachsanpham.pdf');
 Route::get('/admin/danhsachsanpham/print', 'SanphamController@print')->name('danhsachsanpham.print');
-//route loai
-Route::get('/danhsachloai/excel', 'LoaiController@excel')->name('danhsachloai.excel');
-Route::get('/danhsachloai/pdf', 'LoaiController@pdf')->name('danhsachloai.pdf');
-Route::get('/admin/danhsachloai/print', 'LoaiController@print')->name('danhsachloai.print');
+
+//route size (model) san pham
+Route::get('/danhsachmodel', 'ModelsController@index')->name('danhsachmodel.index');
+Route::get('/danhsachmodel/create', 'ModelsController@create')->name('danhsachmodel.create');
+Route::post('/danhsachmodel/store', 'ModelsController@store')->name('danhsachmodel.store');
+Route::get('/danhsachmodel/{id}', 'ModelsController@edit')->name('danhsachmodel.edit');
+Route::delete('/danhsachmodel/{id}', 'ModelsController@destroy')->name('danhsachmodel.destroy');
+Route::put('/danhsachmodel/{id}', 'ModelsController@update')->name('danhsachmodel.update');
+//route nha cung cap
+Route::get('/danhsachnhacungcap', 'NhacungcapController@index')->name('danhsachnhacungcap.index');
+Route::get('/danhsachnhacungcap/create', 'NhacungcapController@create')->name('danhsachnhacungcap.create');
+Route::post('/danhsachnhacungcap/store', 'NhacungcapController@store')->name('danhsachnhacungcap.store');
+Route::get('/danhsachnhacungcap/{id}', 'NhacungcapController@edit')->name('danhsachnhacungcap.edit');
+Route::delete('/danhsachnhacungcap/{id}', 'NhacungcapController@destroy')->name('danhsachnhacungcap.destroy');
+Route::put('/danhsachnhacungcap/{id}', 'NhacungcapController@update')->name('danhsachnhacungcap.update');
+
+Route::get('/danhsachnhacungcap/excel', 'NhacungcapController@excel')->name('danhsachnhacungcap.excel');
+Route::get('/danhsachnhacungcap/pdf', 'NhacungcapController@pdf')->name('danhsachnhacungcap.pdf');
+Route::get('/admin/danhsachnhacungcap/print', 'NhacungcapController@print')->name('danhsachnhacungcap.print');
+//user
+Route::get('/danhsachuser', 'UserController@index')->name('danhsachuser.index');
+Route::delete('/danhsachuser/{id}', 'UserController@destroy')->name('danhsachuser.destroy');
+//nhanvien
+Route::get('/danhsachnhanvien', 'NhanvienController@index')->name('danhsachnhanvien.index');
+Route::get('/danhsachnhanvien/create', 'NhanvienController@create')->name('danhsachnhanvien.create');
+Route::post('/danhsachnhanvien/store', 'NhanvienController@store')->name('danhsachnhanvien.store');
+Route::get('/danhsachnhanvien/{id}', 'NhanvienController@edit')->name('danhsachnhanvien.edit');
+Route::put('/danhsachnhanvien/{id}', 'NhanvienController@update')->name('danhsachnhanvien.update');
+Route::delete('/danhsachnhanvien/{id}', 'NhanvienController@destroy')->name('danhsachnhanvien.destroy');
+
+//phieu nhap
+Route::get('/danhsachphieunhap', 'PhieunhapController@index')->name('danhsachphieunhap.index');
+Route::get('/danhsachphieunhap/create', 'PhieunhapController@create')->name('danhsachphieunhap.create');
+Route::get('/admin/danhsachphieunhap/print', 'PhieunhapController@print')->name('danhsachphieunhap.print');
+Route::post('/danhsachphieunhap/store', 'PhieunhapController@store')->name('danhsachphieunhap.store');
+Route::get('/danhsachphieunhap/{id}', 'PhieunhapController@edit')->name('danhsachphieunhap.edit');
+Route::put('/danhsachphieunhap/{id}', 'PhieunhapController@update')->name('danhsachphieunhap.update');
+Route::delete('/danhsachphieunhap/{id}', 'PhieunhapController@destroy')->name('danhsachphieunhap.destroy');
+
+//xuatxu
+Route::get('/danhsachxuatxusanpham', 'XuatxuController@index')->name('danhsachxuatxu.index');
+Route::get('/danhsachxuatxusanpham/create', 'XuatxuController@create')->name('danhsachxuatxu.create');
+Route::post('/danhsachxuatxusanpham/store', 'XuatxuController@store')->name('danhsachxuatxu.store');
+Route::get('/danhsachxuatxusanpham/{id}', 'XuatxuController@edit')->name('danhsachxuatxu.edit');
+Route::put('/danhsachxuatxusanpham/{id}', 'XuatxuController@update')->name('danhsachxuatxu.update');
+Route::delete('/danhsachxuatxusanpham/{id}', 'XuatxuController@destroy')->name('danhsachxuatxu.destroy');
 
 Route::resource('danhsachsanpham', 'SanphamController');
 Route::resource('danhsachloai', 'LoaiController');
@@ -63,8 +112,8 @@ Route::post('/lien-he/goi-loi-nhan', 'FrontendController@sendMailContactForm')->
 Route::get('/san-pham/{id}', 'FrontendController@productDetail')->name('frontend.productDetail');
 Route::get('/san-pham', 'FrontendController@product')->name('frontend.product');
 //báo cáo
-Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('baocao.donhang');
-Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
+// Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('baocao.donhang');
+// Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
 //languge
 Route::get('setLocale/{locale}', function ($locale) {
     if (in_array($locale, \Config::get('app.locales'))) {
@@ -86,3 +135,16 @@ Route::post('/kiem-tra-dang-nhap', 'FrontendController@checkLogin')->name('kiemt
 Route::get('/gh', 'CartController@index')->name('gh');
 //log out
 Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
+// Route::get('/gio-hang-chi-tiet', 'CartController@index')->name('giohang');
+Route::get('/mua-hang/{id}', [
+	'as'=>'muahang',
+    'uses' => 'CartController@add_product_cart']);
+Route::get('xoa-san-pham/{id}', [
+    'as'=>'xoasanpham',
+    'uses' => 'CartController@xoasanpham']);
+Route::get('cap-nhat-tang/{id}', [
+    'as'=>'capnhattang',
+    'uses' => 'CartController@capnhattang']);
+Route::get('cap-nhat-giam/{id}', [
+    'as'=>'capnhatgiam',
+    'uses' => 'CartController@capnhatgiam']);

@@ -98,15 +98,7 @@ Hiệu chỉnh sản phẩm
             browseClass: "btn btn-primary btn-lg",
             fileType: "any",
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            overwriteInitial: false,
-            initialPrewiewAsData: true,
-            initialPrewiew: [
-                "{{ asset('storage/photos/' .$sp->sp_hinh) }}"
-            ],
-            initialPrewiewConfig: [
-                {caption: "{{ $sp->sp_hinh }}", size: {{ Storage::size('public/photos/' .$sp->sp_hinh) }}, 
-                width: "120px", url: "{$url}", key: 1},
-            ]
+            overwriteInitial: false
         });
     });
 </script>

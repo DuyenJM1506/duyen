@@ -9,7 +9,7 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/cozastore/vendor/bootstrap/css/bootstrap.min.css') }}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="{{ asset('theme/cozastore/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('theme/cozastore/fonts/font-awesome/css/font-awesome.min.css') }}">
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/cozastore/fonts/iconic/css/material-design-iconic-font.min.css') }}">
   <!--===============================================================================================-->
@@ -295,8 +295,7 @@
   
   <!-- Các custom script dành riêng cho từng view -->
   @yield('custom-scripts')
-
-
-  
+  @yield('scripts')
+  @yield('styles')
 </body>
 </html>

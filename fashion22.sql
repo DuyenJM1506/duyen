@@ -11,19 +11,28 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+
+-- Dumping database structure for fashion2
+DROP DATABASE IF EXISTS `fashion2`;
+CREATE DATABASE IF NOT EXISTS `fashion2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+USE `fashion2`;
+
 -- Dumping structure for table fashion2.chitietdonhang
+DROP TABLE IF EXISTS `chitietdonhang`;
 CREATE TABLE IF NOT EXISTS `chitietdonhang` (
-  `sp_ma` bigint(20) NOT NULL COMMENT 'Ma san pham',
+  `spdh_ma` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Ma don hang - san pham',
   `dh_ma` bigint(20) NOT NULL COMMENT 'ma don hang',
-  `dhsp_ma` bigint(20) NOT NULL COMMENT 'Ma don hang - san pham',
-  `dhsp_soLuong` int(11) NOT NULL,
-  `dhsp_donGia` bigint(20) NOT NULL,
-  `dhsp_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dhsp_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `s_ma` tinyint(3) unsigned NOT NULL,
+  `sp_ma` bigint(20) NOT NULL COMMENT 'Ma san pham',
+  `spdh_soLuong` int(11) NOT NULL,
+  `spdh_donGia` bigint(20) NOT NULL,
+  PRIMARY KEY (`spdh_ma`),
   KEY `sanpham_donhang_sp_ma_foreign` (`sp_ma`),
   KEY `sanpham_donhang_dh_ma_foreign` (`dh_ma`),
+  KEY `size_ctdh` (`s_ma`),
   CONSTRAINT `sanpham_donhang_dh_ma_foreign` FOREIGN KEY (`dh_ma`) REFERENCES `donhang` (`dh_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sanpham_donhang_sp_ma_foreign` FOREIGN KEY (`sp_ma`) REFERENCES `sanpham` (`sp_ma`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `sanpham_donhang_sp_ma_foreign` FOREIGN KEY (`sp_ma`) REFERENCES `sanpham` (`sp_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `size_ctdh` FOREIGN KEY (`s_ma`) REFERENCES `size` (`s_ma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table fashion2.chitietdonhang: ~0 rows (approximately)
@@ -31,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `chitietdonhang` (
 /*!40000 ALTER TABLE `chitietdonhang` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.chitietnhap
+DROP TABLE IF EXISTS `chitietnhap`;
 CREATE TABLE IF NOT EXISTS `chitietnhap` (
   `sp_ma` bigint(20) NOT NULL,
   `pn_ma` bigint(20) NOT NULL COMMENT 'Ma phieu nhap',
@@ -47,45 +57,56 @@ CREATE TABLE IF NOT EXISTS `chitietnhap` (
 /*!40000 ALTER TABLE `chitietnhap` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.donhang
+DROP TABLE IF EXISTS `donhang`;
 CREATE TABLE IF NOT EXISTS `donhang` (
   `dh_ma` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Mã đơn hàng, 1-Không xuất hóa đơn',
-  `kh_ma` bigint(20) NOT NULL COMMENT 'Khách hàng # kh_ma # kh_hoTen # Mã khách hàng',
+  `id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'id khách hàng',
   `dh_thoiGianDatHang` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm đặt hàng # Thời điểm đặt hàng',
-  `dh_thoiGianNhanHang` datetime NOT NULL COMMENT 'Thời điểm giao hàng # Thời điểm giao hàng theo yêu cầu của khách hàng',
+  `dh_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT 'Trạng thái # Trạng thái đơn hàng: 1-nhận đơn, 2-xử lý đơn, 3-giao hàng, 4-hoàn tất, 5-đổi trả, 6-hủy',
   `dh_tenKhachHang` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Người nhận quà # Họ tên người nhận (tên hiển thị)',
   `dh_diaChi` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Địa chỉ người nhận # Địa chỉ người nhận',
   `dh_dienThoai` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Điện thoại người nhận # Điện thoại người nhận',
-  `dh_daThanhToan` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Đã thanh toán # Đã thanh toán tiền (trường hợp tặng quà)',
-  `nv_xuLy` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Xử lý đơn hàng # nv_ma # nv_hoTen # Mã nhân viên (người xử lý đơn hàng), 1-chưa phân công',
-  `dh_ngayXuLy` datetime DEFAULT NULL COMMENT 'Thời điểm xử lý # Thời điểm xử lý đơn hàng',
-  `nv_giaoHang` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Giao hàng # nv_ma # nv_hoTen # Mã nhân viên (người lập phiếu giao hàng và giao hàng), 1-chưa phân công',
-  `dh_ngayLapPhieuGiao` datetime DEFAULT NULL COMMENT 'Thời điểm lập phiếu giao # Thời điểm lập phiếu giao',
-  `dh_ngayGiaoHang` datetime DEFAULT NULL COMMENT 'Thời điểm khách nhận được hàng # Thời điểm khách nhận được hàng',
+  `dh_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dh_tongcong` float unsigned NOT NULL COMMENT 'Tổng cộng',
   `dh_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm tạo # Thời điểm đầu tiên tạo đơn hàng',
   `dh_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm cập nhật # Thời điểm cập nhật đơn hàng gần nhất',
-  `dh_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT 'Trạng thái # Trạng thái đơn hàng: 1-nhận đơn, 2-xử lý đơn, 3-giao hàng, 4-hoàn tất, 5-đổi trả, 6-hủy',
-  `vc_ma` tinyint(3) unsigned NOT NULL COMMENT 'Dịch vụ giao hàng # vc_ma # vc_ten # Mã dịch vụ giao hàng',
   `tt_ma` tinyint(3) unsigned NOT NULL COMMENT 'Phương thức thanh toán # tt_ma # tt_ten # Mã phương thức thanh toán',
-  `dh_tongcong` float unsigned NOT NULL COMMENT 'Tổng cộng',
-  `dh_ghiChu` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vc_ma` tinyint(3) unsigned NOT NULL COMMENT 'Dịch vụ giao hàng # vc_ma # vc_ten # Mã dịch vụ giao hàng',
+  `nv_giaoHang` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Giao hàng # nv_ma # nv_hoTen # Mã nhân viên (người lập phiếu giao hàng và giao hàng), 1-chưa phân công',
+  `nv_xuLy` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Xử lý đơn hàng # nv_ma # nv_hoTen # Mã nhân viên (người xử lý đơn hàng), 1-chưa phân công',
   PRIMARY KEY (`dh_ma`),
-  KEY `donhangsanpham_kh_ma_foreign` (`kh_ma`),
   KEY `donhangsanpham_nv_giaohang_foreign` (`nv_giaoHang`),
   KEY `donhangsanpham_nv_xuly_foreign` (`nv_xuLy`),
   KEY `donhangsanpham_tt_ma_foreign` (`tt_ma`),
   KEY `donhangsanpham_vc_ma_foreign` (`vc_ma`),
-  CONSTRAINT `donhangsanpham_kh_ma_foreign` FOREIGN KEY (`kh_ma`) REFERENCES `khachhang` (`kh_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `id` (`id`),
   CONSTRAINT `donhangsanpham_nv_giaohang_foreign` FOREIGN KEY (`nv_giaoHang`) REFERENCES `nhanvien` (`nv_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `donhangsanpham_nv_xuly_foreign` FOREIGN KEY (`nv_xuLy`) REFERENCES `nhanvien` (`nv_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `donhangsanpham_tt_ma_foreign` FOREIGN KEY (`tt_ma`) REFERENCES `thanhtoan` (`tt_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `donhangsanpham_vc_ma_foreign` FOREIGN KEY (`vc_ma`) REFERENCES `vanchuyen` (`vc_ma`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `donhangsanpham_vc_ma_foreign` FOREIGN KEY (`vc_ma`) REFERENCES `vanchuyen` (`vc_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idkhachhang_donhang` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Đơn hàng # Đơn hàng';
 
 -- Dumping data for table fashion2.donhang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `donhang` DISABLE KEYS */;
 /*!40000 ALTER TABLE `donhang` ENABLE KEYS */;
 
+-- Dumping structure for table fashion2.gioitinh_model
+DROP TABLE IF EXISTS `gioitinh_model`;
+CREATE TABLE IF NOT EXISTS `gioitinh_model` (
+  `gt_ten` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`gt_ten`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table fashion2.gioitinh_model: ~2 rows (approximately)
+/*!40000 ALTER TABLE `gioitinh_model` DISABLE KEYS */;
+INSERT INTO `gioitinh_model` (`gt_ten`) VALUES
+	('Nam'),
+	('Nữ');
+/*!40000 ALTER TABLE `gioitinh_model` ENABLE KEYS */;
+
 -- Dumping structure for table fashion2.hinhanh
+DROP TABLE IF EXISTS `hinhanh`;
 CREATE TABLE IF NOT EXISTS `hinhanh` (
   `sp_ma` bigint(20) NOT NULL,
   `ha_stt` tinyint(3) unsigned NOT NULL DEFAULT '1',
@@ -98,28 +119,8 @@ CREATE TABLE IF NOT EXISTS `hinhanh` (
 /*!40000 ALTER TABLE `hinhanh` DISABLE KEYS */;
 /*!40000 ALTER TABLE `hinhanh` ENABLE KEYS */;
 
--- Dumping structure for table fashion2.khachhang
-CREATE TABLE IF NOT EXISTS `khachhang` (
-  `kh_ma` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Ma khach hang',
-  `kh_hoTen` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ho ten khach hang',
-  `kh_gioiTinh` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '1:Nam, 2:Nữ',
-  `kh_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email khach hang',
-  `kh_ngaySinh` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Ngay sinh khach hang',
-  `kh_diaChi` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT 'NULL' COMMENT 'Dia chi khach hang',
-  `kh_dienThoai` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT 'NULL' COMMENT 'Dien thoai khach hang',
-  `kh_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thoi diem tao moi khach hang',
-  `kh_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thoi diem cap nhat khach hang gan nhat',
-  `kh_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '3',
-  PRIMARY KEY (`kh_ma`),
-  UNIQUE KEY `khachhang_kh_ngaysinh_unique` (`kh_ngaySinh`),
-  UNIQUE KEY `khachhang_kh_dienthoai_unique` (`kh_dienThoai`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table fashion2.khachhang: ~0 rows (approximately)
-/*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
-
 -- Dumping structure for table fashion2.khuyenmai
+DROP TABLE IF EXISTS `khuyenmai`;
 CREATE TABLE IF NOT EXISTS `khuyenmai` (
   `km_ma` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Mã chương trình khuyến mãi',
   `km_ten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tên chương trình # Tên chương trình khuyến mãi',
@@ -145,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `khuyenmai` (
 /*!40000 ALTER TABLE `khuyenmai` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.loai
+DROP TABLE IF EXISTS `loai`;
 CREATE TABLE IF NOT EXISTS `loai` (
   `l_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `l_ten` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -158,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `loai` (
 -- Dumping data for table fashion2.loai: ~6 rows (approximately)
 /*!40000 ALTER TABLE `loai` DISABLE KEYS */;
 INSERT INTO `loai` (`l_ma`, `l_ten`, `l_taoMoi`, `l_capNhat`, `l_trangThai`) VALUES
-	(8, 'Quần nữ', '2019-02-17 00:00:00', '2019-02-17 00:00:00', 2),
+	(8, 'Quần nữ', '2019-02-17 00:00:00', '2019-03-17 06:58:53', 2),
 	(14, 'Váy nữ', '2019-02-17 00:00:00', '2019-02-17 00:00:00', 2),
 	(16, 'Quần nam', '2019-02-17 00:00:00', '2019-02-17 00:00:00', 2),
 	(17, 'Áo nam', '2019-02-18 00:00:00', '2019-02-18 00:00:00', 1),
@@ -167,50 +169,34 @@ INSERT INTO `loai` (`l_ma`, `l_ten`, `l_taoMoi`, `l_capNhat`, `l_trangThai`) VAL
 /*!40000 ALTER TABLE `loai` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.mau
+DROP TABLE IF EXISTS `mau`;
 CREATE TABLE IF NOT EXISTS `mau` (
   `m_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `m_ten` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `m_hinhDaiDien` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `m_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm đầu tiên tạo màu sản phẩm',
   `m_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm cập nhật màu sản phẩm',
   `m_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái màu sản phẩm: 1-khóa , 2-khả dụng',
   PRIMARY KEY (`m_ma`),
   UNIQUE KEY `mau_m_ten_unique` (`m_ten`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.mau: ~0 rows (approximately)
+-- Dumping data for table fashion2.mau: ~8 rows (approximately)
 /*!40000 ALTER TABLE `mau` DISABLE KEYS */;
+INSERT INTO `mau` (`m_ma`, `m_ten`, `m_hinhDaiDien`, `m_taoMoi`, `m_capNhat`, `m_trangThai`) VALUES
+	(3, 'Đỏ', 'red.png', '2019-03-16 00:00:00', '2019-03-17 06:40:22', 1),
+	(4, 'Trắng', 'white.png', '2019-03-16 00:00:00', '2019-03-17 06:54:03', 2),
+	(5, 'Đen', 'black.png', '2019-03-16 00:00:00', '2019-03-17 06:54:16', 2),
+	(6, 'Hồng', 'pink.png', '2019-03-16 00:00:00', '2019-03-17 06:54:26', 2),
+	(8, 'Tím', 'purple.png', '2019-03-17 00:00:00', '2019-03-17 00:00:00', 2),
+	(9, 'Xanh lá', 'green.png', '2019-03-17 00:00:00', '2019-03-17 06:55:10', 1),
+	(10, 'Vàng', 'yellow.png', '2019-03-17 00:00:00', '2019-03-17 00:00:00', 2),
+	(11, 'Xanh dương', 'bluee.png', '2019-03-22 00:00:00', '2019-03-22 00:00:00', 2),
+	(12, 'Xám', 'grey.png', '2019-03-22 00:00:00', '2019-03-22 00:00:00', 2);
 /*!40000 ALTER TABLE `mau` ENABLE KEYS */;
 
--- Dumping structure for table fashion2.mausanpham
-CREATE TABLE IF NOT EXISTS `mausanpham` (
-  `sp_ma` bigint(20) NOT NULL COMMENT 'Màu sắc # m_ma # m_ten # Mã sản phẩm',
-  `m_ma` tinyint(3) unsigned NOT NULL COMMENT 'Sản phẩm # sp_ma # sp_ten # Mã màu sản phẩm',
-  `msp_soluong` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượng # Số lượng sản phẩm tương ứng với màu',
-  PRIMARY KEY (`sp_ma`,`m_ma`),
-  KEY `mausanpham_m_ma_foreign` (`m_ma`),
-  CONSTRAINT `mausanpham_m_ma_foreign` FOREIGN KEY (`m_ma`) REFERENCES `mau` (`m_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `mausanpham_sp_ma_foreign` FOREIGN KEY (`sp_ma`) REFERENCES `sanpham` (`sp_ma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Số lượng sản phẩm theo màu # Số lượng sản phẩm tương ứng với các màu';
-
--- Dumping data for table fashion2.mausanpham: ~0 rows (approximately)
-/*!40000 ALTER TABLE `mausanpham` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mausanpham` ENABLE KEYS */;
-
--- Dumping structure for table fashion2.mausize
-CREATE TABLE IF NOT EXISTS `mausize` (
-  `m_ma` tinyint(3) unsigned NOT NULL COMMENT 'Ma mau',
-  `s_ma` tinyint(3) unsigned NOT NULL COMMENT 'Ma size',
-  KEY `mausize_m_ma_foreign` (`m_ma`),
-  KEY `mausize_s_ma_foreign` (`s_ma`),
-  CONSTRAINT `mausize_m_ma_foreign` FOREIGN KEY (`m_ma`) REFERENCES `mau` (`m_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `mausize_s_ma_foreign` FOREIGN KEY (`s_ma`) REFERENCES `size` (`s_ma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table fashion2.mausize: ~0 rows (approximately)
-/*!40000 ALTER TABLE `mausize` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mausize` ENABLE KEYS */;
-
 -- Dumping structure for table fashion2.migrations
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -218,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.migrations: ~23 rows (approximately)
+-- Dumping data for table fashion2.migrations: ~20 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -247,18 +233,42 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.model
+DROP TABLE IF EXISTS `model`;
 CREATE TABLE IF NOT EXISTS `model` (
   `md_ma` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Ma model',
   `md_canNang` double(8,2) NOT NULL COMMENT 'Can nang nguoi dung',
   `md_chieuCao` bigint(20) NOT NULL COMMENT 'Chieu cao nguoi dung',
-  PRIMARY KEY (`md_ma`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Model # Model';
+  `gt_ten` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_ma` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`md_ma`),
+  KEY `gtten` (`gt_ten`),
+  KEY `sizemd` (`s_ma`),
+  CONSTRAINT `gtten` FOREIGN KEY (`gt_ten`) REFERENCES `gioitinh_model` (`gt_ten`),
+  CONSTRAINT `sizemd` FOREIGN KEY (`s_ma`) REFERENCES `size` (`s_ma`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Model # Model';
 
--- Dumping data for table fashion2.model: ~0 rows (approximately)
+-- Dumping data for table fashion2.model: ~7 rows (approximately)
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
+INSERT INTO `model` (`md_ma`, `md_canNang`, `md_chieuCao`, `gt_ten`, `s_ma`) VALUES
+	(1, 53.00, 168, 'Nam', 3),
+	(2, 53.00, 174, 'Nam', 5),
+	(3, 53.00, 180, 'Nam', 1),
+	(4, 60.00, 168, 'Nam', 4),
+	(6, 60.00, 174, 'Nam', 2),
+	(8, 60.00, 180, 'Nam', 6),
+	(9, 40.00, 150, 'Nữ', 2),
+	(10, 40.00, 160, 'Nữ', 1),
+	(11, 40.00, 170, 'Nữ', 2),
+	(13, 50.00, 150, 'Nữ', 1),
+	(14, 50.00, 160, 'Nữ', 1),
+	(16, 50.00, 170, 'Nữ', 1),
+	(18, 60.00, 150, 'Nữ', 1),
+	(19, 60.00, 160, 'Nữ', 2),
+	(20, 60.00, 170, 'Nữ', 3);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.nhacungcap
+DROP TABLE IF EXISTS `nhacungcap`;
 CREATE TABLE IF NOT EXISTS `nhacungcap` (
   `ncc_ma` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `ncc_ten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -270,35 +280,47 @@ CREATE TABLE IF NOT EXISTS `nhacungcap` (
   `ncc_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái nhà cung cấp sản phẩm: 1-khóa , 2-khả dụng',
   PRIMARY KEY (`ncc_ma`),
   UNIQUE KEY `nhacungcap_ncc_ten_unique` (`ncc_ten`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.nhacungcap: ~0 rows (approximately)
+-- Dumping data for table fashion2.nhacungcap: ~1 rows (approximately)
 /*!40000 ALTER TABLE `nhacungcap` DISABLE KEYS */;
+INSERT INTO `nhacungcap` (`ncc_ma`, `ncc_ten`, `ncc_diaChi`, `ncc_dienThoai`, `ncc_email`, `ncc_taoMoi`, `ncc_capNhat`, `ncc_trangThai`) VALUES
+	(2, 'Công ty ABBC', '124 Mậu Thân - P.Xuân Khánh - Q.Ninh Kiều - TP.CT', '0123454312', 'abcfashion@gmail.com', '2019-03-16 00:00:00', '2019-03-16 08:35:18', 1),
+	(3, 'Juno Fashion', '13 An Cư - P.10 - Q.Phú Nhuận - TP.HCM', '0923431599', 'juno@fashion.com', '2019-03-16 00:00:00', '2019-03-16 00:00:00', 2);
 /*!40000 ALTER TABLE `nhacungcap` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.nhanvien
+DROP TABLE IF EXISTS `nhanvien`;
 CREATE TABLE IF NOT EXISTS `nhanvien` (
   `nv_ma` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Mã nhân viên, 1-chưa phân công',
+  `nv_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nv_hoTen` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Họ tên # Họ tên',
   `nv_gioiTinh` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT 'Giới tính # Giới tính: 0-Nữ, 1-Nam, 2-Khác',
-  `nv_ngaySinh` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Ngày sinh # Ngày sinh',
+  `nv_ngaySinh` date NOT NULL COMMENT 'Ngày sinh # Ngày sinh',
   `nv_diaChi` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Địa chỉ # Địa chỉ',
   `nv_dienThoai` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Điện thoại # Điện thoại',
   `nv_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm tạo # Thời điểm đầu tiên tạo nhân viên',
   `nv_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm cập nhật # Thời điểm cập nhật nhân viên gần nhất',
   `nv_trangThai` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'Trạng thái # Trạng thái nhân viên: 1-khóa, 2-khả dụng',
   `q_ma` tinyint(3) unsigned NOT NULL COMMENT 'Quyền # Mã quyền: 1-Giám đốc, 2-Quản trị, 3-Quản lý kho, 4-Kế toán, 5-Nhân viên bán hàng, 6-Nhân viên giao hàng',
+  `nv_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`nv_ma`),
   UNIQUE KEY `nhanvien_nv_dienthoai_unique` (`nv_dienThoai`),
   KEY `nhanvien_q_ma_foreign` (`q_ma`),
   CONSTRAINT `nhanvien_q_ma_foreign` FOREIGN KEY (`q_ma`) REFERENCES `quyen` (`q_ma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Nhân viên # Nhân viên';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Nhân viên # Nhân viên';
 
--- Dumping data for table fashion2.nhanvien: ~0 rows (approximately)
+-- Dumping data for table fashion2.nhanvien: ~4 rows (approximately)
 /*!40000 ALTER TABLE `nhanvien` DISABLE KEYS */;
+INSERT INTO `nhanvien` (`nv_ma`, `nv_id`, `nv_hoTen`, `nv_gioiTinh`, `nv_ngaySinh`, `nv_diaChi`, `nv_dienThoai`, `nv_taoMoi`, `nv_capNhat`, `nv_trangThai`, `q_ma`, `nv_email`) VALUES
+	(6, 'NV001', 'Nguyễn Anh Tú', 1, '1995-03-16', 'Cần Thơ', '0976874533', '2019-03-17 15:02:51', '2019-03-17 08:02:51', 1, 2, 'anhtu123@gmail.com'),
+	(7, 'NV002', 'Phan Anh Tân', 1, '1997-01-01', 'Cà Mau', '0982314567', '2019-03-17 15:03:06', '2019-03-17 08:03:06', 1, 2, 'anhtanphan@gmail.com'),
+	(8, 'NV003', 'Trần Thị Cẫm Châu', 2, '1997-10-19', 'An Giang', '0923143564', '2019-03-17 15:03:16', '2019-03-17 08:03:16', 1, 2, 'chauchau111@gmail.com'),
+	(9, 'NV004', 'Nguyễn Yến Duyên', 2, '1997-06-15', 'Bến Tre', '0326465624', '2019-03-17 15:03:37', '2019-03-17 08:03:37', 1, 2, 'duyenyen@gmail.com');
 /*!40000 ALTER TABLE `nhanvien` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.password_resets
+DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -311,6 +333,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.phieunhap
+DROP TABLE IF EXISTS `phieunhap`;
 CREATE TABLE IF NOT EXISTS `phieunhap` (
   `pn_ma` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Mã phiếu nhập',
   `pn_nguoiGiao` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Người giao hàng # Người giao hàng',
@@ -344,6 +367,7 @@ CREATE TABLE IF NOT EXISTS `phieunhap` (
 /*!40000 ALTER TABLE `phieunhap` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.quyen
+DROP TABLE IF EXISTS `quyen`;
 CREATE TABLE IF NOT EXISTS `quyen` (
   `q_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `q_ten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -353,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `quyen` (
   UNIQUE KEY `quyen_q_ten_unique` (`q_ten`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.quyen: ~3 rows (approximately)
+-- Dumping data for table fashion2.quyen: ~2 rows (approximately)
 /*!40000 ALTER TABLE `quyen` DISABLE KEYS */;
 INSERT INTO `quyen` (`q_ma`, `q_ten`, `q_moTa`, `q_trangThai`) VALUES
 	(1, 'admin', 'người quản trị', 2),
@@ -362,36 +386,45 @@ INSERT INTO `quyen` (`q_ma`, `q_ten`, `q_moTa`, `q_trangThai`) VALUES
 /*!40000 ALTER TABLE `quyen` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.sanpham
+DROP TABLE IF EXISTS `sanpham`;
 CREATE TABLE IF NOT EXISTS `sanpham` (
   `sp_ma` bigint(20) NOT NULL AUTO_INCREMENT,
   `sp_ten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sp_hinh` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sp_giaGoc` int(11) NOT NULL DEFAULT '0',
   `sp_giaBan` int(10) unsigned NOT NULL DEFAULT '0',
-  `sp_hinh` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sp_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Tạo sản phẩm mới',
-  `sp_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Cập nhật sản phẩm mới',
-  `sp_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái sản phẩm: 1-khóa , 2-khả dụng',
-  `l_ma` tinyint(3) unsigned NOT NULL COMMENT 'Loại sản phâm',
   `sp_soLuongBanDau` bigint(20) NOT NULL,
   `sp_soLuongHienTai` bigint(20) NOT NULL,
+  `sp_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Cập nhật sản phẩm mới',
+  `sp_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Tạo sản phẩm mới',
+  `sp_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái sản phẩm: 1-khóa , 2-khả dụng',
+  `l_ma` tinyint(3) unsigned NOT NULL COMMENT 'Loại sản phâm',
+  `xx_ma` mediumint(8) unsigned NOT NULL,
+  `m_ma` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`sp_ma`),
   UNIQUE KEY `sanpham_sp_ten_unique` (`sp_ten`),
   KEY `sanpham_l_ma_foreign` (`l_ma`),
-  CONSTRAINT `sanpham_l_ma_foreign` FOREIGN KEY (`l_ma`) REFERENCES `loai` (`l_ma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `m_ma` (`m_ma`),
+  KEY `sp_xuatxu` (`xx_ma`),
+  CONSTRAINT `sanpham_l_ma_foreign` FOREIGN KEY (`l_ma`) REFERENCES `loai` (`l_ma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sanpham_mau` FOREIGN KEY (`m_ma`) REFERENCES `mau` (`m_ma`),
+  CONSTRAINT `sp_xuatxu` FOREIGN KEY (`xx_ma`) REFERENCES `xuatxu` (`xx_ma`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.sanpham: ~6 rows (approximately)
+-- Dumping data for table fashion2.sanpham: ~7 rows (approximately)
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
-INSERT INTO `sanpham` (`sp_ma`, `sp_ten`, `sp_giaGoc`, `sp_giaBan`, `sp_hinh`, `sp_taoMoi`, `sp_capNhat`, `sp_trangThai`, `l_ma`, `sp_soLuongBanDau`, `sp_soLuongHienTai`) VALUES
-	(9, 'Áo sơ mi công sở', 200000, 500000, 'aosominam2.jpg', '2019-02-17 00:00:00', '2019-02-18 06:37:12', 1, 17, 100, 90),
-	(10, 'Áo sơ mi nam', 300000, 350000, 'aosominam4.jpg', '2019-02-17 00:00:00', '2019-02-17 00:00:00', 1, 17, 20, 20),
-	(11, 'Áo sơ mi xám', 300000, 400000, 'aosominam3.jpg', '2019-02-17 00:00:00', '2019-02-17 00:00:00', 1, 17, 45, 34),
-	(12, 'Áo sơ mi 2', 300000, 400000, 'aosominam5.jpg', '2019-02-20 00:00:00', '2019-02-20 00:00:00', 1, 17, 100, 98),
-	(13, 'Đầm dạ hội', 500000, 700000, 'dam.jpg', '2019-03-04 00:00:00', '2019-03-04 00:00:00', 2, 19, 10, 5),
-	(16, 'Áo sơ mi nữ công sở', 350000, 475000, 'aotrang.jpg', '2019-03-04 00:00:00', '2019-03-04 00:00:00', 2, 18, 4, 2);
+INSERT INTO `sanpham` (`sp_ma`, `sp_ten`, `sp_hinh`, `sp_giaGoc`, `sp_giaBan`, `sp_soLuongBanDau`, `sp_soLuongHienTai`, `sp_capNhat`, `sp_taoMoi`, `sp_trangThai`, `l_ma`, `xx_ma`, `m_ma`) VALUES
+	(9, 'Áo sơ mi công sở', 'aosominam2.jpg', 200000, 500000, 100, 90, '2019-03-17 06:48:26', '2019-02-17 00:00:00', 2, 17, 1, 4),
+	(10, 'Áo sơ mi nam', 'aosominam4.jpg', 300000, 350000, 20, 20, '2019-02-17 00:00:00', '2019-02-17 00:00:00', 1, 17, 1, 12),
+	(11, 'Áo sơ mi xám', 'aosominam3.jpg', 300000, 400000, 45, 34, '2019-02-17 00:00:00', '2019-02-17 00:00:00', 1, 17, 3, 11),
+	(12, 'Áo sơ mi 2', 'aosominam5.jpg', 300000, 400000, 100, 98, '2019-02-20 00:00:00', '2019-02-20 00:00:00', 1, 17, 4, 4),
+	(13, 'Đầm dạ hội', 'dam.jpg', 500000, 700000, 10, 5, '2019-03-04 00:00:00', '2019-03-04 00:00:00', 2, 19, 1, 4),
+	(16, 'Áo sơ mi nữ công sở', 'aotrang.jpg', 350000, 475000, 4, 2, '2019-03-04 00:00:00', '2019-03-04 00:00:00', 2, 18, 4, 4),
+	(17, 'Dạ hội', 'damxoe.jpg', 1000000, 1200000, 2, 2, '2019-02-17 00:00:00', '2019-02-17 00:00:00', 2, 19, 3, 8);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.size
+DROP TABLE IF EXISTS `size`;
 CREATE TABLE IF NOT EXISTS `size` (
   `s_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `s_ten` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -400,31 +433,39 @@ CREATE TABLE IF NOT EXISTS `size` (
   `s_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái size sản phẩm: 1-khóa , 2-khả dụng',
   PRIMARY KEY (`s_ma`),
   UNIQUE KEY `size_s_ten_unique` (`s_ten`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.size: ~0 rows (approximately)
+-- Dumping data for table fashion2.size: ~6 rows (approximately)
 /*!40000 ALTER TABLE `size` DISABLE KEYS */;
+INSERT INTO `size` (`s_ma`, `s_ten`, `s_taoMoi`, `s_capNhat`, `s_trangThai`) VALUES
+	(1, 'S', '2019-03-16 00:00:00', '2019-03-16 00:00:00', 2),
+	(2, 'M', '2019-03-16 00:00:00', '2019-03-16 00:00:00', 2),
+	(3, 'L', '2019-03-17 00:00:00', '2019-03-17 07:01:46', 2),
+	(4, 'XL', '2019-03-22 13:33:07', '2019-03-22 13:33:09', 2),
+	(5, 'XXL', '2019-03-22 13:33:18', '2019-03-22 13:33:19', 2),
+	(6, '3XL', '2019-03-22 13:33:28', '2019-03-22 13:33:29', 2);
 /*!40000 ALTER TABLE `size` ENABLE KEYS */;
 
--- Dumping structure for table fashion2.taikhoan
-CREATE TABLE IF NOT EXISTS `taikhoan` (
-  `tk_ma` bigint(20) unsigned NOT NULL COMMENT 'Mã tài khoản',
-  `tk_username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username dùng để đăng nhập',
-  `tk_password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Password dùng để đăng nhập',
-  `tk_capNhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm tạo # Thời điểm cập nhật tài khoản',
-  `tk_taoMoi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Thời điểm tạo # Thời điểm tạo mới tài khoản',
-  `tk_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT 'Trạng thái # Trạng thái tài khoản: 1-Khóa, 2-Khả dụng',
-  `q_ma` tinyint(3) unsigned NOT NULL COMMENT 'Mã quyền đăng nhập tài khoản',
-  PRIMARY KEY (`tk_ma`),
-  KEY `taikhoan_q_ma_foreign` (`q_ma`),
-  CONSTRAINT `taikhoan_q_ma_foreign` FOREIGN KEY (`q_ma`) REFERENCES `quyen` (`q_ma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tài khoản # Tài khoản';
+-- Dumping structure for table fashion2.size_sanpham
+DROP TABLE IF EXISTS `size_sanpham`;
+CREATE TABLE IF NOT EXISTS `size_sanpham` (
+  `stt` int(10) unsigned NOT NULL DEFAULT '0',
+  `s_ma` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `sp_ma` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ssp_soLuong` smallint(5) unsigned DEFAULT '0',
+  PRIMARY KEY (`stt`),
+  KEY `sp_ma` (`sp_ma`),
+  KEY `size_s_ma_foreign` (`s_ma`),
+  CONSTRAINT `size_s_ma_foreign` FOREIGN KEY (`s_ma`) REFERENCES `size` (`s_ma`),
+  CONSTRAINT `size_sp_ma_foreign` FOREIGN KEY (`sp_ma`) REFERENCES `sanpham` (`sp_ma`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.taikhoan: ~0 rows (approximately)
-/*!40000 ALTER TABLE `taikhoan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `taikhoan` ENABLE KEYS */;
+-- Dumping data for table fashion2.size_sanpham: ~0 rows (approximately)
+/*!40000 ALTER TABLE `size_sanpham` DISABLE KEYS */;
+/*!40000 ALTER TABLE `size_sanpham` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.thanhtoan
+DROP TABLE IF EXISTS `thanhtoan`;
 CREATE TABLE IF NOT EXISTS `thanhtoan` (
   `tt_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Mã phương thức thanh toán',
   `tt_ten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tên phương thức # Tên phương thức thanh toán',
@@ -440,35 +481,38 @@ CREATE TABLE IF NOT EXISTS `thanhtoan` (
 /*!40000 ALTER TABLE `thanhtoan` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hoten` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gioitinh` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `namsinh` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `diachi` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dienthoai` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `q_ma` tinyint(3) unsigned NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `matkhau` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dienthoai` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `diachi` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `q_ma` tinyint(3) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `trangthai` int(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `q_ma` (`q_ma`),
+  CONSTRAINT `maquyen` FOREIGN KEY (`q_ma`) REFERENCES `quyen` (`q_ma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.users: ~5 rows (approximately)
+-- Dumping data for table fashion2.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `name`, `username`, `gioitinh`, `namsinh`, `diachi`, `dienthoai`, `q_ma`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'Nguyễn Văn Anh', 'nvanh', 'Nam', '2004', 'Cần Thơ', '012345678', 3, 'nvanh123@gmail.com', '$2y$10$wne9EMhbShPkrO8eGQPHN.eqo4z4M0e70l8JN8u3rgCaVo17MhM2.', NULL, '2019-02-27 08:24:39', '2019-02-27 08:24:39'),
-	(2, 'Nguyễn Anh Tuấn', 'anhtuan', 'Nam', '1950', 'TP. Hồ Chí Minh', '0912345678', 3, 'tuananh23@gmail.com', '$2y$10$AQJ2Rqdj0X9FqONdQU3VAOe5VM7lKd/v6pwkqRhOVfQ9qINFU1xNK', NULL, '2019-02-27 08:50:07', '2019-02-27 08:50:07'),
-	(3, 'Nguyễn Yến Duyên', 'nyduyen', 'Nữ', '1997', 'Bến Tre', '01626465624', 1, 'nguyenyenduyen1506@gmail.com', 'duyen156', NULL, NULL, NULL),
-	(4, 'Trần Thị Cẫm Châu', 'cchauu', 'Nữ', '1997', 'An Giang', '0912367896', 3, 'chau246@gmail.com', '$2y$10$4bI9HI1g8HB0Wc1KbOiEHeJDuYIY/2R.vHqaRjGjNmbwpo4u42G7u', NULL, '2019-02-28 03:23:34', '2019-02-28 03:23:34'),
-	(5, 'Yến Duyên\r\n', 'duyengia', 'Nam', '1950', 'Cần Thơ', '012345678', 3, 'duyengia@gmail.com', '$2y$10$G6PHodG.YfaEEBz2EAGpIe6zuRz/gHWxgT/jkvDEbqjTvgbfOLQPq', 'KzQixsUnH0klbZk3GqEqOcZXMD238DCWyNVYB9unigvjDHReYcvsrxTlnvKv', '2019-03-01 03:42:59', '2019-03-01 03:42:59');
+INSERT INTO `users` (`id`, `username`, `hoten`, `gioitinh`, `namsinh`, `email`, `matkhau`, `dienthoai`, `diachi`, `q_ma`, `created_at`, `updated_at`, `trangthai`) VALUES
+	(2, 'anhtuan', 'Nguyễn Anh Tuấn', 'Nam', '1950', 'tuananh23@gmail.com', '$2y$10$AQJ2Rqdj0X9FqONdQU3VAOe5VM7lKd/v6pwkqRhOVfQ9qINFU1xNK', '0912345678', 'TP. Hồ Chí Minh', 3, '2019-02-27 08:50:07', '2019-02-27 08:50:07', 0),
+	(3, 'nyduyen', 'Nguyễn Yến Duyên', 'Nữ', '1997', 'nguyenyenduyen1506@gmail.com', 'duyen156', '01626465624', 'Bến Tre', 1, NULL, NULL, 0),
+	(4, 'cchauu', 'Trần Thị Cẫm Châu', 'Nữ', '1997', 'chau246@gmail.com', '$2y$10$4bI9HI1g8HB0Wc1KbOiEHeJDuYIY/2R.vHqaRjGjNmbwpo4u42G7u', '0912367896', 'An Giang', 3, '2019-02-28 03:23:34', '2019-02-28 03:23:34', 0),
+	(5, 'duyengia', 'Yến Duyên\r\n', 'Nam', '1950', 'duyengia@gmail.com', '$2y$10$G6PHodG.YfaEEBz2EAGpIe6zuRz/gHWxgT/jkvDEbqjTvgbfOLQPq', '012345678', 'Cần Thơ', 3, '2019-03-01 03:42:59', '2019-03-01 03:42:59', 0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.vanchuyen
+DROP TABLE IF EXISTS `vanchuyen`;
 CREATE TABLE IF NOT EXISTS `vanchuyen` (
   `vc_ma` tinyint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Mã dịch vụ giao hàng',
   `vc_moTa` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Mô tả',
@@ -486,6 +530,7 @@ CREATE TABLE IF NOT EXISTS `vanchuyen` (
 /*!40000 ALTER TABLE `vanchuyen` ENABLE KEYS */;
 
 -- Dumping structure for table fashion2.xuatxu
+DROP TABLE IF EXISTS `xuatxu`;
 CREATE TABLE IF NOT EXISTS `xuatxu` (
   `xx_ma` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `xx_ten` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -494,10 +539,14 @@ CREATE TABLE IF NOT EXISTS `xuatxu` (
   `xx_trangThai` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT 'Trạng thái xuất xứ sản phẩm: 1-khóa , 2-khả dụng',
   PRIMARY KEY (`xx_ma`),
   UNIQUE KEY `xuatxu_xx_ten_unique` (`xx_ten`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table fashion2.xuatxu: ~0 rows (approximately)
+-- Dumping data for table fashion2.xuatxu: ~2 rows (approximately)
 /*!40000 ALTER TABLE `xuatxu` DISABLE KEYS */;
+INSERT INTO `xuatxu` (`xx_ma`, `xx_ten`, `xx_taoMoi`, `xx_capNhat`, `xx_trangThai`) VALUES
+	(1, 'Hàn Quốc', '2019-03-22 10:24:40', '2019-03-22 10:24:42', 2),
+	(3, 'Thái Lan', '2019-03-22 00:00:00', '2019-03-22 00:00:00', 2),
+	(4, 'USA', '2019-03-22 00:00:00', '2019-03-22 00:00:00', 2);
 /*!40000 ALTER TABLE `xuatxu` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
