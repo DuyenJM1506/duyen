@@ -54,29 +54,30 @@ class CartController extends Controller
             Cart::add(array(
                     'id' => $id,
                     'name' => $sanphammua->sp_ten,
-                    'price' => $sanphammua->sp_gianBan,
+                    'price' => $sanphammua->sp_giaBan,
                     'quantity' => 1,
-                    'attributes' => array('img' => $sanphammua->sp_hinh, 'giagoc' => $sanphammua->sp_giaBan))
+                    'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan))
             );
             $output = new \Symfony\Component\Console\Output\ConsoleOutput(2);
 
             $output->writeln('hello');
 
-            return redirect()->route('gh');
+            return redirect()->route('giohang');
         }
     }
 
     public function add_product_cart($id)
-    {
+    {   
+        // Cart::clear();
         $sanphammua = Sanpham::find($id);
         Cart::add(array(
             'id' => $id,
             'name' => $sanphammua->sp_ten,
             'price' => $sanphammua->sp_giaBan,
             'quantity' => 1,
-            'attributes' => array('img' => $sanphammua->sp_hinh, 'giagoc' => $sanphammua->sp_giaBan))
+            'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan))
         );
-        return redirect()->route('gh');
+        return redirect()->route('giohang');
     }
 
     public function index()

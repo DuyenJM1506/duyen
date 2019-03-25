@@ -132,7 +132,8 @@ Route::get('/admin/dang-nhap', 'BackendController@logout')->name('dangxuatam');
 Route::get('/dangky', 'FrontendController@dangky')->name('frontend.dangky');
 Route::get('register','RegisterController@register')->name('frontend.register');
 Route::post('/kiem-tra-dang-nhap', 'FrontendController@checkLogin')->name('kiemtradangnhap');
-Route::get('/gh', 'CartController@index')->name('gh');
+Route::get('/giohang', 'CartController@index')->name('giohang');
+Route::get('/giohangz', 'CartController@index')->name('gh');
 //log out
 Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
 // Route::get('/gio-hang-chi-tiet', 'CartController@index')->name('giohang');

@@ -13,7 +13,7 @@ Giỏ hàng
 <div class="container text-center">
 <h2>Giỏ hàng</h2>
 <br>
-<h4>Tổng cộng: </h4>
+<h4>Tổng cộng: {{ number_format($total) }}</h4>
 <br>
 <a href="{{route('frontend.product')}}" ><h5>Thêm sản phẩm</h5></a> 
 <br>  
@@ -35,8 +35,8 @@ Giỏ hàng
         <img src="{{ asset('storage/photos/' . $item->attributes->img) }}" height="50px" width="40px" alt="hinh">
         </td>
         <td>{{$item->name}}</td>
-        <td>{{$item->price}} đ</td>
-        <td>
+        <td>{{ number_format($item->price) }} đ</td>
+        
         <td>
           <div class="text-left wrap-num-product flex-w m-l-auto m-r-0">
             <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -44,7 +44,7 @@ Giỏ hàng
                 <i class="fs-16 zmdi zmdi-minus"></i></a>
             </div>
 
-            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
+            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="{{ $item->quantity}}">
 
             <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
               <a href="{{ route('capnhattang',$item->id ) }}">

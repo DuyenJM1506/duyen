@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sanpham;
 use App\Loai;
+use App\Xuatxu;
+use App\Mau;
 use Session;
 use Storage;
 use App\Exports\SanPhamExport;
@@ -17,9 +19,13 @@ class SanphamController extends Controller
     public function index()
     {
         $ds_sanpham = Sanpham::all();
+        $ds_xuatxu = Xuatxu::all();
+        $ds_mau = Mau::all();
 
         return view('sanpham.index')
-            ->with('danhsachsanpham', $ds_sanpham);
+            ->with('danhsachsanpham', $ds_sanpham)
+            ->with('danhsachxuatxu', $ds_xuatxu)
+            ->with('danhsachmau', $ds_mau);
     }
     public function create()
     {
@@ -27,13 +33,14 @@ class SanphamController extends Controller
         return view('sanpham.create')
             ->with('danhsachloai', $ds_loai);
 
-        $ds_mau = Mau::all();
-        return view('sanpham.create')
-            ->with('danhsachmau', $ds_mau);
-
         $ds_xuatxu = Xuatxu::all();
         return view('sanpham.create')
             ->with('danhsachxuatxu', $ds_xuatxu);
+
+        $ds_mau = Mau::all();
+        return view('sanpham.create')
+            ->with('danhsachmau', $ds_mau);
+    
     }
     public function store(Request $request)
     {
@@ -89,9 +96,13 @@ class SanphamController extends Controller
     {
         $sp = Sanpham::where("sp_ma", $id)->first();
         $ds_loai = Loai::all();
+        $ds_xuatxu = Xuatxu::all();
+        $ds_mau = Mau::all();
         return view('sanpham.edit')
             ->with('sp', $sp)
-            ->with('danhsachloai', $ds_loai);
+            ->with('danhsachloai', $ds_loai)
+            ->with('danhsachxuatxu', $ds_xuatxu)
+            ->with('danhsachmau', $ds_mau);
     }
     public function update(Request $request, $id)
     {
