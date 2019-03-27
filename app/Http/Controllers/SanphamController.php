@@ -30,16 +30,12 @@ class SanphamController extends Controller
     public function create()
     {
         $ds_loai = Loai::all();
-        return view('sanpham.create')
-            ->with('danhsachloai', $ds_loai);
-
         $ds_xuatxu = Xuatxu::all();
-        return view('sanpham.create')
-            ->with('danhsachxuatxu', $ds_xuatxu);
-
         $ds_mau = Mau::all();
         return view('sanpham.create')
-            ->with('danhsachmau', $ds_mau);
+            ->with('danhsachmau', $ds_mau)
+            ->with('danhsachloai', $ds_loai)
+            ->with('danhsachxuatxu', $ds_xuatxu);
     
     }
     public function store(Request $request)
@@ -151,7 +147,16 @@ class SanphamController extends Controller
     }
     public function excel() 
     {
-        
+        $ds_sanpham = Sanpham::all();
+        $ds_loai    = Loai::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
+        $data = [
+            'danhsachsanpham' => $ds_sanpham,
+            'danhsachloai'    => $ds_loai,
+            'danhsachmau'     => $ds_mau,
+            'danhsachxuatxu'  => $ds_xuatxu,
+        ];
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }
 

@@ -29,7 +29,7 @@
                     <img src="{{ asset('storage/ddd.jpg') }}" /></td>
             </tr>
             <tr>
-                <td colspan="6" class="caption" align="center" style="text-align: center; font-size: 20px">
+                <td colspan="8" class="caption" align="center" style="text-align: center; font-size: 20px">
                     <b>Danh sách sản phẩm</b>
                 </td>
             </tr>
@@ -37,6 +37,8 @@
                 <th style="text-align: center">STT</th>
                 <th style="text-align: center">Hình sản phẩm</th>
                 <th style="text-align: center">Tên sản phẩm</th>
+                <th style="text-align: center">Xuất xứ</th>
+                <th style="text-align: center">Màu</th>
                 <th style="text-align: center">Giá gốc</th>
                 <th style="text-align: center">Giá bán</th>
                 <th style="text-align: center">Loại sản phẩm</th>
@@ -50,13 +52,28 @@
                     <img class="hinhSanPham" src="{{ asset('storage/photos/' . $sp->sp_hinh) }}" width="100" height="100" />
                 </td>
                 <td align="left" valign="middle" width="30">{{ $sp->sp_ten }}</td>
+
+                @foreach ($danhsachxuatxu as $xx)
+                    @if ($sp->xx_ma == $xx->xx_ma)
+                    <td align="left" width="15" valign="middle">{{ $xx->xx_ten }}</td>
+                    @endif
+                @endforeach
+
+                @foreach ($danhsachmau as $m)
+                    @if ($sp->m_ma == $m->m_ma)
+                    <td align="left" width="15" valign="middle">{{ $m->m_ten }}</td>
+                    @endif
+                @endforeach
+
                 <td align="right" valign="middle" width="15">{{ $sp->sp_giaGoc }}</td>
                 <td align="right" valign="middle" width="15">{{ $sp->sp_giaBan }}</td>
+
                 @foreach ($danhsachloai as $l)
                     @if ($sp->l_ma == $l->l_ma)
                     <td align="left" width="15" valign="middle">{{ $l->l_ten }}</td>
                     @endif
                 @endforeach
+
             </tr>
             @endforeach
         </table>

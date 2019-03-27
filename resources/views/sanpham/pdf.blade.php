@@ -61,6 +61,8 @@
                 <th>STT</th>
                 <th>Hình sản phẩm</th>
                 <th>Tên sản phẩm</th>
+                <th>Xuất xứ</th>
+                <th>Màu</th>
                 <th>Giá gốc</th>
                 <th>Giá bán</th>
                 <th>Loại sản phẩm</th>
@@ -72,12 +74,22 @@
                     <img class="hinhSanPham" src="{{ asset('storage/photos/' . $sp->sp_hinh) }}" />
                 </td>
                 <td align="left">{{ $sp->sp_ten }}</td>
+                @foreach ($danhsachxuatxu as $xx)
+                    @if ($sp->xx_ma == $xx->xx_ma)
+                        <td align="left">{{ $xx->xx_ten }}</td>
+                    @endif
+                @endforeach
+                @foreach ($danhsachmau as $m)
+                    @if ($sp->m_ma == $m->m_ma)
+                        <td align="left">{{ $m->m_ten }}</td>
+                    @endif
+                @endforeach
                 <td align="right">{{ $sp->sp_giaGoc }}</td>
                 <td align="right">{{ $sp->sp_giaBan }}</td>
                 @foreach ($danhsachloai as $l)
-                @if ($sp->l_ma == $l->l_ma)
-                <td align="left">{{ $l->l_ten }}</td>
-                @endif
+                    @if ($sp->l_ma == $l->l_ma)
+                        <td align="left">{{ $l->l_ten }}</td>
+                    @endif
                 @endforeach
             </tr>
             @if (($loop->index + 1) % 5 == 0)
@@ -91,6 +103,8 @@
                 <th>STT</th>
                 <th>Hình sản phẩm</th>
                 <th>Tên sản phẩm</th>
+                <th>Xuất xứ</th>
+                <th>Màu</th>
                 <th>Giá gốc</th>
                 <th>Giá bán</th>
                 <th>Loại sản phẩm</th>

@@ -5,6 +5,8 @@ namespace App\Exports;
 
 use App\Sanpham;
 use App\Loai;
+use App\Xuatxu;
+use App\Mau;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
@@ -28,6 +30,8 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
         return view('sanpham.excel', [
             'danhsachsanpham' => Sanpham::all(),
             'danhsachloai' => Loai::all(),
+            'danhsachxuatxu' => Xuatxu::all(),
+            'danhsachmau' => Mau::all(),
         ]);
     }
      public function drawings()
