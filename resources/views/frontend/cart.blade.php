@@ -39,15 +39,15 @@ Giỏ hàng
         
         <td>
           <div class="text-left wrap-num-product flex-w m-l-auto m-r-0">
-            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-              <a href="{{ route('capnhatgiam',$item->id ) }}">
+            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" style="float:left;">
+              <a href="{{ route('capnhatgiam',$item->id ) }}" style="padding: 13px 17px; ">
                 <i class="fs-16 zmdi zmdi-minus"></i></a>
             </div>
 
-            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="{{ $item->quantity}}">
+            <input style="float:left;" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="{{ $item->quantity}}">
 
-            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-              <a href="{{ route('capnhattang',$item->id ) }}">
+            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" style="float:left;">
+              <a href="{{ route('capnhattang',$item->id ) }}" style="padding: 13px 17px; ">
                 <i class="fs-16 zmdi zmdi-plus"></i></a>
             </div>
           </div>

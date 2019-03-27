@@ -13,19 +13,19 @@
     <div class="row">
         <table border="0" align="center" cellpadding="5" style="border-collapse: collapse;">
             <tr>
-                <td colspan="6" align="center" style="font-size: 13px;" width="100">
+                <td colspan="8" align="center" style="font-size: 13px;" width="100">
                     <b>ARMY FASHION Shop</b></td>
             </tr>
             <tr>
-                <td colspan="6" align="center" style="font-size: 13px">
+                <td colspan="8" align="center" style="font-size: 13px">
                     <b>http://armyfashion.com/</b></td>
             </tr>
             <tr>
-                <td colspan="6" align="center" style="font-size: 13px">
+                <td colspan="8" align="center" style="font-size: 13px">
                     <b>(0292)3.888.999 # 01.222.888.999</b></td>
             </tr>
             <tr>
-                <td colspan="6" align="center">
+                <td colspan="8" align="center">
                     <img src="{{ asset('storage/ddd.jpg') }}" /></td>
             </tr>
             <tr>

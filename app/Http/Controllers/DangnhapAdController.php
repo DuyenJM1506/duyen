@@ -29,10 +29,10 @@ class DangnhapAdController extends Controller
     	if ($validator->fails()) {
     		return redirect()->back()->withErrors($validator)->withInput();
     	} else {
-    		$email = $request->input('username');
+    		$username = $request->input('username');
     		$password = $request->input('password');
 
-    		if( Auth::attempt(['username' => $email, 'password' =>$password,'q_ma' =>1])) {
+    		if( Auth::attempt(['username' => $username, 'password' =>$password,'q_ma' =>1])) {
     			return redirect()->intended('/');
     		} else {
     			$errors = new MessageBag(['errorlogin' => 'Xin hãy đăng nhập bằng tài khoản Admin']);

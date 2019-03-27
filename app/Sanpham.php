@@ -12,7 +12,7 @@ class Sanpham extends Model
     protected $table = 'sanpham';
     protected $fillable= ['sp_ten', 'sp_taoMoi', 'sp_capNhat', 'sp_giaGoc',
                            'sp_giaBan', 'sp_moTa', 'sp_soluongBanDau', 'sp_soluongHienTai',
-                           'l_ma', 'm_ma', 'xx_ma'];
+                           'l_ma', 'm_ma', 'xx_ma', 'km_ma'];
     protected $guarded = ['sp_ma'];
     protected $primaryKey = 'sp_ma';
     protected $dates = ['sp_taoMoi', 'sp_capNhat'];
@@ -33,5 +33,9 @@ class Sanpham extends Model
     public function maus()
     {
         return $this->belongsTo('App\Mau', 'm_ma', 'm_ma');
+    }
+    public function khuyenmai()
+    {
+        return $this->belongsTo('App\Khuyenmai', 'km_ma', 'km_ma');
     }
 }

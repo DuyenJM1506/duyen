@@ -190,16 +190,21 @@
           </div>
         </div>
       </div>
-
+<script>
+  function submit(abc) {
+    alert("THÀNH CÔNG!");
+    
+  }
+</script>
     <!-- SHOW PRODUCT -->
 
-      <div class="row isotope-grid">
+      <div style="width:100%;">
                 @foreach($data as $index=>$sp)
 
-        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item loai-{{ $sp->l_ma }}">
-          <div class="block2">
+        <div  style="float:left; width:300px; height:500px; margin: 10px 10px;">
+          <div class="block2" style="height:400px">
             <div class="block2-pic hov-img0">
-              <img src="{{ asset('storage/photos/' . $sp->sp_hinh) }}" alt="IMG-PRODUCT">
+              <img src="{{ asset('storage/photos/' . $sp->sp_hinh) }}" alt="IMG-PRODUCT" style="width:300px; height:400px">
               <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal" 
                   data-sp-ma="{{ $sp->sp_ma }}"> 
                 Thử đồ online
@@ -214,16 +219,17 @@
                     {{ $sp->sp_giaBan }} <span>VNĐ</span>
                   </span>
                   <span class="stext-105 cl3">
-                    <a href="{{ route('muahang',$sp->sp_ma ) }}">Thêm vào Giỏ hàng </a><span></span>
+                  <input type="text" value="{{ route('muahang',$sp->sp_ma ) }}" id="{{ $sp->sp_ma }}" style="display: none;">
+                    <a href="{{ route('muahang',$sp->sp_ma ) }}" onclick="submit('{{$sp->sp_ma }}')" >Thêm vào Giỏ hàng </a><span></span>
                   </span>
               </div>
             </div>
           </div>
           <!-- Modal quick view -->
               @include('frontend.widgets.product-quick-view', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
-        </div>
+        
                 @endforeach
-
+</div>
       <!-- Load more -->
       <div class="flex-c-m flex-w w-full p-t-45">
         <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">

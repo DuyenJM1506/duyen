@@ -43,7 +43,7 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
         $drawingLogo->setDescription('Logo');
         $drawingLogo->setPath(public_path('storage/storage/ddd.jpg'));
         $drawingLogo->setHeight(90);
-        $drawingLogo->setCoordinates('C4');
+        $drawingLogo->setCoordinates('D4');
         $offsetX = 40; //pixels
         $drawingLogo->setOffsetX($offsetX); //pixels
         $arrDrawings[] = $drawingLogo;
@@ -71,7 +71,7 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
             ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         // Set dòng 4 (dùng chứ ảnh logo) có chiều cao 100
         $event->sheet->getDelegate()->getRowDimension('4')->setRowHeight(100);
-        // Format dòng tiêu đề giới thiệ "Công ty"
+        // Format dòng tiêu đề giới thiệu "Công ty"
         $event->sheet->getDelegate()->getStyle('A1:C5')->applyFromArray(
             [
                 'font' => [
@@ -83,7 +83,7 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
             ]
         );
         // Format dòng tiêu đề "Danh sách sản phẩm"
-        $event->sheet->getDelegate()->getStyle('A5:F5')->applyFromArray(
+        $event->sheet->getDelegate()->getStyle('A5:H5')->applyFromArray(
             [
                 'font' => [
                     'bold' => true,
@@ -94,7 +94,7 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
             ]
         );
         // Format dòng tiêu đề "Tiêu đề cột"
-        $event->sheet->getDelegate()->getStyle('A6:F6')->applyFromArray(
+        $event->sheet->getDelegate()->getStyle('A6:H6')->applyFromArray(
             [
                 'font' => [
                     'bold' => true,
@@ -118,7 +118,7 @@ class SanPhamExport implements FromView, WithDrawings, WithEvents, ShouldAutoSiz
         {
             $currentRow = $startRow + $index;
             $event->sheet->getDelegate()->getRowDimension($currentRow)->setRowHeight(50);
-            $coordinate = "A${currentRow}:F${currentRow}";
+            $coordinate = "A${currentRow}:H${currentRow}";
             $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
                 [
                     'alignment' => [

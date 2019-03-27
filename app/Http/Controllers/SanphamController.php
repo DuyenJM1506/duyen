@@ -160,41 +160,5 @@ class SanphamController extends Controller
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }
 
-    public function pdf() 
-    {
-        $ds_sanpham = Sanpham::all();
-        $ds_loai    = Loai::all();
-        $ds_xuatxu  = Xuatxu::all();
-        $ds_mau     = Mau::all();
-        $data = [
-            'danhsachsanpham' => $ds_sanpham,
-            'danhsachloai'    => $ds_loai,
-            'danhsachmau'     => $ds_mau,
-            'danhsachxuatxu'  => $ds_xuatxu,
-        ];
-        $pdf = PDF::loadView('sanpham.pdf', $data);
-        return $pdf->download('DanhMucSanPham.pdf');
-    }
-
-/**
- * Action hiển thị biểu mẫu xem trước khi in trên Web
- */
-    public function print()
-    {
-        $ds_sanpham = Sanpham::all();
-        $ds_loai    = Loai::all();
-        $ds_xuatxu  = Xuatxu::all();
-        $ds_mau     = Mau::all();
-        $data = [
-            'danhsachsanpham' => $ds_sanpham,
-            'danhsachloai'    => $ds_loai,
-            'danhsachmau'     => $ds_mau,
-            'danhsachxuatxu'  => $ds_xuatxu,
-        ];
-        return view('sanpham.print')
-            ->with('danhsachsanpham', $ds_sanpham)
-            ->with('danhsachloai', $ds_loai)
-            ->with('danhsachmau' , $ds_mau)
-            ->with('danhsachxuatxu', $ds_xuatxu);
-    }
+   
 }

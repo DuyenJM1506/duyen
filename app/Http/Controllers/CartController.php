@@ -45,7 +45,7 @@ class CartController extends Controller
     //     return view('frontend.cart')
     //     ->with('data', $data);
     // }
-    public function muahang($id, $tensanpham, $dongia)
+    public function muahang($id)
     {
         $sanphammua = Sanpham::find($id);
         if ($sanphammua->sp_soLuongHienTai == 0) {
@@ -77,7 +77,7 @@ class CartController extends Controller
             'quantity' => 1,
             'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan))
         );
-        return redirect()->route('giohang');
+        return redirect()->route('san-pham');
     }
 
     public function index()

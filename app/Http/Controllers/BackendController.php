@@ -113,7 +113,7 @@ class BackendController extends Controller
 
     public function login()
     {
-        auth()->logout();
+        auth()->login();
         return view('backend.login');
     }
     public function logout()

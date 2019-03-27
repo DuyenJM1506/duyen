@@ -103,6 +103,14 @@ Route::get('/danhsachxuatxusanpham/{id}', 'XuatxuController@edit')->name('danhsa
 Route::put('/danhsachxuatxusanpham/{id}', 'XuatxuController@update')->name('danhsachxuatxu.update');
 Route::delete('/danhsachxuatxusanpham/{id}', 'XuatxuController@destroy')->name('danhsachxuatxu.destroy');
 
+//khuyenmai
+Route::get('/danhsachkhuyenmai', 'KhuyenmaiController@index')->name('danhsachkhuyenmai.index');
+Route::get('/danhsachkhuyenmai/create', 'KhuyenmaiController@create')->name('danhsachkhuyenmai.create');
+Route::post('/danhsachkhuyenmai/store', 'KhuyenmaiController@store')->name('danhsachkhuyenmai.store');
+Route::get('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@edit')->name('danhsachkhuyenmai.edit');
+Route::put('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@update')->name('danhsachkhuyenmai.update');
+Route::delete('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@destroy')->name('danhsachkhuyenmai.destroy');
+
 Route::resource('danhsachsanpham', 'SanphamController');
 Route::resource('danhsachloai', 'LoaiController');
 Route::get('/', 'FrontendController@index')->name('frontend.home');
@@ -140,6 +148,7 @@ Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
 Route::get('/mua-hang/{id}', [
 	'as'=>'muahang',
     'uses' => 'CartController@add_product_cart']);
+Route::post('/giohang', 'CartController@add_product_cart');
 Route::get('xoa-san-pham/{id}', [
     'as'=>'xoasanpham',
     'uses' => 'CartController@xoasanpham']);

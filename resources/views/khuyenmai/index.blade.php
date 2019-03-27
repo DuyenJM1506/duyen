@@ -1,13 +1,12 @@
 @extends('backend.layouts.index')
 
 @section('title')
-    Danh sách sản phẩm
+    Quản lý khuyến mãi
 @endsection
 
 @section('main-content')
-    <a href="{{route('danhsachsanpham.create')}}" class="btn btn-primary">Thêm mới</a>
-    <a href="{{route('danhsachsanpham.excel')}}" class="btn btn-primary">Xuất Excel</a>
- 
+<a href="{{route('danhsachkhuyenmai.create')}}" class="btn btn-primary">Thêm mới</a>
+<!-- <a href="{{route('danhsachphieunhap.print')}}" class="btn btn-primary">Print</a> -->
 
 <div class="flash-message">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -25,8 +24,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        DANH SÁCH SẢN PHẨM
-        <small>Chi tiết sản phẩm</small>
+      QUẢN LÝ KHUYẾN MÃI
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -44,42 +42,43 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>Mã</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Hình ảnh</th>
-                    <th>Giá gốc</th>
-                    <th>Giá bán</th>
-                    <th>Thuộc loại</th>
-                    <th>SL ban đầu</th>
-                    <th>SL hiện tại</th>
-                    <th>Xuất xứ</th>
-                    <th>Màu</th>
-                 
-                    <th>Sửa - Xóa</th>
+                    <th>Mã khuyến mãi</th>
+                    <th>Tên khuyến mãi</th>
+                    <th>Nội dung</th>
+                    <th>Gía trị</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Người lập</th>
+                    <th>Hình đại diện</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+
                 </tr>
                 </thead>
 
                 <tbody>
-                @foreach($danhsachsanpham as $sp)
+                @foreach($danhsachkhuyenmai as $km)
                 <tr>
-                    <td>{{ $sp->sp_ma }}</td>
-                    <td>{{ $sp->sp_ten }}</td>
-                    <td><img src="{{ asset('storage/photos/' .$sp->sp_hinh) }}" class="img-list"></td>
-                    <td>{{ $sp->sp_giaGoc }}</td>
-                    <td>{{ $sp->sp_giaBan }}</td>
-                    <td>{{ $sp->loaisanpham->l_ten }}</td>
-                    <td>{{ $sp->sp_soLuongBanDau }}</td>
-                    <td>{{ $sp->sp_soLuongHienTai }}</td>
-                    <td>{{ $sp->xuatxus->xx_ten }}</td>
-                    <td>{{ $sp->maus->m_ten }}</td>
+                    <td>{{ $km->km_ma }}</td>
+                    <td>{{ $km->km_ten }}</td>
+                    <td>{{ $km->km_noiDung }}</td>
+                    <td>{{ $km->km_giaTri }}</td>
+                    <td>{{ $km->km_ngayBatDau }}</td>
+                    <td>{{ $km->km_ngayKetThuc }}</td>
+                    <td>{{ $km->nguoilapkm->nv_hoTen }}</td>
                     <td>
-                        <a href="{{ route('danhsachsanpham.edit' , ['id' => $sp->sp_ma]) }}"
+                        <img src="{{ asset('storage/photos/' .$km->km_hinhDaiDien) }}" class="img-list">
+                    </td>
+                    <td>
+                    <a href="{{ route('danhsachkhuyenmai.edit' , ['id' => $km->km_ma]) }}"
                         class="btn btn-primary pull-left">Sửa
                         </a>
-                        <form action="{{ route('danhsachsanpham.destroy', ['id' => $sp->sp_ma]) }}" method="post" class="pull-left">
+                    </td>
+                    <td>
+                        <form action="{{ route('danhsachkhuyenmai.destroy', ['id' => $km->km_ma]) }}" method="post" class="pull-left">
                             <input type="hidden" name="_method" value="DELETE"/>
                             {{ csrf_field() }}
-                            &nbsp; <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="submit" class="btn btn-danger">Xóa</button>
                         </form>
                     </td>
                 </tr>

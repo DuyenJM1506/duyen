@@ -240,7 +240,7 @@ public function orderFinish()
     		'password' => 'required|min:5'
     	];
     	$messages = [
-    		'password.required' => 'Mật khẩu là trường bắt buộc',
+    		'password.required' => 'Mật khẩu là bắt buộc',
     		'password.min' => 'Mật khẩu phải chứa ít nhất 5 ký tự',
     	];
     	$validator = Validator::make($request->all(), $rules, $messages);
@@ -254,7 +254,7 @@ public function orderFinish()
     		if( Auth::attempt(['username' => $username, 'password' =>$password])) {
     			return redirect()->intended('/');
     		} else {
-    			$errors = new MessageBag(['errorlogin' => ' hoặc mật khẩu không đúng']);
+    			$errors = new MessageBag(['errorlogin' => ' Mật khẩu không đúng']);
     			return redirect()->back()->withInput()->withErrors($errors);
     		}
     	}

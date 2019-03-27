@@ -69,6 +69,9 @@
        <br>
         <!-- quản lý xuất xứ sp -->
         <li class="{{ Request::is('admin/danhsachxuatxu') ? 'active' : '' }}"><a href="{{ route('danhsachxuatxu.index') }}">Quản lý xuất xứ sản phẩm</a> ></li>
+        <br>
+        <!-- quản lý khuyến mãi -->
+        <li class="{{ Request::is('admin/danhsachkhuyenmai') ? 'active' : '' }}"><a href="{{ route('danhsachkhuyenmai.index') }}">Quản lý khuyến mãi</a> ></li>
         </ul>
        
       </ul>
