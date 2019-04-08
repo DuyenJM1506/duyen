@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sanpham;
 use App\Loai;
 use App\Xuatxu;
+use App\Khuyenmai;
 use App\Mau;
 use Session;
 use Storage;
@@ -19,23 +20,28 @@ class SanphamController extends Controller
     public function index()
     {
         $ds_sanpham = Sanpham::all();
-        $ds_xuatxu = Xuatxu::all();
-        $ds_mau = Mau::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
+        $ds_km      = Khuyenmai::all();
 
         return view('sanpham.index')
             ->with('danhsachsanpham', $ds_sanpham)
             ->with('danhsachxuatxu', $ds_xuatxu)
-            ->with('danhsachmau', $ds_mau);
+            ->with('danhsachmau', $ds_mau)
+            ->with('danhsachkhuyenmai', $ds_km);
     }
     public function create()
     {
-        $ds_loai = Loai::all();
-        $ds_xuatxu = Xuatxu::all();
-        $ds_mau = Mau::all();
+        $ds_loai    = Loai::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
+        $ds_km      = Khuyenmai::all();
+
         return view('sanpham.create')
             ->with('danhsachmau', $ds_mau)
             ->with('danhsachloai', $ds_loai)
-            ->with('danhsachxuatxu', $ds_xuatxu);
+            ->with('danhsachxuatxu', $ds_xuatxu)
+            ->with('danhsachkhuyenmai', $ds_km);
     
     }
     public function store(Request $request)
@@ -56,6 +62,7 @@ class SanphamController extends Controller
         $sp->l_ma = $request->l_ma;
         $sp->m_ma = $request->m_ma;
         $sp->xx_ma = $request->xx_ma;
+        $sp->km_ma = $request->km_ma;
 
         if($request->hasFile('sp_hinh'));
         {
@@ -90,15 +97,17 @@ class SanphamController extends Controller
     }
     public function edit($id)
     {
-        $sp = Sanpham::where("sp_ma", $id)->first();
-        $ds_loai = Loai::all();
-        $ds_xuatxu = Xuatxu::all();
-        $ds_mau = Mau::all();
+        $sp         = Sanpham::where("sp_ma", $id)->first();
+        $ds_loai    = Loai::all();
+        $ds_xuatxu  = Xuatxu::all();
+        $ds_mau     = Mau::all();
+        $ds_km      = Khuyenmai::all();
         return view('sanpham.edit')
             ->with('sp', $sp)
             ->with('danhsachloai', $ds_loai)
             ->with('danhsachxuatxu', $ds_xuatxu)
-            ->with('danhsachmau', $ds_mau);
+            ->with('danhsachmau', $ds_mau)
+            ->with('danhsachkhuyenmai', $ds_km);
     }
     public function update(Request $request, $id)
     {
@@ -114,6 +123,7 @@ class SanphamController extends Controller
         $sp->l_ma = $request->l_ma;
         $sp->m_ma = $request->m_ma;
         $sp->xx_ma = $request->xx_ma;
+        $sp->km_ma = $request->km_ma;
 
         if($request->hasFile('sp_hinh'))
         {
@@ -151,11 +161,13 @@ class SanphamController extends Controller
         $ds_loai    = Loai::all();
         $ds_xuatxu  = Xuatxu::all();
         $ds_mau     = Mau::all();
+        $ds_km      = Khuyenmai::all();
         $data = [
             'danhsachsanpham' => $ds_sanpham,
             'danhsachloai'    => $ds_loai,
             'danhsachmau'     => $ds_mau,
             'danhsachxuatxu'  => $ds_xuatxu,
+            'danhsachkhuyenmai'=> $ds_km,
         ];
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }

@@ -75,9 +75,9 @@ Route::put('/danhsachnhacungcap/{id}', 'NhacungcapController@update')->name('dan
 Route::get('/danhsachnhacungcap/excel', 'NhacungcapController@excel')->name('danhsachnhacungcap.excel');
 Route::get('/danhsachnhacungcap/pdf', 'NhacungcapController@pdf')->name('danhsachnhacungcap.pdf');
 Route::get('/admin/danhsachnhacungcap/print', 'NhacungcapController@print')->name('danhsachnhacungcap.print');
-//user
-Route::get('/danhsachuser', 'UserController@index')->name('danhsachuser.index');
-Route::delete('/danhsachuser/{id}', 'UserController@destroy')->name('danhsachuser.destroy');
+//khachhang
+Route::get('/danhsachkhachhang', 'UserController@index')->name('danhsachkhachhang.index');
+Route::delete('/danhsachkhachhang/{id}', 'UserController@destroy')->name('danhsachkhachhang.destroy');
 //nhanvien
 Route::get('/danhsachnhanvien', 'NhanvienController@index')->name('danhsachnhanvien.index');
 Route::get('/danhsachnhanvien/create', 'NhanvienController@create')->name('danhsachnhanvien.create');
@@ -110,6 +110,18 @@ Route::post('/danhsachkhuyenmai/store', 'KhuyenmaiController@store')->name('danh
 Route::get('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@edit')->name('danhsachkhuyenmai.edit');
 Route::put('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@update')->name('danhsachkhuyenmai.update');
 Route::delete('/danhsachkhuyenmai/{id}', 'KhuyenmaiController@destroy')->name('danhsachkhuyenmai.destroy');
+
+//donhang
+Route::get('/danhsachdonhang', 'DonhangController@index')->name('danhsachdonhang.index');
+Route::get('/danhsachdonhang/{id}', 'DonhangController@edit')->name('danhsachdonhang.edit');
+Route::put('/danhsachdonhang/{id}', 'DonhangController@update')->name('danhsachdonhang.update');
+Route::delete('/danhsachdonhang/{id}', 'DonhangController@destroy')->name('danhsachdonhang.destroy');
+
+//thanhtoan
+Route::get('/danhsachthanhtoan', 'ThanhtoanController@index')->name('danhsachthanhtoan.index');
+Route::get('/danhsachthanhtoan/{id}', 'ThanhtoanController@edit')->name('danhsachthanhtoan.edit');
+Route::put('/danhsachthanhtoan/{id}', 'ThanhtoanController@update')->name('danhsachthanhtoan.update');
+Route::delete('/danhsachthanhtoan/{id}', 'ThanhtoanController@destroy')->name('danhsachthanhtoan.destroy');
 
 Route::resource('danhsachsanpham', 'SanphamController');
 Route::resource('danhsachloai', 'LoaiController');
@@ -145,10 +157,10 @@ Route::get('/giohangz', 'CartController@index')->name('gh');
 //log out
 Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
 // Route::get('/gio-hang-chi-tiet', 'CartController@index')->name('giohang');
+Route::get('/thong-tin-dat-hang','CartController@thongtindathang')->name('frontend.dathang');
 Route::get('/mua-hang/{id}', [
 	'as'=>'muahang',
     'uses' => 'CartController@add_product_cart']);
-Route::post('/giohang', 'CartController@add_product_cart');
 Route::get('xoa-san-pham/{id}', [
     'as'=>'xoasanpham',
     'uses' => 'CartController@xoasanpham']);
@@ -158,3 +170,6 @@ Route::get('cap-nhat-tang/{id}', [
 Route::get('cap-nhat-giam/{id}', [
     'as'=>'capnhatgiam',
     'uses' => 'CartController@capnhatgiam']);
+Route::post('them-moi-don-hang', [
+    'as'=>'themdonhang',
+    'uses' => 'CartController@themdonhang']);

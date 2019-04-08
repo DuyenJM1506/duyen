@@ -14,33 +14,32 @@ class PhieunhapController extends Controller
     public function index()
     {
         $ds_pn = Phieunhap::all();
-
         return view('phieunhap.index')
             ->with('danhsachphieunhap', $ds_pn);
     }
     public function create()
     {
+        $ds_ncc = Nhacungcap::all();
         $ds_nv = Nhanvien::all();
         return view('phieunhap.create')
+            ->with('danhsachnhacungcap', $ds_ncc)
             ->with('danhsachnhanvien', $ds_nv);
-
-        $ds_ncc = Nhacungcap::all();
-        return view('phieunhap.create')
-            ->with('danhsachnhacungcap', $ds_ncc);
         
     }
     public function store(Request $request)
     {
         $pn                     = new Phieunhap();
         $pn->pn_nguoiGiao       =$request->pn_nguoiGiao;
-        $pn->pn_hoaDon          =$request->pn_hoaDon;
+        $pn->pn_soHoaDon        =$request->pn_soHoaDon;
         $pn->pn_ngayXuatHoaDon  =$request->pn_ngayXuatHoaDon;
         $pn->pn_ghiChu          =$request->pn_ghiChu;
         $pn->pn_ngayLapPhieu    =$request->pn_ngayLapPhieu;
         $pn->pn_ngayXacNhan     =$request->pn_ngayXacNhan;
         $pn->pn_ngayNhapKho     =$request->pn_ngayNhapKho;
-        $pn->pn_keToan          =$request->pn_keToan;
-        $pn->pn_thuKho          =$request->pn_thuKho;
+        $pn->nv_nguoiLapPhieu   = $request->nv_ma;
+        $pn->nv_keToan          = $request->nv_ma;
+        $pn->nv_thuKho          = $request->nv_ma;
+        $pn->ncc_ma             = $request->ncc_ma;
         $pn->pn_taoMoi          = $request->pn_taoMoi;
         $pn->pn_capNhat         = $request->pn_capNhat;
         $pn->pn_trangThai       = $request->pn_trangThai;
@@ -51,23 +50,29 @@ class PhieunhapController extends Controller
     public function edit($id){
         //Lay du lieu de edit
         $pn = Phieunhap::where("pn_ma", $id)->first();
+        $ds_nv = Nhanvien::all();
+        $ds_ncc = Nhacungcap::all();
         return view('phieunhap.edit')
-                    ->with('pn', $pn);
+                    ->with('pn', $pn)
+                    ->with('danhsachnhanvien', $ds_nv)
+                    ->with('danhsachnhacungcap', $ds_ncc);
             
     } 
 
-    public function update(LoaiRequest $request, $id){
+    public function update(Request $request, $id){
         //cap nhat du lieu
         $pn = Phieunhap::where("pn_ma", $id)->first();
         $pn->pn_nguoiGiao       = $request->pn_nguoiGiao;
-        $pn->pn_hoaDon          =$request->pn_hoaDon  ;
-        $pn->pn_ngayXuatHoaDon  =$request->pn_ngayXuatHoaDon  ;
-        $pn->pn_ghiChu          =$request->pn_ghiChu  ;
-        $pn->pn_ngayLapPhieu    =$request->pn_ngayLapPhieu  ;
-        $pn->pn_ngayXacNhan     =$request->pn_ngayXacNhan  ;
-        $pn->pn_ngayNhapKho     =$request->pn_ngayNhapKho  ;
-        $pn->pn_keToan          =$request->pn_keToan;
-        $pn->pn_thuKho          =$request->pn_thuKho;
+        $pn->pn_soHoaDon        =$request->pn_soHoaDon;
+        $pn->pn_ngayXuatHoaDon  = $request->pn_ngayXuatHoaDon;
+        $pn->pn_ghiChu          = $request->pn_ghiChu;
+        $pn->pn_ngayLapPhieu    = $request->pn_ngayLapPhieu;
+        $pn->pn_ngayXacNhan     = $request->pn_ngayXacNhan;
+        $pn->pn_ngayNhapKho     = $request->pn_ngayNhapKho;
+        $pn->nv_nguoiLapPhieu   = $request->nv_ma;
+        $pn->nv_keToan          = $request->nv_ma;
+        $pn->nv_thuKho          = $request->nv_ma;
+        $pn->ncc_ma              = $request->ncc_ma;
         $pn->pn_taoMoi          = $request->pn_taoMoi;
         $pn->pn_capNhat         = $request->pn_capNhat;
         $pn->pn_trangThai       = $request->pn_trangThai;
@@ -101,12 +106,12 @@ class PhieunhapController extends Controller
         $ds_ncc   = Nhacungcap::all();
         $data = [
             'danhsachphieunhap'     => $ds_pn,
-            'danhsachnhanvien'    => $nv,
-            'danhsachnhacungcap'  => $ncc,
+            'danhsachnhanvien'    => $ds_nv,
+            'danhsachnhacungcap'  => $ds_ncc,
         ];
         return view('phieunhap.print')
             ->with('danhsachphieunhap', $ds_pn)
-            ->with('danhsachnhanvien', $nv)
-            ->with('danhsachnhacungcap', $ncc);
+            ->with('danhsachnhanvien', $ds_nv)
+            ->with('danhsachnhacungcap', $ds_ncc);
     }
 }

@@ -37,9 +37,9 @@ class XuatxuController extends Controller
             
     } 
 
-    public function update(LoaiRequest $request, $id){
+    public function update(Request $request, $id){
         //cap nhat du lieu
-        $loai = Xuatxu::where("xx_ma", $id)->first();
+        $xx = Xuatxu::where("xx_ma", $id)->first();
         $xx->xx_ten       = $request->xx_ten;
         $xx->xx_taoMoi    = $request->xx_taoMoi;
         $xx->xx_capNhat   = $request->xx_capNhat;

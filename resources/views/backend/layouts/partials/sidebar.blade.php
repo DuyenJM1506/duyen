@@ -59,7 +59,7 @@
         <li class="{{ Request::is('admin/danhsachnhacungcap') ? 'active' : '' }}"><a href="{{ route('danhsachnhacungcap.index') }}">Danh sách nhà cung cấp </a> ></li>
         <br>
         <!-- User -->
-        <li class="{{ Request::is('admin/danhsachuser') ? 'active' : '' }}"><a href="{{ route('danhsachuser.index') }}">Danh sách khách hàng </a> ></li>
+        <li class="{{ Request::is('admin/danhsachkhachhang') ? 'active' : '' }}"><a href="{{ route('danhsachkhachhang.index') }}">Danh sách khách hàng </a> ></li>
         <br>
         <!-- Nhan vien -->
         <li class="{{ Request::is('admin/danhsachnhanvien') ? 'active' : '' }}"><a href="{{ route('danhsachnhanvien.index') }}">Danh sách nhân viên </a> ></li>
@@ -72,6 +72,12 @@
         <br>
         <!-- quản lý khuyến mãi -->
         <li class="{{ Request::is('admin/danhsachkhuyenmai') ? 'active' : '' }}"><a href="{{ route('danhsachkhuyenmai.index') }}">Quản lý khuyến mãi</a> ></li>
+        <br>
+        <!-- quản lý thanh toán -->
+        <li class="{{ Request::is('admin/danhsachthanhtoan') ? 'active' : '' }}"><a href="{{ route('danhsachthanhtoan.index') }}">DS phương thức thanh toán</a> ></li>
+        <br>
+        <!-- quản lý đơn hàng -->
+        <li class="{{ Request::is('admin/danhsachdonhang') ? 'active' : '' }}"><a href="{{ route('danhsachdonhang.index') }}">Quản lý đơn hàng</a> ></li>
         </ul>
        
       </ul>

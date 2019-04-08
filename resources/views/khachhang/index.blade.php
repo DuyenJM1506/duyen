@@ -54,19 +54,19 @@
                 </thead>
 
                 <tbody>
-                @foreach($danhsachuser as $user)
+                @foreach($danhsachkhachhang as $kh)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->hoten }}</td>
-                    <td>{{ $user->username }}</td>
-                    <td>{{ $user->gioitinh }}</td>
-                    <td>{{ $user->namsinh }}</td>
-                    <td>{{ $user->diachi }}</td>
-                    <td>{{ $user->dienthoai }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->matkhau }}</td>
+                    <td>{{ $kh->id }}</td>
+                    <td>{{ $kh->name }}</td>
+                    <td>{{ $kh->username }}</td>
+                    <td>{{ $kh->gioitinh }}</td>
+                    <td>{{ $kh->namsinh }}</td>
+                    <td>{{ $kh->diachi }}</td>
+                    <td>{{ $kh->dienthoai }}</td>
+                    <td>{{ $kh->email }}</td>
+                    <td>{{ $kh->password }}</td>
                     <td>
-                        <form action="{{ route('danhsachuser.destroy', ['id' => $user->id]) }}" method="post" class="pull-left">
+                        <form action="{{ route('danhsachkhachhang.destroy', ['id' => $kh->id]) }}" method="post" class="pull-left">
                             <input type="hidden" name="_method" value="DELETE"/>
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-danger">Xóa</button>

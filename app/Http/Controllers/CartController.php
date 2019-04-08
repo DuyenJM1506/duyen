@@ -20,31 +20,6 @@ use App\Classes\ActivationService;
 
 class CartController extends Controller
 {
-    // public function index(){
-    //     Cart::add(array(
-    //         array(
-    //             'id' => 456,
-    //             'name' => 'Sample Item 1',
-    //             'price' => 67.99,
-    //             'quantity' => 4,
-    //             'attributes' => array()
-    //         ),
-    //         array(
-    //             'id' => 568,
-    //             'name' => 'Sample Item 2',
-    //             'price' => 69.25,
-    //             'quantity' => 4,
-    //             'attributes' => array(
-    //               'size' => 'L',
-    //               'color' => 'blue'
-    //             )
-    //         ),
-    //       ));
-    //       $data = Cart::getContent();
-    
-    //     return view('frontend.cart')
-    //     ->with('data', $data);
-    // }
     public function muahang($id)
     {
         $sanphammua = Sanpham::find($id);
@@ -56,7 +31,31 @@ class CartController extends Controller
                     'name' => $sanphammua->sp_ten,
                     'price' => $sanphammua->sp_giaBan,
                     'quantity' => 1,
-                    'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan))
+                    'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan,
+                                           'size' =>$sanphammua->s_ten ))
+            );
+            $output = new \Symfony\Component\Console\Output\ConsoleOutput(2);
+
+            $output->writeln('hello');
+
+            return redirect()->route('giohang');
+        }
+    }
+
+    public function muahangchitiet(Request $request, $id)
+    {
+
+        $sanphammua = Sanpham::find($id);
+        if ($sanphammua->sp_soLuongHienTai == 0) {
+            return redirect()->back()->with('alert', 'Sản phẩm đã hết hàng vui lòng chọn sản phẩm khác');
+        } else {
+            Cart::add(array(
+                    'id' => $id,
+                    'name' => $sanphammua->sp_ten,
+                    'price' => $sanphammua->sp_giaBan,
+                    'quantity' => Request::get('spdh_soLuong'), //dh_soluong???
+                    'attributes' => array('img' => $sanphammua->sp_anhDaiDien, 'giagoc' => $sanphammua->sp_giaBan,
+                                            'size' =>$sanphammua->s_ten  ))
             );
             $output = new \Symfony\Component\Console\Output\ConsoleOutput(2);
 
@@ -75,9 +74,11 @@ class CartController extends Controller
             'name' => $sanphammua->sp_ten,
             'price' => $sanphammua->sp_giaBan,
             'quantity' => 1,
-            'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan))
+            'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan,
+                                'size' =>$sanphammua->s_ten ))
         );
-        return redirect()->route('san-pham');
+        return redirect()->back();
+        
     }
 
     public function index()
@@ -86,6 +87,7 @@ class CartController extends Controller
         $total = Cart::getSubTotal();
         return view('frontend.cart', compact('cart'))->with('total',$total);
     }
+
     public function xoasanpham($id)
     {
         Cart::remove($id);
@@ -125,5 +127,83 @@ class CartController extends Controller
             'CartController@index');
     }
 
+    public function themdonhang(Request $request)
+    {
+        try {
+            $cartInfor = Cart::getContent();
+            $dh = new Donhang();
+            if (isset(Auth::user()->name)) {
+                $dh->id = Auth::user()->id;
+            } else {
+                $dh->id = 0;
+            }
+            $dh->dh_tenKhachHang = Request::get('dh_tenKhachHang');
+            $dh->dh_email = Request::get('dh_email');
+            $dh->dh_diaChi = Request::get('dh_diaChi');
+            $dh->dh_dienThoai = Request::get('dh_dienThoai');
+            if (Cart::getSubTotal() < 500000) {
+                $dh->dh_tongcong = str_replace(',', '', Cart::getSubTotal() + 30000);
+            } else {
+                $dh->dh_tongcong = str_replace(',', '', Cart::getSubTotal());
+            }
+
+            $dh->vc_ma = Request::get('vc_ma');
+            $dh->tt_ma = Request::get('tt_ma');
+            $dh->save();
+            if (count($cartInfor) > 0) {
+                foreach ($cartInfor as $key => $item) {
+                    $spdh = new Chitietdonhang();
+                    $spdh->dh_ma = $dh->dh_ma;
+                    $spdh->sp_ma = $item->id;
+                    $spdh->s_ma = $item->id;
+                    $spdh->spdh_soLuong = $item->quantity;
+                    $spdh->spdh_donGia = $item->price;
+                    $spdh->save();
+                    $sp = DB::table('sanpham')
+                        ->where('sp_ma', $item->id)
+                        ->first();
+                    // $spkm = DB::table('sanpham_khuyenmai')
+                    //     ->where('sp_ma', $item->id)
+                    //     ->where('kmsp_trangThai', '=', 2)
+                    //     ->first();
+                    // if (isset($spkm->kmsp_soLuongKhuyenMaiConLai) && ($spkm->kmsp_soLuongKhuyenMaiConLai > 0)) {
+                    //     DB::table('sanpham_khuyenmai')
+                    //         ->where('sp_ma', $item->id)
+                    //         ->update(['kmsp_soLuongKhuyenMaiConLai' => $spkm->kmsp_soLuongKhuyenMaiConLai - $item->quantity]);
+                    // }
+                    DB::table('sanpham')
+                        ->where('sp_ma', $item->id)
+                        ->update(['sp_soLuongHienTai' => $sp->sp_soLuongHienTai - $item->quantity]);
+                }
+            }
+            Cart::clear();
+            return redirect(route('index'))
+                ->with('alert', 'Đặt hàng thành công');
+        } catch (QueryException $ex) {
+            return response([
+                'error' => true, 'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    public function thongtindathang()
+    {
+
+        $cart = Cart::getContent();
+        $total = Cart::getSubTotal();
+        if($total>0)
+        {
+
+            $total = Thanhtoan::all();
+            $vc = Vanchuyen::all();
+            return view('frontend.dathang', compact('cart', 'total'))
+                ->with('thanhtoan', $total)
+                ->with('vanchuyen', $vc);
+        }
+        else{
+            return redirect()->back()->with('alert', 'Vui lòng lựa chọn sản phẩm');
+        }
+
+    }
 
 }

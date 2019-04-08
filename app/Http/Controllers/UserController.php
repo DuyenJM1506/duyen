@@ -11,18 +11,18 @@ class UserController extends Controller
 {
     public function index()
     {
-        $ds_user = User::where('q_ma','=','3')->paginate(5);
+        $ds_khachhang = User::where('q_ma','=','3')->paginate(5);
 
-        return view('user.index')
-            ->with('danhsachuser', $ds_user);
+        return view('khachhang.index')
+            ->with('danhsachkhachhang', $ds_khachhang);
     }
     public function destroy($id)
     {
-        $user = User::where("id", $id)->first();
-        $user->delete();
+        $kh = User::where("id", $id)->first();
+        $kh->delete();
 
         Session::flash('alert-info', 'Xoa khach hang thanh cong!');
-        return redirect()->route('danhsachuser.index');
+        return redirect()->route('danhsachkhachhang.index');
     }
 
 }

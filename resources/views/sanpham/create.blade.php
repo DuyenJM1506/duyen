@@ -85,6 +85,19 @@ Thêm mới sản phẩm
     </div>
 
     <div class="form-group">
+        <label for="km_ten">Chọn khuyến mãi</label>
+        <select name="km_ma">
+            @foreach($danhsachkhuyenmai as $km)
+                @if(old('km_ma') == $km->km_ma)
+                    <option value="{{ $km->km_ma }}" selected>{{ $km->km_ten }}</option>
+                @else
+                    <option value="{{ $km->km_ma }}">{{ $km->km_ten }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="sp_taoMoi">Ngày tạo mới</label>
             <input type="text" class="form-control" id="sp_taoMoi" name="sp_taoMoi" placeholder="Ngay" value="{{ old('sp_taoMoi') }}">
     </div>

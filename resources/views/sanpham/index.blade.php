@@ -45,16 +45,16 @@
                 <thead>
                 <tr>
                     <th>Mã</th>
-                    <th>Tên sản phẩm</th>
+                    <th>Tên</th>
                     <th>Hình ảnh</th>
                     <th>Giá gốc</th>
                     <th>Giá bán</th>
-                    <th>Thuộc loại</th>
+                    <th>Loại</th>
                     <th>SL ban đầu</th>
                     <th>SL hiện tại</th>
                     <th>Xuất xứ</th>
                     <th>Màu</th>
-                 
+                    <th>Khuyến mãi</th>
                     <th>Sửa - Xóa</th>
                 </tr>
                 </thead>
@@ -72,6 +72,7 @@
                     <td>{{ $sp->sp_soLuongHienTai }}</td>
                     <td>{{ $sp->xuatxus->xx_ten }}</td>
                     <td>{{ $sp->maus->m_ten }}</td>
+                    <td>{{ $sp->khuyenmai->km_ten }}</td>
                     <td>
                         <a href="{{ route('danhsachsanpham.edit' , ['id' => $sp->sp_ma]) }}"
                         class="btn btn-primary pull-left">Sửa

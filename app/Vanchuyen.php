@@ -11,7 +11,7 @@ class Vanchuyen extends Model
     protected $table        = 'vanchuyen';
     protected $fillable     = ['vc_ma', 'vc_ten','vc_chiPhi','v_trangThai'];
     protected $guarded      = ['vc_ma'];
-     protected $dates        = ['vc_taoMoi', 'vc_capNhat']; // Carbon
+     protected $dates        = ['vc_taoMoi', 'vc_capNhat']; 
     protected $dateFormat   = 'Y-m-d H:i:s';
     protected $primaryKey   = 'vc_ma';
 

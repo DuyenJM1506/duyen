@@ -21,7 +21,7 @@ Liên hệ Shop Hoa tươi - Sunshine
       <div class="flex-w flex-tr">
         <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
           <form name="contactForm" ng-submit="submitContactForm()" novalidate>
-            <h4 class="mtext-105 cl2 txt-center p-b-30">
+            <h4 class="mtext-105 cl2 txt-center p-b-30" style="font-family: 'Lora', serif;">
               Gởi lời nhắn cho ARMY FASHION Shop
             </h4>
             <!-- Div Thông báo lỗi 
@@ -56,8 +56,8 @@ Liên hệ Shop Hoa tươi - Sunshine
               <img class="how-pos4 pointer-none" src="{{ asset('theme/cozastore/images/icons/icon-email.png') }}" alt="ICON">
             </div>
             <!-- Validate lời nhắm -->
-            <div class="bor8 m-b-30">
-              <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="message" placeholder="Bạn cần chúng tôi giúp đỡ về vấn đề gì?"
+            <div class="bor8 m-b-30" >
+              <textarea style="font-family: 'Lora', serif; font-size: 16px" class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="message" placeholder="Bạn cần chúng tôi giúp đỡ về vấn đề gì?"
                 ng-model="message" ng-minlength="6" ng-maxlength="250"
                 ng-required=true></textarea>
             </div>
@@ -67,16 +67,16 @@ Liên hệ Shop Hoa tươi - Sunshine
             </button>
           </form>
         </div>
-        <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+        <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md" >
           <div class="flex-w w-full p-b-42">
             <span class="fs-18 cl5 txt-center size-211">
               <span class="lnr lnr-map-marker"></span>
             </span>
             <div class="size-212 p-t-2">
-              <span class="mtext-110 cl2">
+              <span class="mtext-110 cl2" style="font-family: 'Lora', serif;">
                 Địa chỉ
               </span>
-              <p class="stext-115 cl6 size-213 p-t-18">
+              <p class="stext-115 cl6 size-213 p-t-18" style="font-family: 'Lora', serif;">
                 Hẻm 11 Mậu Thân, Xuân Khánh, Quận Ninh Kiều, TP Cần Thơ
               </p>
             </div>
@@ -86,10 +86,10 @@ Liên hệ Shop Hoa tươi - Sunshine
               <span class="lnr lnr-phone-handset"></span>
             </span>
             <div class="size-212 p-t-2">
-              <span class="mtext-110 cl2">
+              <span class="mtext-110 cl2" style="font-family: 'Lora', serif;">
                 Đường dây nóng
               </span>
-              <p class="stext-115 cl1 size-213 p-t-18">
+              <p class="stext-115 cl1 size-213 p-t-18" style="font-family: 'Lora', serif;">
                 0915-659-223
               </p>
             </div>
@@ -99,10 +99,10 @@ Liên hệ Shop Hoa tươi - Sunshine
               <span class="lnr lnr-envelope"></span>
             </span>
             <div class="size-212 p-t-2">
-              <span class="mtext-110 cl2">
+              <span class="mtext-110 cl2" style="font-family: 'Lora', serif;">
                 Email hỗ trợ
               </span>
-              <p class="stext-115 cl1 size-213 p-t-18">
+              <p class="stext-115 cl1 size-213 p-t-18" style="font-family: 'Lora', serif;">
                 nguyenyenduyen1506@gmail.com
               </p>
             </div>
@@ -111,7 +111,7 @@ Liên hệ Shop Hoa tươi - Sunshine
       </div>
       <!-- Bản đồ Địa chỉ công ty -->
       <div class="row mt-4">
-        <div class="col-md-12 text-center mb-4">
+        <div class="col-md-12 text-center mb-4" style="font-family: 'Lora', serif;">
           <h2>Địa chỉ liên hệ</h2>
         </div>
         <div class="col-md-12">

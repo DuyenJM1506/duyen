@@ -4,6 +4,7 @@
   <title>@yield('title')</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
   <!--===============================================================================================-->
   <link rel="icon" type="image/png" href="{{ asset('theme/cozastore/images/icons/favicon.png') }}" />
   <!--===============================================================================================-->
@@ -69,6 +70,7 @@
                 <div class="wrap-slick3-dots"></div>
                 <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
                 <div class="slick3 gallery-lb">
+
                   <div class="item-slick3" data-thumb="{{ asset('theme/cozastore/images/product-detail-01.jpg') }}">
                     <div class="wrap-pic-w pos-relative">
                       <img src="{{ asset('theme/cozastore/images/product-detail-01.jpg') }}" alt="IMG-PRODUCT">
@@ -77,6 +79,7 @@
                       </a>
                     </div>
                   </div>
+
                   <div class="item-slick3" data-thumb="{{ asset('theme/cozastore/images/product-detail-02.jpg') }}">
                     <div class="wrap-pic-w pos-relative">
                       <img src="{{ asset('theme/cozastore/images/product-detail-02.jpg') }}" alt="IMG-PRODUCT">
@@ -85,6 +88,7 @@
                       </a>
                     </div>
                   </div>
+                  
                   <div class="item-slick3" data-thumb="{{ asset('theme/cozastore/images/product-detail-03.jpg') }}">
                     <div class="wrap-pic-w pos-relative">
                       <img src="{{ asset('theme/cozastore/images/product-detail-03.jpg') }}" alt="IMG-PRODUCT">
@@ -297,5 +301,12 @@
   @yield('custom-scripts')
   @yield('scripts')
   @yield('styles')
+
+  <style>
+    body {
+    font-family: 'Lora', serif;
+  }
+  </style>
+  
 </body>
 </html>

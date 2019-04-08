@@ -2,4 +2,5 @@
     <div class="overlay-modal1 js-hide-modal" data-sp-ma="{{ $sp->sp_ma }}"></div>
     <!-- Product info -->
     @include('frontend.widgets.product-info', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
+    
 </div>

@@ -19,35 +19,43 @@ Thêm mới phiếu nhập
 
     <div class="form-group ">
         <label for="pn_soHoaDon">Số hóa đơn</label>
-            <input disabled type="text" class="form-control" id="pn_soHoaDon" name="pn_soHoaDon" placeholder="HDxxxt" value="{{ old('pn_soHoaDon') }}">
+            <input type="text" class="form-control" id="pn_soHoaDon" name="pn_soHoaDon" placeholder="HDxxx" value="{{ old('pn_soHoaDon') }}">
     </div>
 
     <div class="form-group">
-        <label for="pn_nguoiLapPhieu">Họ tên người lập phiếu</label>
-            <input type="text" class="form-control" id="pn_nguoiLapPhieu" name="pn_nguoiLapPhieu" placeholder="Ho ten nguoi lap phieu" value="{{ old('pn_nguoiLapPhieu') }}">
-    </div>
-
-    <div class="form-group">
-        <label for="nv_ten">Kế toán</label>
+        <label for="nv_nguoiLapPhieu">Người lập phiếu</label>
         <select name="nv_ma">
             @foreach($danhsachnhanvien as $nv)
                 @if(old('nv_ma') == $nv->nv_ma)
-                    <option value="{{ $nv->nv_ma }}" selected>{{ $nv->nv_ten }}</option>
+                    <option value="{{ $nv->nv_ma }}" selected>{{ $nv->nv_hoTen }}</option>
                 @else
-                    <option value="{{ $nv->nv_ma }}">{{ $nv->nv_ten }}</option>
+                    <option value="{{ $nv->nv_ma }}">{{ $nv->nv_hoTen }}</option>
                 @endif
             @endforeach
         </select>
     </div>
 
     <div class="form-group">
-        <label for="nv_ten">Thủ kho</label>
+        <label for="nv_keToan">Kế toán</label>
         <select name="nv_ma">
             @foreach($danhsachnhanvien as $nv)
                 @if(old('nv_ma') == $nv->nv_ma)
-                    <option value="{{ $nv->nv_ma }}" selected>{{ $nv->nv_ten }}</option>
+                    <option value="{{ $nv->nv_ma }}" selected>{{ $nv->nv_hoTen }}</option>
                 @else
-                    <option value="{{ $nv->nv_ma }}">{{ $nv->nv_ten }}</option>
+                    <option value="{{ $nv->nv_ma }}">{{ $nv->nv_hoTen }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="nv_thuKho">Thủ kho</label>
+        <select name="nv_ma">
+            @foreach($danhsachnhanvien as $nv)
+                @if(old('nv_ma') == $nv->nv_ma)
+                    <option value="{{ $nv->nv_ma }}" selected>{{ $nv->nv_hoTen }}</option>
+                @else
+                    <option value="{{ $nv->nv_ma }}">{{ $nv->nv_hoTen }}</option>
                 @endif
             @endforeach
         </select>
@@ -69,6 +77,16 @@ Thêm mới phiếu nhập
                 @endif
             @endforeach
         </select>
+    </div>
+
+    <div class="form-group">
+        <label for="pn_ghiChu">Ghi chú</label>
+            <input type="text" class="form-control" id="pn_ghiChu" name="pn_ghiChu" placeholder="Ghi chu" value="{{ old('pn_ghiChu') }}">
+    </div>
+
+    <div class="form-group">
+        <label for="pn_ngayXuatHoaDon">Ngày xuất hóa đơn</label>
+            <input type="text" class="form-control" id="pn_ngayXuatHoaDon" name="pn_ngayXuatHoaDon" placeholder="yyyy-mm-dd" value="{{ old('pn_ngayXuatHoaDon') }}">
     </div>
 
     <div class="form-group">

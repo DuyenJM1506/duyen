@@ -39,7 +39,7 @@
 		<div class="col-sm-6 col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form role="form" action="{{ route('checkLogin') }}" method="POST">
+					<form role="form" action="{{ route('kiemtradangnhap') }}" method="POST">
 						{!! csrf_field() !!}
 						<fieldset>
 							<div class="row">

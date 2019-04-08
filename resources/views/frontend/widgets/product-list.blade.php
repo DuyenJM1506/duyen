@@ -6,7 +6,6 @@
           <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
            Tất cả
           </button>
-
           @foreach($danhsachloai as $loai)
           <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".loai-{{ $loai->l_ten }}">
             {{ $loai->l_ten }}
@@ -26,15 +25,18 @@
           </div>
         </div>
         
-        <!-- Search product -->
+  <!-- Search product -->
         <div class="dis-none panel-search w-full p-t-10 p-b-15">
           <div class="bor8 dis-flex p-l-15">
-            <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-              <i class="zmdi zmdi-search"></i>
-            </button>
-            <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+            
+              <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                <i class="zmdi zmdi-search"></i>
+              </button>
+              <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Nhập tên hoặc giá sản phẩm ...">
+            
           </div>  
         </div>
+
         <!-- Filter -->
         <div class="dis-none panel-filter w-full p-t-10">
           <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
@@ -190,14 +192,14 @@
           </div>
         </div>
       </div>
+      
 <script>
   function submit(abc) {
-    alert("THÀNH CÔNG!");
-    
+    alert("Thêm vào giỏ hàng thành công!");
   }
 </script>
     <!-- SHOW PRODUCT -->
-
+      
       <div style="width:100%;">
                 @foreach($data as $index=>$sp)
 
@@ -208,19 +210,22 @@
               <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal" 
                   data-sp-ma="{{ $sp->sp_ma }}"> 
                 Thử đồ online
-              </a>
-            </div>
+              </a>   
+              </div>
             <div class="block2-txt flex-w flex-t p-t-14">
               <div class="block2-txt-child1 flex-col-l ">
                   <a class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                    {{ $sp->sp_ten }}
+                      <span style="color:blue; text-transform: uppercase;">
+                      {{ $sp->sp_ten }}
+                      </span>
                   </a>
                   <span class="stext-105 cl3">
-                    {{ $sp->sp_giaBan }} <span>VNĐ</span>
+                   <b style="font-size:18px;">{{number_format( $sp->sp_giaBan )}}</b> <span>VNĐ</span>
+                   - <span>Số lượng: </span><b style="font-size:15px;">{{ $sp->sp_soLuongHienTai }}</b> 
                   </span>
                   <span class="stext-105 cl3">
                   <input type="text" value="{{ route('muahang',$sp->sp_ma ) }}" id="{{ $sp->sp_ma }}" style="display: none;">
-                    <a href="{{ route('muahang',$sp->sp_ma ) }}" onclick="submit('{{$sp->sp_ma }}')" >Thêm vào Giỏ hàng </a><span></span>
+                    <a href="{{ route('muahang',$sp->sp_ma ) }}" onclick="submit('{{$sp->sp_ma }}')" ><span style="color: red; font-size: 18px">Thêm vào Giỏ hàng </span></a>
                   </span>
               </div>
             </div>

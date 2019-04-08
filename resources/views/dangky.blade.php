@@ -23,7 +23,8 @@
             <div class="col-sm-12 row-sm-12">
                         <div class="panel panel-default"><!--contact_form_container form-group-->
                         
-                            <div class="contact_form_title row d-flex justify-content-center"><font style="font-family: Ampersand; font-size: 30px">Đăng ký tài khoản</font></div> </br>
+                            <div class="contact_form_title row d-flex justify-content-center">
+                            <font style="font-family: Ampersand; font-size: 30px;color: white; padding: 10px">Đăng ký tài khoản</font></div> </br>
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -62,7 +63,7 @@
 
                                     <div style="height: 30px"></div>
                                     <div class="d-flex flex-md-row flex-column">
-                                        <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Username</font></div>
+                                        <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Username đăng nhập</font></div>
                                         <div class="col-sm-8">
                                             <input type="username" id="username" name="username" value="{{ old('username') }}" class="form-control" placeholder="Username" required>
                                         </div>

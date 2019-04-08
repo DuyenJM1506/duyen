@@ -44,12 +44,14 @@
                 <tr>
                     <th>Mã</th>
                     <th>Số hóa đơn</th>
-                    <th>Họ tên người lập phiếu</th>
+                    <th>Người lập phiếu</th>
                     <th>Kế toán</th>
                     <th>Thủ kho</th>
                     <th>Người giao</th>
                     <th>Nhà cung cấp</th>
+                    <th>Ghi chú</th>
                     <th>Ngày lập phiếu</th>
+                    <th>Ngày xuất HĐ</th>
                     <th>Ngày xác nhận</th>
                     <th>Ngày nhập kho</th>
                     <th>Sửa</th>
@@ -68,15 +70,18 @@
                     <td>{{ $pn->thukho->nv_hoTen }}</td>
                     <td>{{ $pn->pn_nguoiGiao }}</td>
                     <td>{{ $pn->nhacungcap->ncc_ten }}</td>
+                    <td>{{ $pn->pn_ghiChu }}</td>
+                    <td>{{ $pn->pn_ngayLapPhieu }}</td>
+                    <td>{{ $pn->pn_ngayXuatHoaDon }}</td>
                     <td>{{ $pn->pn_ngayXacNhan }}</td>
-                    <td>{{ $pn->pn_nhapKho }}</td>
+                    <td>{{ $pn->pn_ngayNhapKho }}</td>
                     <td>
-                    <a href="{{ route('danhsachphieunhan.edit' , ['id' => $pn->pn_ma]) }}"
+                    <a href="{{ route('danhsachphieunhap.edit' , ['id' => $pn->pn_ma]) }}"
                         class="btn btn-primary pull-left">Sửa
                         </a>
                     </td>
                     <td>
-                        <form action="{{ route('danhsachphieunhan.destroy', ['id' => $pn->pn_ma]) }}" method="post" class="pull-left">
+                        <form action="{{ route('danhsachphieunhap.destroy', ['id' => $pn->pn_ma]) }}" method="post" class="pull-left">
                             <input type="hidden" name="_method" value="DELETE"/>
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-danger">Xóa</button>
