@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Loai;
-//use App\Mau;
+use App\Mau;
 use App\Sanpham;
 use App\Vanchuyen;
 use App\Khachhang;
@@ -31,6 +31,8 @@ class FrontendController extends Controller
  */
 public function index(Request $request)
 {
+
+
     // Query top 3 loại sản phẩm (có sản phẩm) mới nhất
     $ds_top3_newest_loaisanpham = DB::table('loai')
                                 ->join('sanpham', 'loai.l_ma', '=', 'sanpham.l_ma')
@@ -38,6 +40,7 @@ public function index(Request $request)
     
     // Query tìm danh sách sản phẩm
     $danhsachsanpham = $this->searchSanPham($request);
+
 
     // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
     $danhsachhinhanhlienquan = DB::table('hinhanh')
@@ -48,19 +51,17 @@ public function index(Request $request)
     $danhsachloai = Loai::all();
 
      // Query danh sách màu
-    //$danhsachmau = Mau::all();
+    $danhsachmau = Mau::all();
 
     // Hiển thị view `frontend.index` với dữ liệu truyền vào
     return view('frontend.index')
         ->with('ds_top3_newest_loaisanpham', $ds_top3_newest_loaisanpham)
         ->with('danhsachsanpham', $danhsachsanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-      //  ->with('danhsachmau', $danhsachmau)
+       ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
-/**
- * Hàm query danh sách sản phẩm theo nhiều điều kiện
- */
+
 private function searchSanPham(Request $request)
 {
     $query = DB::table('sanpham')->select('*');
@@ -74,10 +75,74 @@ private function searchSanPham(Request $request)
     $data = $query->get();
     return $data;
 }
+/**
+ * Hàm query danh sách sản phẩm theo nhiều điều kiện
+ */
+public function searchpage($tukhoa)
+{
+
+    $ta = str_replace('-', ' ', $tukhoa);
+        $ds_loai = Loai::all();
+        $data = DB::table('sanpham')
+            ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+            ->where('sp_ten', 'LIKE', "%{$ta}%")
+            ->orWhere('l_ten', 'LIKE', "%{$ta}%")
+            ->orderBy('sp_giaBan', 'ASC')
+            ->paginate(10);
+        $count = DB::table('sanpham')
+            ->where('sp_ten', 'LIKE', "%{$ta}%")
+            ->count();
+        return view('frontend.ketqua')
+            ->with('data', $data)
+            ->with('count', $count)
+            ->with('danhsachloai', $ds_loai);
+}
+
+public function searchpage_gia($gia1, $gia2)
+    {
+        $ds_loai = Loai::all();
+        if ($gia2 == 'Hight') {
+            $data = DB::table('sanpham')
+             ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+                ->where('sp_giaBan', '>', $gia1)
+                ->orderBy('sp_giaBan', 'ASC')
+                ->paginate(10);
+            $count = DB::table('sanpham')
+                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+                ->where('sp_giaBan', '>', $gia1)
+                ->count();
+        } else {
+            $data = DB::table('sanpham')
+                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+                ->where('sp_giaBan', '>', $gia1)
+                ->where('sp_giaBan', '<', $gia2)
+                ->orderBy('sp_giaBan', 'ASC')
+                ->paginate(10);
+            $count = DB::table('sanpham')
+                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+                ->where('sp_giaBan', '>', $gia1)
+                ->where('sp_giaBan', '<', $gia2)
+                ->count();
+        }
+
+        return view('frontend.ketqua')
+            ->with('data', $data)
+            ->with('count', $count)
+            ->with('danhsach', $ds_loai);
+    }
+
+    
+
 public function about ()
     {
         return view('frontend.pages.about');
     }
+
+public function trying ()
+{
+    return view('frontend.pages.tryingonl');
+}
+
 public function contact ()
     {
         return view('frontend.pages.contact');
@@ -104,11 +169,11 @@ public function chitietsanpham(Request $request, $id)
     // Query danh sách Loại
     $danhsachloai = Loai::all();
     // Query danh sách màu
-   // $danhsachmau = Mau::all();
+   $danhsachmau = Mau::all();
     return view('frontend.pages.product-detail')
         ->with('sp', $sanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-       // ->with('danhsachmau', $danhsachmau)
+       ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
     }
 
@@ -126,12 +191,12 @@ public function product(Request $request)
     // Query danh sách Loại
     $danhsachloai = Loai::all();
     // Query danh sách màu
-    //$danhsachmau = Mau::all();
+    $danhsachmau = Mau::all();
     // Hiển thị view `frontend.index` với dữ liệu truyền vào
     return view('frontend.pages.product')
         ->with('danhsachsanpham', $danhsachsanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-        //->with('danhsachmau', $danhsachmau)
+        ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
 
@@ -264,6 +329,7 @@ public function orderFinish()
         return redirect()->intended('/');
      }
 
+  
 }
 
 

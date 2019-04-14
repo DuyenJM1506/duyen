@@ -24,7 +24,7 @@
                         <div class="panel panel-default"><!--contact_form_container form-group-->
                         
                             <div class="contact_form_title row d-flex justify-content-center">
-                            <font style="font-family: Ampersand; font-size: 30px;color: white; padding: 10px">Đăng ký tài khoản</font></div> </br>
+                            <font style="font-family: Ampersand; font-size: 30px;color: white; padding: 10px">Đăng ký tài khoản</font></div> 
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -35,12 +35,12 @@
                             </div>
                             @endif
                         <fieldset style="background: #17568C">
-                            <form  class="form" method="POST" action="{{ url('/register') }}" >  </br>
+                            <form  class="form" method="POST" action="{{ url('/register') }}" >  
                                 {{ csrf_field() }}
                                 <div class="d-flex flex-md-row flex-column">
                                     <div class="col-sm-4 d-flex align-items-end flex-column" ><font style="color: white">Họ tên</font> </div>
                                     <div class="col-sm-8">
-                                        <input type="name"name="name" value="{{ old('name') }}"  class="form-control" placeholder="Họ tên" required>
+                                        <input type="name"name="name" value="{{ old('name') }}"  class="form-control" placeholder="Vui lòng nhập đầy đủ họ tên" required>
                                         @if ($errors->has('name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -52,7 +52,7 @@
                                     <div class="d-flex flex-md-row flex-column">
                                         <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Email</font></div>
                                         <div class="col-sm-8">
-                                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email" required>
+                                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="example@gmail.com" required>
                                         </div>
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -63,9 +63,9 @@
 
                                     <div style="height: 30px"></div>
                                     <div class="d-flex flex-md-row flex-column">
-                                        <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Username đăng nhập</font></div>
+                                        <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Username</font></div>
                                         <div class="col-sm-8">
-                                            <input type="username" id="username" name="username" value="{{ old('username') }}" class="form-control" placeholder="Username" required>
+                                            <input type="username" id="username" name="username" value="{{ old('username') }}" class="form-control" placeholder="Username để đăng nhập" required>
                                         </div>
                                         @if ($errors->has('username'))
                                             <span class="help-block">
@@ -124,7 +124,7 @@
                         <div class="d-flex flex-md-row flex-column">
                             <div class="col-sm-4 d-flex align-items-end flex-column"><font style="color: white"> Địa chỉ</font></div>
                             <div class="col-sm-8">
-                                <input id="diachi" type="text" name="diachi" value="{{ old('diachi') }}" class="form-control" placeholder="Địa chỉ" required>
+                                <input id="diachi" type="text" name="diachi" value="{{ old('diachi') }}" class="form-control" placeholder="Nhập đầy đủ và chính xác địa chỉ" required>
                             </div>
                             
                         </div>

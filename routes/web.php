@@ -126,6 +126,7 @@ Route::delete('/danhsachthanhtoan/{id}', 'ThanhtoanController@destroy')->name('d
 Route::resource('danhsachsanpham', 'SanphamController');
 Route::resource('danhsachloai', 'LoaiController');
 Route::get('/', 'FrontendController@index')->name('frontend.home');
+Route::get('/thu-do-online', 'FrontendController@trying')->name('frontend.tryingonl');
 Route::get('/gioi-thieu', 'FrontendController@about')->name('frontend.about');
 Route::get('/lien-he', 'FrontendController@contact')->name('frontend.contact');
 Route::post('/lien-he/goi-loi-nhan', 'FrontendController@sendMailContactForm')->name('frontend.contact.sendMailContactForm');
@@ -173,3 +174,5 @@ Route::get('cap-nhat-giam/{id}', [
 Route::post('them-moi-don-hang', [
     'as'=>'themdonhang',
     'uses' => 'CartController@themdonhang']);
+
+

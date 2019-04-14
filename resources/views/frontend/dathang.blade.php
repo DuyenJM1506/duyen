@@ -1,3 +1,4 @@
+
 {{-- View này sẽ kế thừa giao diện từ `frontend.layouts.index` --}}
 @extends('frontend.layouts.index')
 {{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.index` --}}
@@ -19,8 +20,9 @@
         <img src="{{asset('storage/photos/shopping-01-512.png')}}" alt="img" width= "40px" height="36px"></button>
 
     </a>
+    </div>
 </div>
-</div>
+<br>
 <hr>
 <div class="container" ng-controller="orderController">
     <form name="orderForm" ng-submit="submitOrderForm()" novalidate method="POST" action="{{ route('themdonhang') }}">
@@ -28,7 +30,10 @@
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <h4>Thông tin khách hàng</h4>
-
+                <!-- Div Thông báo lỗi 
+                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
+                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
+                -->
                 <br>
               
                 <div class="form-group">
@@ -70,21 +75,26 @@
  <!-- Thông tin đặt hàng -->           
             <div class="col-lg-6 col-md-6">
                 <h4>Thông tin Đặt hàng</h4>
+                <!-- Div Thông báo lỗi 
+                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
+                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
+                -->
               <br>
                 <div class="form-group">
                     <label for="tt_ma"><b>Hình thức thanh toán:</b></label>
                     <select name="tt_ma" id="tt_ma" class="form-control" ng-model="tt_ma" ng-required=true>
-                        @foreach ($thanhtoan as $httt)
-                          <option value="{{ $httt->tt_ma }}">{{ $httt->tt_ten }}</option>
-                        @endforeach
+                        <option value="">Thanh toán trực tuyến</option>
+                          <option value="">Thanh toán khi nhận hàng (COD)</option>
                     </select>
                 </div>
-              
-                <div class="form-group">
-                    <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-                    <script>paypal.Buttons().render('body');</script>
-                </div>
+                
+                <!-- <div class="form-group">
+                    <a href="{{ route('giohang') }}">
+                    
+                    <button type="button" class="button btn btn-primary cart_button_checkout">Trở lại đặt hàng</button></a>
+                </div> -->
 
+                
             </div>
         </div>
      
@@ -100,5 +110,3 @@
 {{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
 @section('custom-scripts')
 @endsection
-
-

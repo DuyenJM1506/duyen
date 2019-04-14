@@ -14,6 +14,9 @@ use App\Exports\SanPhamExport;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 
+use PayPal;
+use Redirect;
+
 
 class SanphamController extends Controller
 {
@@ -172,5 +175,5 @@ class SanphamController extends Controller
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }
 
-   
+ 
 }

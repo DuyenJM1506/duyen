@@ -2,7 +2,7 @@
 @extends('frontend.layouts.index')
 {{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.index` --}}
 @section('title')
-Liên hệ Shop Hoa tươi - Sunshine
+Liên hệ ARMY FASHION Shop
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.index` --}}
 @section('custom-css')
@@ -49,15 +49,15 @@ Liên hệ Shop Hoa tươi - Sunshine
             </div>
             <!-- Validate email -->
             <div class="bor8 m-b-20 how-pos4-parent">
-              <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Email của bạn"
+              <input style="font-family: 'Lora', serif;" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Email của bạn"
                 ng-model="email" ng-pattern="/^.+@gmail\.com$/"
                 ng-required=true>
-              <span class="valid" ng-show="userInfo.email.$valid">Hợp lệ</span>
+              <span class="valid" ng-show="userInfo.email.$valid" style="font-family: 'Lora', serif;">Hợp lệ</span>
               <img class="how-pos4 pointer-none" src="{{ asset('theme/cozastore/images/icons/icon-email.png') }}" alt="ICON">
             </div>
             <!-- Validate lời nhắm -->
-            <div class="bor8 m-b-30" >
-              <textarea style="font-family: 'Lora', serif; font-size: 16px" class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="message" placeholder="Bạn cần chúng tôi giúp đỡ về vấn đề gì?"
+            <div class="bor8 m-b-30">
+              <textarea style="font-family: 'Lora', serif;" class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="message" placeholder="Bạn cần chúng tôi giúp đỡ về vấn đề gì?"
                 ng-model="message" ng-minlength="6" ng-maxlength="250"
                 ng-required=true></textarea>
             </div>
@@ -67,7 +67,7 @@ Liên hệ Shop Hoa tươi - Sunshine
             </button>
           </form>
         </div>
-        <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md" >
+        <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
           <div class="flex-w w-full p-b-42">
             <span class="fs-18 cl5 txt-center size-211">
               <span class="lnr lnr-map-marker"></span>
@@ -90,7 +90,7 @@ Liên hệ Shop Hoa tươi - Sunshine
                 Đường dây nóng
               </span>
               <p class="stext-115 cl1 size-213 p-t-18" style="font-family: 'Lora', serif;">
-                0915-659-223
+                0326-465-624
               </p>
             </div>
           </div>
@@ -103,7 +103,7 @@ Liên hệ Shop Hoa tươi - Sunshine
                 Email hỗ trợ
               </span>
               <p class="stext-115 cl1 size-213 p-t-18" style="font-family: 'Lora', serif;">
-                nguyenyenduyen1506@gmail.com
+                armyfashionshop@gmail.com
               </p>
             </div>
           </div>
@@ -111,8 +111,8 @@ Liên hệ Shop Hoa tươi - Sunshine
       </div>
       <!-- Bản đồ Địa chỉ công ty -->
       <div class="row mt-4">
-        <div class="col-md-12 text-center mb-4" style="font-family: 'Lora', serif;">
-          <h2>Địa chỉ liên hệ</h2>
+        <div class="col-md-12 text-center mb-4">
+          <h2 style="font-family: 'Lora', serif;">Địa chỉ liên hệ</h2>
         </div>
         <div class="col-md-12">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.8082036236256!2d105.77062491446353!3d10.032680275224248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a08822846b9eb7%3A0x4b88a7dd41f21b61!2zSOG6u20gMTEgTeG6rXUgVGjDom4sIFh1w6JuIEtow6FuaCwgTmluaCBLaeG7gXUsIEPhuqduIFRoxqEsIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1544526145126" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
