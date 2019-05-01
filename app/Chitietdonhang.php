@@ -10,6 +10,8 @@ class Chitietdonhang extends Model
     protected $fillable     = ['dh_ma', 'sp_ma','spdh_soLuong', 'spdh_donGia', 's_ma'];
     protected $guarded      = ['spdh_ma'];
     protected $primaryKey   = 'spdh_ma'; 
+    protected $dates        = ['created_at', 'updated_at']; // Carbon
+    protected $dateFormat   = 'Y-m-d H:i:s';
 
     public function donhang()
     {

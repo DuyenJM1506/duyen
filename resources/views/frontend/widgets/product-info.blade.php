@@ -59,6 +59,16 @@
            <p class="mtext-106 cl2">
            <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Số lượng hiện tại: </span> {{ $sp->sp_soLuongHienTai }}
           </p>
+         
+          <p class="mtext-106 cl2">
+           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Màu sắc: </span> 
+           {{ $sp->m_ma }}
+          </p>
+
+          <p class="mtext-106 cl2">
+           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Xuất xứ: </span> 
+          </p>
+          
         
        </br>
             <div class="flex-w flex-r-m p-b-10">
@@ -79,7 +89,7 @@
               </div>
             </div>
           </div>
-          <!--  -->
+          <!-- sns -->
           <div class="flex-w flex-m p-l-100 p-t-40 respon7">
             <div class="flex-m bor9 p-r-10 m-r-11">
              

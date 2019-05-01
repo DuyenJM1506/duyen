@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Cart;
+use App\Nhanvien;
 use App\Sanpham;
 use App\Donhang;
 use App\Chitietdonhang;
@@ -75,7 +76,7 @@ class CartController extends Controller
             'price' => $sanphammua->sp_giaBan,
             'quantity' => 1,
             'attributes' => array('img' => $sanphammua->sp_hinh, 'giaban' => $sanphammua->sp_giaBan,
-                                'size' =>$sanphammua->s_ten ))
+                                'size' =>$sanphammua->s_ma ))
         );
         return redirect()->back();
         
@@ -149,6 +150,10 @@ class CartController extends Controller
 
             $dh->vc_ma = Request::get('vc_ma');
             $dh->tt_ma = Request::get('tt_ma');
+            
+            $dh->nv_xuLy = Request::get('nv_ma', '6'); //->paginate(5);
+            $dh->nv_giaoHang = Request::get('nv_ma', '7'); //->paginate(5);
+            
             $dh->save();
             if (count($cartInfor) > 0) {
                 foreach ($cartInfor as $key => $item) {
@@ -162,15 +167,6 @@ class CartController extends Controller
                     $sp = DB::table('sanpham')
                         ->where('sp_ma', $item->id)
                         ->first();
-                    // $spkm = DB::table('sanpham_khuyenmai')
-                    //     ->where('sp_ma', $item->id)
-                    //     ->where('kmsp_trangThai', '=', 2)
-                    //     ->first();
-                    // if (isset($spkm->kmsp_soLuongKhuyenMaiConLai) && ($spkm->kmsp_soLuongKhuyenMaiConLai > 0)) {
-                    //     DB::table('sanpham_khuyenmai')
-                    //         ->where('sp_ma', $item->id)
-                    //         ->update(['kmsp_soLuongKhuyenMaiConLai' => $spkm->kmsp_soLuongKhuyenMaiConLai - $item->quantity]);
-                    // }
                     DB::table('sanpham')
                         ->where('sp_ma', $item->id)
                         ->update(['sp_soLuongHienTai' => $sp->sp_soLuongHienTai - $item->quantity]);
@@ -194,10 +190,10 @@ class CartController extends Controller
         if($total>0)
         {
 
-            $total = Thanhtoan::all();
+            $tt = Thanhtoan::all();
             $vc = Vanchuyen::all();
             return view('frontend.dathang', compact('cart', 'total'))
-                ->with('thanhtoan', $total)
+                ->with('thanhtoan', $tt)
                 ->with('vanchuyen', $vc);
         }
         else{

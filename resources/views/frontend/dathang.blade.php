@@ -22,31 +22,68 @@
     </a>
     </div>
 </div>
-<br>
+
 <hr>
 <div class="container" ng-controller="orderController">
     <form name="orderForm" ng-submit="submitOrderForm()" novalidate method="POST" action="{{ route('themdonhang') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>               
         <div class="row">
             <div class="col-lg-6 col-md-6">
-                <h4>Thông tin khách hàng</h4>
-                <!-- Div Thông báo lỗi 
-                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
-                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
-                -->
-                <br>
-              
+                
                 <div class="form-group">
-                    <label for="kh_hoTen"><b>Họ tên:</b></label>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th >Sản phẩm mua</th>
+                                <th >Số lượng</th>
+                                <th >Đơn giá</th>
+                                <th >Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($cart as $item)
+                            <tr>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ number_format($item->price) }}</td>
+                                <td>{{ number_format(($item->price)*($item->quantity)) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <h4>Thông tin khách hàng</h4>
+              <br>
+                <div class="form-group">
+                    <label for="dh_tenKhachHang"><b>Họ tên:</b></label>
                     @if (isset(Auth::user()->name))
-                    <input type="text" id="kh_hoTen" name="kh_hoTen" value="{{ Auth::user()->name }}" class="form-control" >
+                    <input type="text" id="dh_tenKhachHang" name="dh_tenKhachHang" value="{{ Auth::user()->name }}" class="form-control" >
                     @else
-                    <input type="text" class="form-control" id="kh_hoTen" name="kh_hoTen" ng-model="kh_hoTen" ng-minlength="6" ng-maxlength="100" ng-required=true>
+                    <input type="text" class="form-control" id="dh_tenKhachHang" name="dh_tenKhachHang" ng-model="dh_tenKhachHang" ng-minlength="6" ng-maxlength="100" ng-required=true>
                     @endif
                 </div>
                
                 <div class="form-group">
-                    <label for="kh_email"><b>Email:</b></label>
+                    <label for="dh_diaChi"><b>Địa chỉ:</b></label>
+                    @if (isset(Auth::user()->diachi)) 
+                    <input type="text" class="form-control" id="dh_diaChi" name="dh_diaChi" value="{{ Auth::user()->diachi }}">
+                    @else
+                    <input type="text" class="form-control" id="dh_diaChi" name="dh_diaChi" ng-model="dh_diaChi" ng-minlength="6" ng-maxlength="250">
+                    @endif
+                 </div>
+               
+                <div class="form-group">
+                    <label for="dh_dienThoai"><b>Điện thoại:</b></label>
+                    @if (isset(Auth::user()->dienthoai)) 
+                    <input type="text" class="form-control" id="dh_dienThoai"  name="dh_dienThoai" value="{{ Auth::user()->dienthoai }}">
+                    @else
+                    <input type="text" class="form-control" id="dh_dienThoai" name="dh_dienThoai" ng-model="dh_dienThoai" ng-minlength="6" ng-maxlength="11">
+                    @endif
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="dh_email"><b>Email:</b></label>
                     @if (isset(Auth::user()->email)) 
                     <input type="text" class="form-control" id="dh_email"  name="dh_email" value="{{ Auth::user()->email }}" >
                     @else
@@ -54,23 +91,6 @@
                     @endif
                 </div>
                
-                <div class="form-group">
-                    <label for="kh_diaChi"><b>Địa chỉ:</b></label>
-                    @if (isset(Auth::user()->diachi)) 
-                    <input type="text" class="form-control" id="dh_diaChi" name="dh_diaChi" value="{{ Auth::user()->diachi }}">
-                    @else
-                    <input type="text" class="form-control" id="dh_diaChi" name="kh_ddh_diaChiiaChi" ng-model="kh_diaChi" ng-minlength="6" ng-maxlength="250">
-                    @endif
-                 </div>
-
-                <div class="form-group">
-                    <label for="kh_dienThoai"><b>Điện thoại:</b></label>
-                    @if (isset(Auth::user()->dienthoai)) 
-                    <input type="text" class="form-control" id="dh_dienThoai"  name="dh_dienThoai" value="{{ Auth::user()->dienthoai }}">
-                    @else
-                    <input type="text" class="form-control" id="dh_dienThoai" name="dh_dienThoai" ng-model="kh_dienThoai" ng-minlength="6" ng-maxlength="11">
-                    @endif
-                </div>
             </div>
  <!-- Thông tin đặt hàng -->           
             <div class="col-lg-6 col-md-6">
@@ -83,9 +103,44 @@
                 <div class="form-group">
                     <label for="tt_ma"><b>Hình thức thanh toán:</b></label>
                     <select name="tt_ma" id="tt_ma" class="form-control" ng-model="tt_ma" ng-required=true>
-                        <option value="">Thanh toán trực tuyến</option>
-                          <option value="">Thanh toán khi nhận hàng (COD)</option>
+                        @foreach ($thanhtoan as $httt)
+                          <option value="{{ $httt->tt_ma }}">{{ $httt->tt_ten }}</option>
+                        @endforeach
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="vc_ma"><b>Hình thức vận chuyển:</b></label>
+                    <select class="form-control" id="vc_ma" name="vc_ma">
+                        @foreach ($vanchuyen as $htvc)
+                        <option value="{{ $htvc->vc_ma }}">{{ $htvc->vc_ten }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+               
+                <div class="form-group">
+                <div class="order_total_content text-md-left">
+                    <div class="order_total_title"><b>Phí vận chuyển:</b></div>
+                        <div class="order_total_amount">
+                            @if($total>500000)
+                                0 đ &nbsp 
+                            @else
+                                30,000 đ &nbsp 
+                            @endif
+                        </div>
+                    <br>
+                        <div class="order_total_title"><b> Tổng cộng:</b></div>
+                        <div class="order_total_amount">
+                        @if($total>500000)
+                            {{ number_format($total) }} đ
+                        @else
+                            {{ number_format($total+30000) }} đ
+                        @endif
+                        </div>
+                    </div>
+                </div>
                 </div>
                 
                 <!-- <div class="form-group">
@@ -109,4 +164,22 @@
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
 @section('custom-scripts')
+@endsection
+@section('scripts')
+<script src="{{ asset('frontend/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('frontend/styles/bootstrap4/popper.js') }}"></script>
+<script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/greensock/TweenMax.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/greensock/TimelineMax.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/greensock/animation.gsap.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/easing/easing.js') }}"></script>
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+  }
+</script>
 @endsection

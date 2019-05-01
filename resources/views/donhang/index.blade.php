@@ -78,7 +78,7 @@
                     <td>{{ $dh->nhanvienXL->nv_hoTen }}</td>
                     <td>{{ $dh->nhanvienGH->nv_hoTen }}</td>
                     <td>
-                        <a href="#">Xem</a>
+                        <a href="{{ route('chitietdonhang.index' , ['id' => $dh->dh_ma]) }}">Xem</a>
                     </td>
                     <td>
                         <a href="{{ route('danhsachdonhang.edit' , ['id' => $dh->dh_ma]) }}"
@@ -95,6 +95,7 @@
                 </tbody>
 
               </table>
+           
             </div><!-- /.box-body -->
           </div><!-- /.box -->
         </div> <!-- col -->

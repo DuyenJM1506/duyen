@@ -116,6 +116,7 @@ Route::get('/danhsachdonhang', 'DonhangController@index')->name('danhsachdonhang
 Route::get('/danhsachdonhang/{id}', 'DonhangController@edit')->name('danhsachdonhang.edit');
 Route::put('/danhsachdonhang/{id}', 'DonhangController@update')->name('danhsachdonhang.update');
 Route::delete('/danhsachdonhang/{id}', 'DonhangController@destroy')->name('danhsachdonhang.destroy');
+Route::get('/chitietdonhang/{id}' , 'CTDHController@index')->name('chitietdonhang.index');
 
 //thanhtoan
 Route::get('/danhsachthanhtoan', 'ThanhtoanController@index')->name('danhsachthanhtoan.index');
@@ -127,6 +128,7 @@ Route::resource('danhsachsanpham', 'SanphamController');
 Route::resource('danhsachloai', 'LoaiController');
 Route::get('/', 'FrontendController@index')->name('frontend.home');
 Route::get('/thu-do-online', 'FrontendController@trying')->name('frontend.tryingonl');
+Route::get('/ket-qua-tim-kiem', 'FrontendController@searchpage')->name('frontend.ketquatimkiem');
 Route::get('/gioi-thieu', 'FrontendController@about')->name('frontend.about');
 Route::get('/lien-he', 'FrontendController@contact')->name('frontend.contact');
 Route::post('/lien-he/goi-loi-nhan', 'FrontendController@sendMailContactForm')->name('frontend.contact.sendMailContactForm');
@@ -175,4 +177,7 @@ Route::post('them-moi-don-hang', [
     'as'=>'themdonhang',
     'uses' => 'CartController@themdonhang']);
 
-
+Route::get('search', [
+    'as'=>'search',
+    'uses'=>'FrontendController@getSearch',
+]);

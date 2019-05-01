@@ -8,9 +8,10 @@ use App\Vanchuyen;
 use App\Thanhtoan;
 use App\Nhanvien;
 use App\User;
-// use App\Chitietdonhang;
+use App\Chitietdonhang;
 use Session;
 use Storage;
+use DB;
 
 class DonhangController extends Controller
 {
@@ -45,6 +46,17 @@ class DonhangController extends Controller
             ->with('danhsachthanhtoan', $ds_thanhtoan);
     }
 
+    public function chitietdonhang()
+    {
+        $spdh = DB::table('chitietdonhang')
+            ->join('sanpham', 'chitietdonhang.sp_ma', '=', 'sanpham.sp_ma')
+            ->join('donhang', 'chitietdonhang.dh_ma', '=', 'donhang.dh_ma')
+            ->orderBy('dh_taoMoi', 'desc')
+            ->paginate(5);
+        return view('chitietdonhang.index')
+            ->with('spdh', $spdh);
+    }
+
     public function store(Request $request)
     {   
         $dh = new Donhang();
@@ -60,8 +72,8 @@ class DonhangController extends Controller
         $dh->dh_capNhat         = $request->dh_capNhat;
         $dh->tt_ma              = $request->tt_ma;
         $dh->vc_ma              = $request->vc_ma;
-        $dh->nv_giaoHang        = $request->nv_ma;
         $dh->nv_xuLy            = $request->nv_ma;
+        $dh->nv_giaoHang        = $request->nv_ma;
         $dh->save();
 
         Session::flash('alert-info', 'Cap nhat thanh cong!');
@@ -100,10 +112,13 @@ class DonhangController extends Controller
         $dh->nv_giaoHang        = $request->nv_ma;
         $dh->nv_xuLy            = $request->nv_ma;
         $dh->save();
+        
 
         Session::flash('alert-info', 'Cap nhat thanh cong!');
         return redirect()->route('danhsachdonhang.index');
     }
+
+
     public function destroy($id)
     {
         $dh = Donhang::where("dh_ma", $id)->first();

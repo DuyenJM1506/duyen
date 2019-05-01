@@ -1,16 +1,22 @@
+{{-- View này sẽ kế thừa giao diện từ `frontend.layouts.index` --}}
+@extends('frontend.layouts.index')
+{{-- Thay thế nội dung vào Placeholder `title` của view `frontend.layouts.index` --}}
+@section('title')
+Danh sách tìm kiếm
+@endsection
+{{-- Thay thế nội dung vào Placeholder `custom-css` của view `frontend.layouts.index` --}}
+@section('custom-css')
+@endsection
+{{-- Thay thế nội dung vào Placeholder `main-content` của view `frontend.layouts.index` --}}
+@section('main-content')
 
-  <div class="bg0 m-t-23 p-b-140">
+
+<div class="bg0 m-t-23 p-b-140">
     <div class="container">
       <div class="flex-w flex-sb-m p-b-52">
         <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-          <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*" style="font-family: 'Lora', serif; font-size: 16px">
-          Tất cả
-          </button>
-          @foreach($danhsachloai as $loai)
-          <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".loai-{{ $loai->l_ma }}" style="font-family: 'Lora', serif; font-size: 16px">
-            {{ $loai->l_ten }}
-          </button>
-          @endforeach
+         <p>Tìm thấy {{count($tk)}} sản phẩm</p>
+         
         </div>
         <div class="flex-w flex-c-m m-tb-10" style="font-family: 'Lora', serif; font-size: 15px">
           <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
@@ -30,7 +36,7 @@
   <!-- Search product -->
   
         <div class="dis-none panel-search w-full p-t-10 p-b-15">
-          <form action="{{route('search')}}" method="get" role="search" id="searchForm">
+          <form action="#" method="get" role="search" id="searchForm">
             <div class="bor8 dis-flex p-l-15">
               <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
                 <i class="zmdi zmdi-search"></i>
@@ -195,7 +201,7 @@
     <!-- SHOW PRODUCT -->
       
       <div style="width:100%;">
-                @foreach($data as $index=>$sp)
+                @foreach($tk as $sp)
 
         <div  style="float:left; width:300px; height:500px; margin: 10px 10px;">
           <div class="block2" style="height:400px">
@@ -226,12 +232,12 @@
           <!-- Modal quick view -->
               @include('frontend.widgets.product-quick-view', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
         
-                @endforeach
-      </div>
-      <!-- Load more -->
-      <div class="flex-c-m flex-w w-full p-t-45">
-        
+          @endforeach
       </div>
     </div>
   </div>
 </div>
+@endsection
+{{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
+@section('custom-scripts')
+@endsection

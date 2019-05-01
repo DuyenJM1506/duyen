@@ -15,4 +15,9 @@ class Size extends Model
     protected $primaryKey = 's_ma';
     protected $dates = ['s_taoMoi', 's_capNhat'];
     protected $dateFormat = 'Y-m-d H:i:s';
+
+    public function chitietdonhang()
+    {
+    	return $this->hasMany('App\Chitietdonhang', 's_ma', 's_ma');
+    }
 }

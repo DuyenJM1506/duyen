@@ -54,8 +54,8 @@ Giỏ hàng
 
         </td>
         <td>
-        <a href="{{ route('xoasanpham', $item->id) }}">
-        <input type="hidden" name="_method" value="DELETE"/>
+        <a onclick="return ktra()" href="{{ route('xoasanpham', $item->id) }}">
+        <input  type="hidden" name="_method" value="DELETE"/>
             {{ csrf_field() }}
             <button type="submit" class="btn btn-danger" >Xóa</button>
         </a>
@@ -75,8 +75,17 @@ Giỏ hàng
                   Đặt hàng
       </button>
 </a>
-
 </div>
+<script language="javascript">
+  function ktra() {
+      if (confirm("Bạn có chắc chắn muốn xóa ")) {
+          return true;
+      }
+      else {
+          return false;
+      }
+  }
+</script>
 <!-- Slider -->
 <!-- @include('frontend.widgets.homepage-slider') -->
 <!-- Banner -->

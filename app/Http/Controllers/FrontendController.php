@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Loai;
 use App\Mau;
+use App\Xuatxu;
 use App\Sanpham;
 use App\Vanchuyen;
 use App\Khachhang;
@@ -39,10 +40,10 @@ public function index(Request $request)
                                 ->orderBy('l_capNhat')->take(3)->get();
     
     // Query tìm danh sách sản phẩm
-    $danhsachsanpham = $this->searchSanPham($request);
+    $danhsachsanpham = $this->getSearch($request);
 
 
-    // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
+     // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
     $danhsachhinhanhlienquan = DB::table('hinhanh')
         ->whereIn('sp_ma', $danhsachsanpham->pluck('sp_ma')->toArray())
         ->get();
@@ -58,78 +59,86 @@ public function index(Request $request)
         ->with('ds_top3_newest_loaisanpham', $ds_top3_newest_loaisanpham)
         ->with('danhsachsanpham', $danhsachsanpham)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
-       ->with('danhsachmau', $danhsachmau)
+        ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
 
-private function searchSanPham(Request $request)
-{
-    $query = DB::table('sanpham')->select('*');
-    // Kiểm tra điều kiện `searchByLoaiMa`
-    $searchByLoaiMa = $request->query('searchByLoaiMa');
-    if($searchByLoaiMa != null)
-    {
-        $query->where('l_ma', $searchByLoaiMa);
-    }
+// private function searchSanPham(Request $request)
+// {
+//     $query = DB::table('sanpham')->select('*');
+//     // Kiểm tra điều kiện `searchByLoaiMa`
+//     $searchByLoaiMa = $request->query('searchByLoaiMa');
+//     if($searchByLoaiMa != null)
+//     {
+//         $query->where('l_ma', $searchByLoaiMa);
+//     }
     
-    $data = $query->get();
-    return $data;
+//     $data = $query->get();
+//     return $data;
+// }
+
+public function getSearch(Request $req){
+    $tk = Sanpham::where('sp_ten', 'like', '%'.$req->key.'%')
+                    ->orWhere('sp_giaBan', $req->key)
+                    ->get();
+    return view('frontend.search', compact('tk'));
 }
+
 /**
  * Hàm query danh sách sản phẩm theo nhiều điều kiện
  */
-public function searchpage($tukhoa)
-{
+// public function searchpage($tukhoa)
+// {
 
-    $ta = str_replace('-', ' ', $tukhoa);
-        $ds_loai = Loai::all();
-        $data = DB::table('sanpham')
-            ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
-            ->where('sp_ten', 'LIKE', "%{$ta}%")
-            ->orWhere('l_ten', 'LIKE', "%{$ta}%")
-            ->orderBy('sp_giaBan', 'ASC')
-            ->paginate(10);
-        $count = DB::table('sanpham')
-            ->where('sp_ten', 'LIKE', "%{$ta}%")
-            ->count();
-        return view('frontend.ketqua')
-            ->with('data', $data)
-            ->with('count', $count)
-            ->with('danhsachloai', $ds_loai);
-}
+//     $ta = str_replace('-', ' ', $tukhoa);
+//         $ds_loai = Loai::all();
+//         $data = DB::table('sanpham')
+//             ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+//             ->where('sp_ten', 'LIKE', "%{$ta}%")
+//             ->orWhere('l_ten', 'LIKE', "%{$ta}%")
+//             ->orderBy('sp_giaBan', 'ASC')
+//             ->paginate(10);
+//         $count = DB::table('sanpham')
+//             ->where('sp_ten', 'LIKE', "%{$ta}%")
+//             ->count();
+//         return view('frontend.ketquatimkiem')
+//             ->with('data', $data)
+//             ->with('count', $count)
+//             ->with('danhsachloai', $ds_loai);
+// }
 
-public function searchpage_gia($gia1, $gia2)
-    {
-        $ds_loai = Loai::all();
-        if ($gia2 == 'Hight') {
-            $data = DB::table('sanpham')
-             ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
-                ->where('sp_giaBan', '>', $gia1)
-                ->orderBy('sp_giaBan', 'ASC')
-                ->paginate(10);
-            $count = DB::table('sanpham')
-                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
-                ->where('sp_giaBan', '>', $gia1)
-                ->count();
-        } else {
-            $data = DB::table('sanpham')
-                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
-                ->where('sp_giaBan', '>', $gia1)
-                ->where('sp_giaBan', '<', $gia2)
-                ->orderBy('sp_giaBan', 'ASC')
-                ->paginate(10);
-            $count = DB::table('sanpham')
-                ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
-                ->where('sp_giaBan', '>', $gia1)
-                ->where('sp_giaBan', '<', $gia2)
-                ->count();
-        }
+// public function searchpage_gia($gia1, $gia2)
+//     {
+//         $ds_loai = Loai::all();
+//         if ($gia2 == 'Hight') {
+//             $data = DB::table('sanpham')
+//              ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+//                 ->where('sp_giaBan', '>', $gia1)
+//                 ->orderBy('sp_giaBan', 'ASC')
+//                 ->paginate(10);
+//             $count = DB::table('sanpham')
+//                 ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+//                 ->where('sp_giaBan', '>', $gia1)
+//                 ->count();
+//         } else {
+//             $data = DB::table('sanpham')
+//                 ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+//                 ->where('sp_giaBan', '>', $gia1)
+//                 ->where('sp_giaBan', '<', $gia2)
+//                 ->orderBy('sp_giaBan', 'ASC')
+//                 ->paginate(10);
+//             $count = DB::table('sanpham')
+//                 ->join('loai', 'sanpham.l_ma', '=', 'loai.l_ma')
+//                 ->where('sp_giaBan', '>', $gia1)
+//                 ->where('sp_giaBan', '<', $gia2)
+//                 ->count();
+//         }
 
-        return view('frontend.ketqua')
-            ->with('data', $data)
-            ->with('count', $count)
-            ->with('danhsach', $ds_loai);
-    }
+//         return view('frontend.ketquatimkiem')
+//             ->with('data', $data)
+//             ->with('count', $count)
+//             ->with('danhsach', $ds_loai);
+//     }
 
     
 
@@ -138,6 +147,7 @@ public function about ()
         return view('frontend.pages.about');
     }
 
+// page thu do online
 public function trying ()
 {
     return view('frontend.pages.tryingonl');
@@ -159,9 +169,9 @@ public function sendMailContactForm(Request $request)
 /**
  * Action hiển thị chi tiết Sản phẩm
  */
-public function chitietsanpham(Request $request, $id)
+public function productDetail(Request $request, $id)
     {
-    $sanpham = Sanpham::find($id);
+    $sp = Sanpham::find($id);
     // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
     $danhsachhinhanhlienquan = DB::table('hinhanh')
                             ->where('sp_ma', $id)
@@ -170,10 +180,12 @@ public function chitietsanpham(Request $request, $id)
     $danhsachloai = Loai::all();
     // Query danh sách màu
    $danhsachmau = Mau::all();
+   $dsxuatxu = Xuatxu::all();
     return view('frontend.pages.product-detail')
-        ->with('sp', $sanpham)
+        ->with('sp', $sp)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
        ->with('danhsachmau', $danhsachmau)
+       ->with('dsxuatxu', $dsxuatxu)
         ->with('danhsachloai', $danhsachloai);
     }
 
