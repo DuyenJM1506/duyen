@@ -38,4 +38,8 @@ class Sanpham extends Model
     {
         return $this->belongsTo('App\Khuyenmai', 'km_ma', 'km_ma');
     }
+    public function sizesp()
+    {
+        return $this->belongsTo('App\Size_Sanpham', 's_ma', 's_ma');
+    }
 }

@@ -133,7 +133,7 @@ Route::get('/gioi-thieu', 'FrontendController@about')->name('frontend.about');
 Route::get('/lien-he', 'FrontendController@contact')->name('frontend.contact');
 Route::post('/lien-he/goi-loi-nhan', 'FrontendController@sendMailContactForm')->name('frontend.contact.sendMailContactForm');
 Route::get('/san-pham/{id}', 'FrontendController@productDetail')->name('frontend.productDetail');
-Route::get('/san-pham', 'FrontendController@product')->name('frontend.product');
+Route::get('/san-pham-a', 'FrontendController@product')->name('frontend.product');
 //báo cáo
 // Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('baocao.donhang');
 // Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
@@ -158,6 +158,18 @@ Route::post('/kiem-tra-dang-nhap', 'FrontendController@checkLogin')->name('kiemt
 Route::get('/giohang', 'CartController@index')->name('giohang');
 Route::get('/giohangz', 'CartController@index')->name('gh');
 //log out
+
+//index backend
+Route::get('/tong-quat', 'BackendController@index')->name('tongquat');
+Route::get('/don-hang', 'DonhangController@index')->name('donhang_index');
+Route::get('/don-hang/{id}', 'CartController@themdonhang')->name('themdonhang');
+Route::get('/san-pham/cap-nhat/{id}', 'SanphamController@edit')->name('sanpham_edit');
+Route::get('/san-pham', 'SanphamController@index')->name('sanpham_index');
+
+//login admin
+Route::get('/admin/login', 'BackendController@login')->name('backend.loginadmin');
+Route::get('/admin', 'BackendController@login')->name('backend.loginadmin');
+
 Route::get('/logout','FrontendController@getLogout')->name('frontend.dangxuat');
 // Route::get('/gio-hang-chi-tiet', 'CartController@index')->name('giohang');
 Route::get('/thong-tin-dat-hang','CartController@thongtindathang')->name('frontend.dathang');

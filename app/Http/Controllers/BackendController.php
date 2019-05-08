@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Session;
 use DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use Carbon;
+use Carbon\Carbon;
 use PhpParser\Node\Stmt\Switch_;
 use DateTime;
-//use App\SanPham;
+use App\Sanpham;
+use App\Donhang;
+use App\Loai;
 
 class BackendController extends Controller
 {
@@ -48,51 +50,52 @@ class BackendController extends Controller
         }
         $slsp = DB::table('sanpham')->count();
         $spm = Sanpham::orderBy('sp_taoMoi', 'desc')->limit(4)->get();
-        $doanhthu = DB::table('donhangsanpham')->where('dh_taoMoi', '>', $ngaydautuan)->sum('dh_tongCong');
+        $doanhthu = DB::table('donhang')->where('dh_taoMoi', '>=', $ngaydautuan)->sum('dh_tongcong');
 
-        $sltv = DB::table('users')->where('q_ma', 3)->where('created_at', '>', $ngaydautuan)->count();
-        $dstvm = DB::table('users')->where('q_ma', 3)
+        $dhm = DB::table('donhang')
             ->limit(4)
-            ->orderBy('created_at', 'desc')
-            ->where('created_at', '>', $ngaydautuan)
-            ->get();
-        $dhm = DB::table('donhangsanpham')
-            ->limit(4)
-            ->where('dh_taoMoi', '>', $ngaydautuan)
+            ->where('dh_taoMoi', '>=', $ngaydautuan)
             ->orderBy('dh_taoMoi', 'desc')
             ->get();
-        $spdh = DB::table('sanpham-donhang')
-            ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
-            ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
-            ->limit(4)
-            ->orderBy('dh_taoMoi', 'desc')
-            ->get();
+
+        $sltv = DB::table('users')->where('q_ma', 3)->where('created_at', '>=', $ngaydautuan)->count();
+
         $date = new Carbon;
-        $sldt = DB::table('sanpham-donhang')
-            ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
-            ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
-            ->where('dh_taoMoi', '>', $ngaydautuan)
-            ->where('l_ma','=',1)
-            ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
-        $sllt = DB::table('sanpham-donhang')
-            ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
-            ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
-            ->where('dh_taoMoi', '>', $ngaydautuan)
-            ->where('l_ma','=',2)
-            ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
-        $slmtb = DB::table('sanpham-donhang')
-            ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
-            ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
-            ->where('dh_taoMoi', '>', $ngaydautuan)
-            ->where('l_ma','=',3)
-            ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
-        $slpk = DB::table('sanpham-donhang')
-            ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
-            ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
-            ->where('dh_taoMoi', '>', $ngaydautuan)
-            ->where('l_ma','=',4)
-            ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
-        $sldh = DB::table('donhangsanpham')->where('dh_taoMoi', '>', $ngaydautuan)->count();
+
+        $sldh = DB::table('donhang')->where('dh_taoMoi', '>=', $ngaydautuan)->count();
+
+        // $spdh = DB::table('sanpham-donhang')
+        //     ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
+        //     ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
+        //     ->limit(4)
+        //     ->orderBy('dh_taoMoi', 'desc')
+        //     ->get();
+       
+        // $sldt = DB::table('sanpham-donhang')
+        //     ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
+        //     ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
+        //     ->where('dh_taoMoi', '>', $ngaydautuan)
+        //     ->where('l_ma','=',1)
+        //     ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
+        // $sllt = DB::table('sanpham-donhang')
+        //     ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
+        //     ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
+        //     ->where('dh_taoMoi', '>', $ngaydautuan)
+        //     ->where('l_ma','=',2)
+        //     ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
+        // $slmtb = DB::table('sanpham-donhang')
+        //     ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
+        //     ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
+        //     ->where('dh_taoMoi', '>', $ngaydautuan)
+        //     ->where('l_ma','=',3)
+        //     ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
+        // $slpk = DB::table('sanpham-donhang')
+        //     ->join('sanpham', 'sanpham-donhang.sp_ma', '=', 'sanpham.sp_ma')
+        //     ->join('donhangsanpham', 'sanpham-donhang.dh_ma', '=', 'donhangsanpham.dh_ma')
+        //     ->where('dh_taoMoi', '>', $ngaydautuan)
+        //     ->where('l_ma','=',4)
+        //     ->sum(DB::raw('dhsp_soLuong *dhsp_donGia'));
+       
 
         return view('backend.index')
             ->with('slsp', $slsp)
@@ -100,17 +103,17 @@ class BackendController extends Controller
             ->with('sldh', $sldh)
             ->with('sltv', $sltv)
             ->with('ngay', $ngay)
-            ->with('sldt', $sldt)
-            ->with('sllt', $sllt)
             ->with('spm', $spm)
-            ->with('slmtb', $slmtb)
-            ->with('slpk', $slpk)
             ->with('ngaydautuan', $ngaydautuan)
-            ->with('dstvm', $dstvm)
-            ->with('dhm', $dhm)
-            ->with('spdh', $spdh);
+            ->with('dhm', $dhm);
+            // ->with('spdh', $spdh)
+            // ->with('sldt', $sldt)
+            // ->with('sllt', $sllt)
+            // ->with('dstvm', $dstvm)
+            // ->with('slmtb', $slmtb)
+            // ->with('slpk', $slpk)
+            
     }
-
     public function login()
     {
         auth()->login();

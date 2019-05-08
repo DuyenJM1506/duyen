@@ -24,6 +24,7 @@ use Validator;
 use Auth;
 use Illuminate\Support\MessageBag;
 
+
 class FrontendController extends Controller
 {
     /**
@@ -40,12 +41,17 @@ public function index(Request $request)
                                 ->orderBy('l_capNhat')->take(3)->get();
     
     // Query tìm danh sách sản phẩm
-    $danhsachsanpham = $this->getSearch($request);
-
-
+    $danhsachsanpham = $this->searchSanPham($request);
+    $tk = Sanpham::where('sp_ten', 'like', '%'.$request->key.'%')
+                    ->orWhere('sp_giaBan', $request->key)
+                    ->get();
+    $dssp= array();
+    foreach ($tk as $spa) {
+        array_push($dssp,$spa->sp_ma);
+    }
      // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
     $danhsachhinhanhlienquan = DB::table('hinhanh')
-        ->whereIn('sp_ma', $danhsachsanpham->pluck('sp_ma')->toArray())
+        ->whereIn('sp_ma', $dssp)
         ->get();
 
      // Query danh sách Loại
@@ -57,29 +63,29 @@ public function index(Request $request)
     // Hiển thị view `frontend.index` với dữ liệu truyền vào
     return view('frontend.index')
         ->with('ds_top3_newest_loaisanpham', $ds_top3_newest_loaisanpham)
-        ->with('danhsachsanpham', $danhsachsanpham)
+        ->with('danhsachsanpham', $tk)
         ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
         ->with('danhsachmau', $danhsachmau)
         ->with('danhsachloai', $danhsachloai);
 }
 
-// private function searchSanPham(Request $request)
-// {
-//     $query = DB::table('sanpham')->select('*');
-//     // Kiểm tra điều kiện `searchByLoaiMa`
-//     $searchByLoaiMa = $request->query('searchByLoaiMa');
-//     if($searchByLoaiMa != null)
-//     {
-//         $query->where('l_ma', $searchByLoaiMa);
-//     }
+private function searchSanPham(Request $request)
+{
+    $query = DB::table('sanpham')->select('*');
+    // Kiểm tra điều kiện `searchByLoaiMa`
+    $searchByLoaiMa = $request->query('searchByLoaiMa');
+    if($searchByLoaiMa != null)
+    {
+        $query->where('l_ma', $searchByLoaiMa);
+    }
     
-//     $data = $query->get();
-//     return $data;
-// }
+    $data = $query->get();
+    return $data;
+}
 
-public function getSearch(Request $req){
-    $tk = Sanpham::where('sp_ten', 'like', '%'.$req->key.'%')
-                    ->orWhere('sp_giaBan', $req->key)
+public function getSearch(Request $request){
+    $tk = Sanpham::where('sp_ten', 'like', '%'.$request->key.'%')
+                    ->orWhere('sp_giaBan', $request->key)
                     ->get();
     return view('frontend.search', compact('tk'));
 }

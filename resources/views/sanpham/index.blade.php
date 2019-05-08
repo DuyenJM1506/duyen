@@ -65,8 +65,9 @@
                     <td>{{ $sp->sp_ma }}</td>
                     <td>{{ $sp->sp_ten }}</td>
                     <td><img src="{{ asset('storage/photos/' .$sp->sp_hinh) }}" class="img-list"></td>
-                    <td>{{ $sp->sp_giaGoc }}</td>
-                    <td>{{ $sp->sp_giaBan }}</td>
+                    
+                    <td class="text-right">{{ number_format($sp->sp_giaGoc) }}</td>
+                    <td class="text-right">{{ number_format($sp->sp_giaBan) }}</td>
                     <td>{{ $sp->loaisanpham->l_ten }}</td>
                     <td>{{ $sp->sp_soLuongBanDau }}</td>
                     <td>{{ $sp->sp_soLuongHienTai }}</td>

@@ -10,7 +10,7 @@ San pham thoi trang nam nu ARMY FASHION
 {{-- Thay thế nội dung vào Placeholder `main-content` của view `frontend.layouts.index` --}}
 @section('main-content')
 <!-- Product info -->
-@include('frontend.widgets.product-info', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
+@include('frontend.widgets.product-info', ['sp' => $sp])
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
 @section('custom-scripts')

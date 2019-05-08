@@ -224,14 +224,13 @@
             </div>
           </div>
           <!-- Modal quick view -->
-              @include('frontend.widgets.product-quick-view', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
-        
-                @endforeach
+              @include('frontend.widgets.product-quick-view', ['sp' => $sp])
+            @endforeach
       </div>
-      <!-- Load more -->
-      <div class="flex-c-m flex-w w-full p-t-45">
+        <!-- Load more -->
+        <div class="flex-c-m flex-w w-full p-t-45">
         
-      </div>
+        </div>
     </div>
   </div>
 </div>

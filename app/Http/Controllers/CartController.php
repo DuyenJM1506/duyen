@@ -9,7 +9,6 @@ use App\Nhanvien;
 use App\Sanpham;
 use App\Donhang;
 use App\Chitietdonhang;
-//use App\SanPhamKhuyenMai;
 use App\Vanchuyen;
 use App\Thanhtoan;
 use DB;
@@ -131,7 +130,7 @@ class CartController extends Controller
     public function themdonhang(Request $request)
     {
         try {
-            $cartInfor = Cart::getContent();
+            // $cartInfor = Cart::getContent();
             $dh = new Donhang();
             if (isset(Auth::user()->name)) {
                 $dh->id = Auth::user()->id;
@@ -151,29 +150,29 @@ class CartController extends Controller
             $dh->vc_ma = Request::get('vc_ma');
             $dh->tt_ma = Request::get('tt_ma');
             
-            $dh->nv_xuLy = Request::get('nv_ma', '6'); //->paginate(5);
-            $dh->nv_giaoHang = Request::get('nv_ma', '7'); //->paginate(5);
+            $dh->nv_xuLy = Request::get('nv_ma', '6'); 
+            $dh->nv_giaoHang = Request::get('nv_ma', '7'); 
             
             $dh->save();
-            if (count($cartInfor) > 0) {
-                foreach ($cartInfor as $key => $item) {
-                    $spdh = new Chitietdonhang();
-                    $spdh->dh_ma = $dh->dh_ma;
-                    $spdh->sp_ma = $item->id;
-                    $spdh->s_ma = $item->id;
-                    $spdh->spdh_soLuong = $item->quantity;
-                    $spdh->spdh_donGia = $item->price;
-                    $spdh->save();
-                    $sp = DB::table('sanpham')
-                        ->where('sp_ma', $item->id)
-                        ->first();
-                    DB::table('sanpham')
-                        ->where('sp_ma', $item->id)
-                        ->update(['sp_soLuongHienTai' => $sp->sp_soLuongHienTai - $item->quantity]);
-                }
-            }
+            // if (count($cartInfor) > 0) {
+            //     foreach ($cartInfor as $key => $item) {
+            //         $spdh = new Chitietdonhang();
+            //         $spdh->dh_ma = $dh->dh_ma;
+            //         $spdh->sp_ma = $item->id;
+            //         $spdh->s_ma = $item->id;
+            //         $spdh->spdh_soLuong = $item->quantity;
+            //         $spdh->spdh_donGia = $item->price;
+            //         $spdh->save();
+            //         $sp = DB::table('sanpham')
+            //             ->where('sp_ma', $item->id)
+            //             ->first();
+            //         DB::table('sanpham')
+            //             ->where('sp_ma', $item->id)
+            //             ->update(['sp_soLuongHienTai' => $sp->sp_soLuongHienTai - $item->quantity]);
+            //     }
+            // }
             Cart::clear();
-            return redirect(route('index'))
+            return redirect(route('frontend.home'))
                 ->with('alert', 'Đặt hàng thành công');
         } catch (QueryException $ex) {
             return response([

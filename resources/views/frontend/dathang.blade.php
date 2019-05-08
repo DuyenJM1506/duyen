@@ -93,12 +93,8 @@
                
             </div>
  <!-- Thông tin đặt hàng -->           
-            <div class="col-lg-6 col-md-6">
+        <div class="col-lg-6 col-md-6">
                 <h4>Thông tin Đặt hàng</h4>
-                <!-- Div Thông báo lỗi 
-                Chỉ hiển thị khi các validate trong form `orderForm` không hợp lệ => orderForm.$invalid = true
-                Sử dụng tiền chỉ lệnh ng-show="orderForm.$invalid"
-                -->
               <br>
                 <div class="form-group">
                     <label for="tt_ma"><b>Hình thức thanh toán:</b></label>
@@ -117,55 +113,131 @@
                         @endforeach
                     </select>
                 </div>
-
-
                
                 <div class="form-group">
-                <div class="order_total_content text-md-left">
-                    <div class="order_total_title"><b>Phí vận chuyển:</b></div>
-                        <div class="order_total_amount">
-                            @if($total>500000)
-                                0 đ &nbsp 
+                    <div class="order_total_content text-md-left">
+                        <div class="order_total_title"><b>Phí vận chuyển:</b></div>
+                            <div class="order_total_amount">
+                                @if($total>500000 || $total==500000)
+                                    0 đ &nbsp 
+                                @else
+                                    30,000 đ &nbsp 
+                                @endif
+                            </div>
+                        <br>
+                            <div class="order_total_title"><b> Tổng cộng:</b></div>
+                            <div class="order_total_amount">
+                            @if($total>500000 || $total==500000)
+                                {{ number_format($total) }} đ
                             @else
-                                30,000 đ &nbsp 
+                                {{ number_format($total+30000) }} đ
                             @endif
-                        </div>
-                    <br>
-                        <div class="order_total_title"><b> Tổng cộng:</b></div>
-                        <div class="order_total_amount">
-                        @if($total>500000)
-                            {{ number_format($total) }} đ
-                        @else
-                            {{ number_format($total+30000) }} đ
-                        @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                </div>
-                
-                <!-- <div class="form-group">
-                    <a href="{{ route('giohang') }}">
-                    
-                    <button type="button" class="button btn btn-primary cart_button_checkout">Trở lại đặt hàng</button></a>
-                </div> -->
 
-                
+                    <div class="form-group">
+                    <hr>
+                       <h5><b> Tiện lợi và nhanh chóng khi thanh toán trực tuyến với:</b></h5><br>
+                        <div id="paypal-button-container"></div> <br>
+                        <button type="submit" class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer mb-4" ng-disabled="orderForm.$invalid && ngCart.getTotalItems() === 0">
+                                Đặt hàng
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-     
-        <div >
-            <button type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer mb-4" ng-disabled="orderForm.$invalid && ngCart.getTotalItems() === 0">
-                    Đặt hàng
-            </button>
         </div>
     </form>
 </div>
+
+<!-- Thanh toan Paypal -->
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+	paypal.Button.render({
+		env: 'sandbox',
+		style: {
+			color:  'gold',
+			shape:  'pill',
+			label:  'pay',
+			height: 40
+		},
+		funding: {
+			allowed: [
+			paypal.FUNDING.CARD,
+			paypal.FUNDING.CREDIT
+			],
+			disallowed: []
+		},
+		client: {
+			sandbox: 'AS9FRbEqsg1ex9bmexC1ShHxK6RBVnhPwM6tQYd2H9zyZlzvRu9Yf9BBsqlZlSLuuSQ9blUgi8ocxJWa',
+			production: '9PH06259G4965803L'
+		},
+		payment: function(data, actions) {
+			
+			return actions.payment.create({
+				transactions: [{
+					item_list: {
+						<?php $tongtien = 0; ?>
+						items: [
+						@foreach($cart as $item)
+						{
+							<?php
+								$tiendo =  round($item->price/ 23189.96);
+								$tongtien = $tongtien + ($tiendo * $item->quantity);
+							?>
+							name: '{{$item->name}}',
+							quantity: '{{$item->quantity}}',
+							price: '{{$tiendo}}',
+							tax: '0.01',
+							sku: '1',
+							currency: 'USD'
+						},
+						@endforeach
+						],
+						shipping_address: {
+							recipient_name: 'Nguyễn Yến Duyên',
+							line1: 'Cần Thơ',
+							line2: 'Ninh Kiều',
+							city: 'San Jose',
+							country_code: 'US',
+							postal_code: '95131',
+							phone: '0326465624',
+							state: 'CA'
+						}
+					},
+					amount: {
+						total: '{{$tongtien}}',
+						currency: 'USD',
+						details: {
+							subtotal: '{{$tongtien}}',
+						}
+					},
+					description: 'The payment transaction description.',
+					custom: '90048630024435',
+					payment_options: {
+						allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+					},
+					soft_descriptor: 'ECHI5786786',
+				}],
+				note_to_payer: 'Contact us for any questions on your order.'
+			});
+		},
+		onAuthorize: function (data, actions) {
+			return actions.payment.execute()
+			.then(function () {
+				alert('Thanh toán thành công!!!');
+			});
+		}
+	}, '#paypal-button-container');
+</script>
+<!-- End Thanh toan Paypal -->
 
 @endsection
 {{-- Thay thế nội dung vào Placeholder `custom-scripts` của view `frontend.layouts.index` --}}
 @section('custom-scripts')
 @endsection
-@section('scripts')
+@section('custom-scripts')
+
 <script src="{{ asset('frontend/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('frontend/styles/bootstrap4/popper.js') }}"></script>
 <script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js') }}"></script>

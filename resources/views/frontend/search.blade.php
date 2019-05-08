@@ -36,7 +36,7 @@ Danh sách tìm kiếm
   <!-- Search product -->
   
         <div class="dis-none panel-search w-full p-t-10 p-b-15">
-          <form action="#" method="get" role="search" id="searchForm">
+          <form action="{{route('search')}}" method="get" role="search" id="searchForm">
             <div class="bor8 dis-flex p-l-15">
               <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
                 <i class="zmdi zmdi-search"></i>
@@ -230,10 +230,14 @@ Danh sách tìm kiếm
             </div>
           </div>
           <!-- Modal quick view -->
-              @include('frontend.widgets.product-quick-view', ['sp' => $sp, 'hinhanhlienquan' => $danhsachhinhanhlienquan])
+              @include('frontend.widgets.product-quick-view', ['sp' => $sp])
         
           @endforeach
       </div>
+        <!-- Load more -->
+        <div class="flex-c-m flex-w w-full p-t-45">
+        
+        </div>
     </div>
   </div>
 </div>

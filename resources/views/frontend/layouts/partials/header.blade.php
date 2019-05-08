@@ -5,7 +5,7 @@
       <div class="top-bar">
         <div class="content-topbar flex-sb-m h-full container">
           <div class="left-top-bar" style="font-family: 'Lora', serif; font-size: 17px ">
-            Miễn phí ship với hóa đơn trên 500.000 VNĐ
+            Miễn phí vận chuyển với hóa đơn từ 500.000 VNĐ trở lên! 
           </div>
           <div class="right-top-bar flex-w h-full">
             @if (Auth::guest())

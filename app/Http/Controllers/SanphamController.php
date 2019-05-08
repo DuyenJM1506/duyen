@@ -8,12 +8,14 @@ use App\Loai;
 use App\Xuatxu;
 use App\Khuyenmai;
 use App\Mau;
+use App\Size;
+use App\Size_Sanpham;
 use Session;
 use Storage;
 use App\Exports\SanPhamExport;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use DB;
 use PayPal;
 use Redirect;
 
@@ -26,12 +28,16 @@ class SanphamController extends Controller
         $ds_xuatxu  = Xuatxu::all();
         $ds_mau     = Mau::all();
         $ds_km      = Khuyenmai::all();
-
+        $ds_size    = DB::table('sanpham')
+            ->join('size_sanpham', 'sanpham.sp_ma', '=', 'size_sanpham.sp_ma')
+            ->join('size', 'size_sanpham.s_ma', '=', 'size.s_ma')
+            ->get()->unique('s_ma');
         return view('sanpham.index')
             ->with('danhsachsanpham', $ds_sanpham)
             ->with('danhsachxuatxu', $ds_xuatxu)
             ->with('danhsachmau', $ds_mau)
-            ->with('danhsachkhuyenmai', $ds_km);
+            ->with('danhsachkhuyenmai', $ds_km)
+            ->with('danhsachsizesp', $ds_size);
     }
     public function create()
     {
@@ -39,12 +45,16 @@ class SanphamController extends Controller
         $ds_xuatxu  = Xuatxu::all();
         $ds_mau     = Mau::all();
         $ds_km      = Khuyenmai::all();
-
+        $ds_size    = DB::table('sanpham')
+        ->join('size_sanpham', 'sanpham.sp_ma', '=', 'size_sanpham.sp_ma')
+        ->join('size', 'size_sanpham.s_ma', '=', 'size.s_ma')
+        ->get()->unique('s_ma');
         return view('sanpham.create')
             ->with('danhsachmau', $ds_mau)
             ->with('danhsachloai', $ds_loai)
             ->with('danhsachxuatxu', $ds_xuatxu)
-            ->with('danhsachkhuyenmai', $ds_km);
+            ->with('danhsachkhuyenmai', $ds_km)
+            ->with('danhsachsizesp', $ds_size);
     
     }
     public function store(Request $request)
@@ -54,6 +64,7 @@ class SanphamController extends Controller
         ]);
 
         $sp = new Sanpham();
+        $size = Size::where('s_ma', $sp);
         $sp->sp_ten = $request->sp_ten;
         $sp->sp_giaGoc = $request->sp_giaGoc;
         $sp->sp_giaBan = $request->sp_giaBan;
@@ -66,7 +77,8 @@ class SanphamController extends Controller
         $sp->m_ma = $request->m_ma;
         $sp->xx_ma = $request->xx_ma;
         $sp->km_ma = $request->km_ma;
-
+        
+     
         if($request->hasFile('sp_hinh'));
         {
             $file = $request->sp_hinh;
@@ -105,16 +117,23 @@ class SanphamController extends Controller
         $ds_xuatxu  = Xuatxu::all();
         $ds_mau     = Mau::all();
         $ds_km      = Khuyenmai::all();
+        $ds_size    = DB::table('sanpham')
+        ->join('size_sanpham', 'sanpham.sp_ma', '=', 'size_sanpham.sp_ma')
+        ->join('size', 'size_sanpham.s_ma', '=', 'size.s_ma')
+        ->get()->unique('s_ma');
         return view('sanpham.edit')
             ->with('sp', $sp)
             ->with('danhsachloai', $ds_loai)
             ->with('danhsachxuatxu', $ds_xuatxu)
             ->with('danhsachmau', $ds_mau)
-            ->with('danhsachkhuyenmai', $ds_km);
+            ->with('danhsachkhuyenmai', $ds_km)
+            ->with('danhsachsizesp', $ds_size);
     }
     public function update(Request $request, $id)
     {
+       
         $sp = Sanpham::where("sp_ma", $id)->first();
+        $size = Size::where("s_ma", $sp);
         $sp->sp_ten = $request->sp_ten;
         $sp->sp_giaGoc = $request->sp_giaGoc;
         $sp->sp_giaBan = $request->sp_giaBan;
@@ -127,7 +146,7 @@ class SanphamController extends Controller
         $sp->m_ma = $request->m_ma;
         $sp->xx_ma = $request->xx_ma;
         $sp->km_ma = $request->km_ma;
-
+        
         if($request->hasFile('sp_hinh'))
         {
             //Xóa hình cũ để tránh rác
@@ -165,12 +184,14 @@ class SanphamController extends Controller
         $ds_xuatxu  = Xuatxu::all();
         $ds_mau     = Mau::all();
         $ds_km      = Khuyenmai::all();
+        $ds_sizesp  = Size_Sanpham::all();
         $data = [
             'danhsachsanpham' => $ds_sanpham,
             'danhsachloai'    => $ds_loai,
             'danhsachmau'     => $ds_mau,
             'danhsachxuatxu'  => $ds_xuatxu,
             'danhsachkhuyenmai'=> $ds_km,
+            'danhsachsizesp' => $ds_sizesp,
         ];
         return Excel::download(new SanPhamExport, 'danhsachsanpham.xlsx');
     }

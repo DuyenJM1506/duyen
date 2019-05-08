@@ -20,4 +20,8 @@ class Size extends Model
     {
     	return $this->hasMany('App\Chitietdonhang', 's_ma', 's_ma');
     }
+    public function sizesp()
+    {
+        return $this->belongsTo('App\Size_Sanpham', 's_ma', 's_ma');
+    }
 }

@@ -49,6 +49,20 @@ Thêm mới sản phẩm
             <input id="sp_hinh" type="file" name="sp_hinh">
         </div>
     </div>
+
+    <div class="form-group">
+        <label for="s_ten">Chọn size sản phẩm</label>
+        <select name="s_ma">
+            @foreach($danhsachsizesp as $ds_size)
+                @if(old('s_ma') == $ds_size->s_ma)
+                    <option value="{{ $ds_size->s_ma }}" selected>{{ $ds_size->s_ten }}</option>
+                @else
+                    <option value="{{ $ds_size->s_ma }}">{{ $ds_size->s_ten }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
     <div class="form-group">
         <label for="sp_soLuongBanDau">Số lượng ban đầu</label>
             <input type="text" class="form-control" id="sp_soLuongBanDau" name="sp_soLuongBanDau" placeholder="Số lượng sản phẩm ban đầu" value="{{ old('sp_soLuongBanDau') }}">

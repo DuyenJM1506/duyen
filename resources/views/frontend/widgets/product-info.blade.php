@@ -18,24 +18,6 @@
                   </a>
                 </div>
               </div>
-              <?php
-              // Lọc các hình ảnh liên quan đến sản phẩm
-              $id = $sp->sp_ma;
-              $hinhanhlienquan = $hinhanhlienquan->toArray();
-              $filteredItems = array_filter($hinhanhlienquan, function($item) use($id){
-                return $item->sp_ma == $id;
-              });
-              ?>
-              @foreach($filteredItems as $hinhanh)
-              <div class="item-slick3" data-thumb="{{ asset('storage/photos/' . $hinhanh->ha_ten) }}" >
-                <div class="wrap-pic-w pos-relative" >
-                  <img src="{{ asset('storage/photos/' . $hinhanh->ha_ten) }}" alt="IMG-PRODUCT" >
-                  <a  class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('storage/photos/' . $hinhanh->ha_ten) }}">
-                    <i class="fa fa-expand"></i>
-                  </a>
-                </div>
-              </div>
-              @endforeach
             </div>
           </div>
         </div>
@@ -49,24 +31,26 @@
 
       <div class="col-md-6 col-lg-5 p-b-30">
         <div class="p-r-50 p-t-5 p-lr-0-lg">
-          <h4 class="mtext-105 cl2 js-name-detail p-b-14" style="font-family: 'Lora', serif; ">
+          <h4 class="mtext-105 cl2 js-name-detail p-b-14" style="font-family: 'Lora', serif;">
             <a href="{{ route('frontend.productDetail', ['id' => $sp->sp_ma]) }}">{{ $sp->sp_ten }}</a>
           </h4>
           <span class="mtext-106 cl2">
-            <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Giá: </span>{{ number_format( $sp->sp_giaBan ) }} <span>VNĐ</span>
+            <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif;font-size:18px; ">Giá: </span>{{ number_format( $sp->sp_giaBan ) }} <span>VNĐ</span>
           </span>
 
            <p class="mtext-106 cl2">
-           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Số lượng hiện tại: </span> {{ $sp->sp_soLuongHienTai }}
+           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif;font-size:18px; ">Số lượng hiện tại: </span> {{ $sp->sp_soLuongHienTai }}
           </p>
          
           <p class="mtext-106 cl2">
-           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Màu sắc: </span> 
-           {{ $sp->m_ma }}
+           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif;font-size:18px; ">
+           Màu sắc: @if(isset($sp->maus->m_ten)) <b>{{$sp->maus->m_ten}}</b> @endif</span> 
+
           </p>
 
           <p class="mtext-106 cl2">
-           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif; ">Xuất xứ: </span> 
+           <span class="stext-102 cl3 p-t-23" style="font-family: 'Lora', serif;font-size:18px; ">
+           Xuất xứ: @if(isset($sp->xuatxus->xx_ten)) <b>{{$sp->xuatxus->xx_ten}}</b> @endif</span> 
           </p>
           
         
@@ -90,20 +74,7 @@
             </div>
           </div>
           <!-- sns -->
-          <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-            <div class="flex-m bor9 p-r-10 m-r-11">
-             
-            </div>
-            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-              <i class="fa fa-facebook"></i>
-            </a>
-            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-              <i class="fa fa-google-plus"></i>
-            </a>
-          </div>
+         
         </div>
       </div>
     </div>
